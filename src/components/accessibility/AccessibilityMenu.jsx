@@ -130,7 +130,7 @@ export default function AccessibilityMenu() {
       {/* Accessibility Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 left-4 z-50 bg-primary text-white p-2 rounded-full shadow-md hover:bg-primary/90 transition-all"
+        className="fixed bottom-4 right-4 z-50 bg-primary text-white p-2 rounded-full shadow-md hover:bg-primary/90 transition-all"
         aria-label="תפריט נגישות"
         title="תפריט נגישות"
       >
@@ -139,7 +139,7 @@ export default function AccessibilityMenu() {
 
       {/* Accessibility Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 left-6 z-50 bg-white border-2 border-secondary rounded-xl shadow-2xl w-80 max-h-[80vh] overflow-y-auto">
+        <div className="fixed bottom-24 right-4 z-50 bg-white border-2 border-secondary rounded-xl shadow-2xl w-80 max-h-[80vh] overflow-y-auto">
           <div className="sticky top-0 bg-secondary text-white p-4 flex items-center justify-between rounded-t-xl">
             <h2 className="font-heading text-xl">הצהרת נגישות</h2>
             <button
