@@ -40,12 +40,12 @@ export default function HeroSection({ heroImage }) {
             className="flex items-center gap-2 mb-4"
           >
             <div className="w-10 h-[2px] bg-primary" />
-            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">כלי עבודה לדרג הפיקודי</span>
+            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">משקפי בטיחות מקצועיים</span>
           </motion.div>
 
           <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase leading-[0.9] tracking-tighter mb-6">
-            הנדסה של<br />
-            <span className="text-primary">כלי כבדים</span>
+            הגנה ברמה<br />
+            <span className="text-primary">אחרת לגמרי</span>
           </h1>
 
           <motion.p
@@ -54,7 +54,7 @@ export default function HeroSection({ heroImage }) {
             transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-secondary-foreground/80 text-lg sm:text-xl max-w-xl leading-relaxed font-medium"
           >
-            הגנה מקסימלית בסטנדרט בינלאומי. עמידות בליסטית עם עיצוב שמשדר סמכות באתר.
+            משקפי בטיחות בתקן ANSI Z87.1+ עם עדשות אנטי-פוג, עמידות לפגיעות ועיצוב נוח לשימוש כל היום.
           </motion.p>
 
           <motion.div
@@ -66,13 +66,13 @@ export default function HeroSection({ heroImage }) {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
               <Button asChild size="lg" className="h-14 px-10 font-heading uppercase tracking-wider text-base font-bold transition-all duration-300">
                 <Link to="/shop">
-                  הציוד המקצועי <ArrowRight className="w-5 h-5 ml-3" />
+                  לחנות <ArrowRight className="w-5 h-5 ml-3" />
                 </Link>
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
               <Button variant="outline" size="lg" className="h-14 px-10 font-heading uppercase tracking-wider text-base font-bold border-2 border-white/80 text-white hover:bg-white/20 hover:text-white hover:border-white transition-all duration-300">
-                <Play className="w-5 h-5 mr-3" /> מבחן עמידות
+                <Play className="w-5 h-5 mr-3" /> סרטון המוצר
               </Button>
             </motion.div>
           </motion.div>

@@ -3,10 +3,10 @@ import { Users, Shield, Truck, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const stats = [
-  { icon: Users, value: '50,000+', label: 'מפקדי אתר מוגנים' },
+  { icon: Users, value: '50,000+', label: 'לקוחות מרוצים' },
   { icon: Shield, value: 'לכל החיים', label: 'אחריות על המסגרת' },
-  { icon: Truck, value: 'עולמי', label: 'משלוח בינלאומי' },
-  { icon: Clock, value: '24/7', label: 'תמיכה מקצועית' },
+  { icon: Truck, value: 'חינם', label: 'משלוח מעל ₪500' },
+  { icon: Clock, value: '24/7', label: 'שירות לקוחות' },
 ];
 
 export default function TrustBar() {

@@ -20,8 +20,8 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
-              <h3 className="font-heading text-2xl uppercase tracking-wider mb-2 font-bold">הצטרף לדרג הפיקודי</h3>
-              <p className="text-secondary-foreground/70 text-base font-medium">10% הנחה על ההזמנה הראשונה וגישה מוקדמת לציוד חדש</p>
+              <h3 className="font-heading text-2xl uppercase tracking-wider mb-2 font-bold">הירשמו לניוזלטר</h3>
+              <p className="text-secondary-foreground/70 text-base font-medium">קבלו 10% הנחה על ההזמנה הראשונה ועדכונים על מוצרים חדשים</p>
             </div>
             <div className="flex gap-2 w-full max-w-md">
               <Input
@@ -46,7 +46,7 @@ export default function Footer() {
           <div>
             <span className="font-heading text-xl font-bold tracking-widest text-white">KROXIS</span>
             <p className="text-secondary-foreground/70 text-base mt-4 leading-relaxed font-medium">
-              ציוד אופטי בדרגת הנדסה. למי שמוביל פרויקטים ולא מתפשר על איכות.
+              משקפי בטיחות מקצועיים בתקנים בינלאומיים. הגנה, נוחות ואיכות ללא פשרות.
             </p>
           </div>
           <div>
@@ -88,7 +88,7 @@ export default function Footer() {
             <p className="text-xs text-secondary-foreground/40">© {new Date().getFullYear()} KROXIS. All rights reserved.</p>
             <div className="flex items-center gap-4">
               <Truck className="w-4 h-4 text-secondary-foreground/40" />
-              <span className="text-xs text-secondary-foreground/40">משלוח חינם מעל $150</span>
+              <span className="text-xs text-secondary-foreground/40">משלוח חינם מעל ₪500</span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -104,7 +104,7 @@ export default function Footer() {
               className="flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#2eb8e6] text-white rounded-lg font-medium text-sm transition-colors"
             >
               <Navigation className="w-4 h-4" />
-              Navigate with Waze
+              נווט עם Waze
             </a>
           </div>
         </div>

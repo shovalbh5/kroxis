@@ -7,15 +7,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const megaMenuData = {
   industry: [
-    { label: 'Construction', icon: HardHat, href: '/shop?category=construction' },
-    { label: 'Lab & Medical', icon: FlaskConical, href: '/shop?category=lab' },
-    { label: 'Outdoor & Utility', icon: TreePine, href: '/shop?category=outdoor' },
+    { label: 'בנייה ותשתיות', icon: HardHat, href: '/shop?category=construction' },
+    { label: 'מעבדות ורפואה', icon: FlaskConical, href: '/shop?category=lab' },
+    { label: 'עבודות שטח', icon: TreePine, href: '/shop?category=outdoor' },
   ],
   tech: [
-    { label: 'Anti-Fog', href: '/shop?tech=anti_fog' },
-    { label: 'Polarized', href: '/shop?tech=polarized' },
-    { label: 'Blue Light', href: '/shop?tech=blue_light' },
-    { label: 'Prescription Ready', href: '/shop?tech=prescription_ready' },
+    { label: 'אנטי פוג', href: '/shop?tech=anti_fog' },
+    { label: 'עדשות מקוטבות', href: '/shop?tech=polarized' },
+    { label: 'סינון אור כחול', href: '/shop?tech=blue_light' },
+    { label: 'מתאים למשקפי ראייה', href: '/shop?tech=prescription_ready' },
   ],
 };
 
@@ -38,7 +38,7 @@ export default function Header() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground text-center text-xs py-1.5 font-medium tracking-wider uppercase">
-        משלוח חינם מעל $150 · תקן ANSI Z87.1+
+        משלוח חינם מעל ₪500 · כל המוצרים בתקן ANSI Z87.1+
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">

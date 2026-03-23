@@ -64,7 +64,7 @@ export default function ProductCard({ product }) {
             </div>
             {product.b2b_bulk_discount_threshold && (
               <p className="text-xs text-primary mt-1 font-bold">
-                {product.b2b_bulk_discount_threshold}+ יחידות ← {product.b2b_bulk_discount_percent}% הנחה
+                הזמנה של {product.b2b_bulk_discount_threshold}+ יחידות → {product.b2b_bulk_discount_percent}% הנחה
               </p>
             )}
           </div>

@@ -4,10 +4,10 @@ import { HardHat, FlaskConical, TreePine, Wrench } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const industries = [
-  { label: 'בנייה ותשתיות', desc: 'עמידות בפני מכות ורסיסים באתר', icon: HardHat, category: 'construction', color: 'from-orange-600/20 to-orange-900/20' },
-  { label: 'מעבדות ורפואה', desc: 'הגנה מפני כימיקלים והתערפלות', icon: FlaskConical, category: 'lab', color: 'from-blue-600/20 to-blue-900/20' },
-  { label: 'שטח ותפעול', desc: 'אופטיקה פולארית לשמש ישראלית', icon: TreePine, category: 'outdoor', color: 'from-green-600/20 to-green-900/20' },
-  { label: 'תעשייה כללית', desc: 'הגנה יומיומית בסטנדרט גבוה', icon: Wrench, category: 'general', color: 'from-gray-500/20 to-gray-800/20' },
+  { label: 'בנייה ותשתיות', desc: 'הגנה מפגיעות, אבק וחלקיקים באתרי בנייה', icon: HardHat, category: 'construction', color: 'from-orange-600/20 to-orange-900/20' },
+  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', color: 'from-blue-600/20 to-blue-900/20' },
+  { label: 'עבודות שטח', desc: 'עדשות מקוטבות לעבודה ממושכת בשמש', icon: TreePine, category: 'outdoor', color: 'from-green-600/20 to-green-900/20' },
+  { label: 'תעשייה כללית', desc: 'משקפי מגן לשימוש יומיומי בכל סביבת עבודה', icon: Wrench, category: 'general', color: 'from-gray-500/20 to-gray-800/20' },
 ];
 
 export default function IndustryGrid() {
@@ -17,10 +17,10 @@ export default function IndustryGrid() {
         <div className="text-center mb-14">
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="w-10 h-[2px] bg-primary" />
-            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">תחומי התמחות</span>
+            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">קטגוריות</span>
             <div className="w-10 h-[2px] bg-primary" />
           </div>
-          <h2 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight font-bold">לכל סוג אתר</h2>
+          <h2 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight font-bold">לכל סביבת עבודה</h2>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
