@@ -18,6 +18,10 @@ import Wholesale from '@/pages/Wholesale';
 import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
+import Warranty from '@/pages/Warranty';
+import B2BPortal from '@/pages/B2BPortal';
+import Contact from '@/pages/Contact';
+import FAQ from '@/pages/FAQ';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -62,6 +66,10 @@ const AuthenticatedApp = () => {
           <Route path="/en/blog" element={<Blog />} />
           <Route path="/en/blog/:slug" element={<BlogPost />} />
           <Route path="/en/wholesale" element={<Wholesale />} />
+          <Route path="/warranty" element={<Warranty />} />
+          <Route path="/b2b" element={<B2BPortal />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
         </Route>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<PageNotFound />} />

@@ -61,10 +61,10 @@ export default function Footer() {
           <div>
             <h4 className="font-heading text-xs uppercase tracking-widest text-primary mb-5">תמיכה</h4>
             <div className="space-y-3">
-              <span className="block text-sm text-secondary-foreground/60">רישום אחריות</span>
-              <span className="block text-sm text-secondary-foreground/60">פורטל עסקי</span>
-              <span className="block text-sm text-secondary-foreground/60">יצירת קשר</span>
-              <span className="block text-sm text-secondary-foreground/60">שאלות נפוצות</span>
+              <Link to="/warranty" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">רישום אחריות</Link>
+              <Link to="/b2b" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">פורטל עסקי</Link>
+              <Link to="/contact" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">יצירת קשר</Link>
+              <Link to="/faq" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">שאלות נפוצות</Link>
             </div>
           </div>
           <div>
