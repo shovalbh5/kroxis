@@ -9,18 +9,51 @@ const translations = {
       shop: 'Shop',
       allProducts: 'All Products',
       cart: 'Cart',
+      blog: 'Blog',
+      wholesale: 'Wholesale',
+      byUse: 'By Use',
+      byTech: 'By Technology',
     },
-    home: {
-      hero_title: 'Built for',
-      hero_subtitle: 'the Grind',
-      hero_description: 'Engineered for the toughest environments. ANSI Z87.1+ certified impact protection meets industrial luxury.',
-      shop_btn: 'Shop the Collection',
-      watch_btn: 'Watch Stress Test',
-      featured_title: 'The Heavy Hitters',
-      industry_title: 'Shop by Industry',
+    topBar: 'Free Shipping Over ₪500 · Tactical Sunglasses for Field & Work',
+    search: 'Search sunglasses...',
+    hero: {
+      badge: 'Tactical Sunglasses',
+      title_1: 'Vision On',
+      title_2: 'Another Level',
+      description: 'Tactical sunglasses for field operators, military & fighters. Polarized lenses, impact-resistant, and comfortable for extended use in all field conditions.',
+      shopBtn: 'Shop Now',
+      videoBtn: 'Watch Product Video',
+    },
+    featured: {
+      badge: 'Our Selection',
+      title: 'Popular Products',
+    },
+    industry: {
+      badge: 'Choose Your Battlefield',
+      title_1: 'Ready For',
+      title_2: 'Any',
+      title_3: 'Environment',
+      discover: 'Discover Now',
+      items: [
+        { label: 'Military & Combat', desc: 'Tactical sunglasses for combat and training conditions' },
+        { label: 'Field & Operations', desc: 'Polarized lenses for extended fieldwork in the open' },
+        { label: 'Work & Industry', desc: 'Durable sunglasses for challenging work environments' },
+        { label: 'Tactical Fashion', desc: 'Aggressive style for everyday wear with full sun protection' },
+      ],
+    },
+    trust: {
+      items: [
+        { value: '50,000+', label: 'Happy Customers' },
+        { value: 'Lifetime', label: 'Frame Warranty' },
+        { value: 'Free', label: 'Shipping Over ₪500' },
+        { value: '24/7', label: 'Customer Service' },
+      ],
     },
     product: {
       addToCart: 'Add to Cart',
+      quickView: 'Quick View',
+      bestSeller: 'Best Seller',
+      bulkOrder: 'units → discount',
       quantity: 'Quantity',
       lensOption: 'Lens Option',
       color: 'Color',
@@ -40,10 +73,41 @@ const translations = {
       total: 'Total',
     },
     footer: {
-      newsletter: 'Join the Crew',
-      newsletterDesc: 'Get 10% off your first order and early access to new drops.',
+      newsletter: 'Subscribe to Newsletter',
+      newsletterDesc: 'Get 10% off your first order and updates on new products',
       subscribe: 'Subscribe',
-    }
+      enterEmail: 'Enter email',
+      shopTitle: 'Shop',
+      supportTitle: 'Support',
+      qualityTitle: 'Quality',
+      military: 'Military & Combat',
+      field: 'Field & Operations',
+      work: 'Work & Industry',
+      allProducts: 'All Products',
+      warranty: 'Warranty Registration',
+      b2b: 'Business Portal',
+      contact: 'Contact Us',
+      faq: 'FAQ',
+      terms: 'Terms of Service',
+      privacy: 'Privacy Policy',
+      returns: 'Return Policy',
+      brandDesc: 'Tactical sunglasses for field operators, military & fighters. Protection, style and durability without compromise.',
+      freeShipping: 'Free Shipping Over ₪500',
+      navigateWaze: 'Navigate with Waze',
+    },
+    megaMenu: {
+      industry: [
+        { label: 'Military & Combat' },
+        { label: 'Field & Operations' },
+        { label: 'Work & Industry' },
+      ],
+      tech: [
+        { label: 'Polarized Lenses' },
+        { label: 'Photochromic' },
+        { label: 'Blue Light Filter' },
+        { label: 'Prescription Ready' },
+      ],
+    },
   },
   he: {
     nav: {
@@ -51,18 +115,51 @@ const translations = {
       shop: 'חנות',
       allProducts: 'כל המוצרים',
       cart: 'עגלה',
+      blog: 'בלוג',
+      wholesale: 'סיטונאות',
+      byUse: 'לפי שימוש',
+      byTech: 'לפי טכנולוגיה',
     },
-    home: {
-      hero_title: 'בנוי עבור',
-      hero_subtitle: 'העבודה הקשה',
-      hero_description: 'מהונדס עבור הסביבות הקשות ביותר. הגנת פגיעה מאושרת ANSI Z87.1+ פוגשת יוקרה תעשייתית.',
-      shop_btn: 'קנה את האוסף',
-      watch_btn: 'צפה במבחן עומס',
-      featured_title: 'המכות הכבדות',
-      industry_title: 'קנה לפי תעשייה',
+    topBar: 'משלוח חינם מעל ₪500 · משקפי שמש טקטיות לשטח ועבודה',
+    search: 'חיפוש משקפי שמש...',
+    hero: {
+      badge: 'משקפי שמש טקטיות',
+      title_1: 'ראייה ברמה',
+      title_2: 'אחרת לגמרי',
+      description: 'משקפי שמש טקטיות לאנשי שטח, צבא ולוחמים. עדשות מקוטבות, עמידות בפגיעות ונוחות לשימוש ממושך בכל תנאי שטח.',
+      shopBtn: 'לחנות',
+      videoBtn: 'סרטון המוצר',
+    },
+    featured: {
+      badge: 'הנבחרת שלנו',
+      title: 'המוצרים הפופולריים',
+    },
+    industry: {
+      badge: 'בחר את שדה הקרב שלך',
+      title_1: 'מוכן',
+      title_2: 'לכל',
+      title_3: 'סביבה',
+      discover: 'גלה עכשיו',
+      items: [
+        { label: 'צבא ולוחמים', desc: 'משקפי שמש טקטיות לתנאי לחימה ואימונים' },
+        { label: 'שטח ותפעול', desc: 'עדשות מקוטבות לעבודה ממושכת בשטח פתוח' },
+        { label: 'עבודה ותעשייה', desc: 'משקפי שמש עמידות לסביבות עבודה מאתגרות' },
+        { label: 'אופנה טקטית', desc: 'סטייל אגרסיבי ליומיום עם הגנה מלאה מהשמש' },
+      ],
+    },
+    trust: {
+      items: [
+        { value: '50,000+', label: 'לקוחות מרוצים' },
+        { value: 'לכל החיים', label: 'אחריות על המסגרת' },
+        { value: 'חינם', label: 'משלוח מעל ₪500' },
+        { value: '24/7', label: 'שירות לקוחות' },
+      ],
     },
     product: {
       addToCart: 'הוסף לעגלה',
+      quickView: 'צפייה מהירה',
+      bestSeller: 'רב מכר',
+      bulkOrder: 'יחידות → הנחה',
       quantity: 'כמות',
       lensOption: 'אפשרות עדשה',
       color: 'צבע',
@@ -82,10 +179,41 @@ const translations = {
       total: 'סה"כ',
     },
     footer: {
-      newsletter: 'הצטרף לצוות',
-      newsletterDesc: 'קבל 10% הנחה בהזמנה הראשונה וגישה מוקדמת לשחרורים חדשים.',
-      subscribe: 'הירשם',
-    }
+      newsletter: 'הירשמו לניוזלטר',
+      newsletterDesc: 'קבלו 10% הנחה על ההזמנה הראשונה ועדכונים על מוצרים חדשים',
+      subscribe: 'הרשמה',
+      enterEmail: 'הזן אימייל',
+      shopTitle: 'חנות',
+      supportTitle: 'תמיכה',
+      qualityTitle: 'איכות',
+      military: 'צבא ולוחמים',
+      field: 'שטח ותפעול',
+      work: 'עבודה ותעשייה',
+      allProducts: 'כל המוצרים',
+      warranty: 'רישום אחריות',
+      b2b: 'פורטל עסקי',
+      contact: 'יצירת קשר',
+      faq: 'שאלות נפוצות',
+      terms: 'תקנון האתר',
+      privacy: 'מדיניות פרטיות',
+      returns: 'מדיניות החזרות',
+      brandDesc: 'משקפי שמש טקטיות לאנשי שטח, צבא ולוחמים. הגנה, סטייל ועמידות ללא פשרות.',
+      freeShipping: 'משלוח חינם מעל ₪500',
+      navigateWaze: 'נווט עם Waze',
+    },
+    megaMenu: {
+      industry: [
+        { label: 'צבא ולוחמים' },
+        { label: 'שטח ותפעול' },
+        { label: 'עבודה ותעשייה' },
+      ],
+      tech: [
+        { label: 'עדשות מקוטבות' },
+        { label: 'פוטוכרומטיות' },
+        { label: 'סינון אור כחול' },
+        { label: 'מתאים למשקפי ראייה' },
+      ],
+    },
   }
 };
 
@@ -117,12 +245,14 @@ export function LanguageProvider({ children }) {
     return value || path;
   };
 
+  const isRTL = direction === 'rtl';
+
   const switchLanguage = (newLocale) => {
     const currentPath = window.location.pathname;
     let newPath;
     
     if (newLocale === 'en') {
-      newPath = currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`;
+      newPath = currentPath.startsWith('/en') ? currentPath : `/en${currentPath === '/' ? '' : currentPath}`;
       setDirection('ltr');
       document.documentElement.dir = 'ltr';
       document.documentElement.lang = 'en';
@@ -139,7 +269,7 @@ export function LanguageProvider({ children }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ locale, direction, t, switchLanguage }}>
+    <LanguageContext.Provider value={{ locale, direction, isRTL, t, switchLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

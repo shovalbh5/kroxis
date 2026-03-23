@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { Shield, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ProductCard({ product }) {
+  const { t, locale } = useLanguage();
   const certLabels = {
     ANSI_Z87: 'ANSI Z87.1+',
     CE_EN166: 'CE EN166',
@@ -20,7 +22,7 @@ export default function ProductCard({ product }) {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -8 }}
     >
-      <Link to={`/product/${product.id}`} className="group block">
+      <Link to={`${locale === 'en' ? '/en' : ''}/product/${product.id}`} className="group block">
         <div className="relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:border-primary/50">
           {/* Image */}
           <div className="relative aspect-square overflow-hidden bg-muted">
@@ -32,12 +34,12 @@ export default function ProductCard({ product }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-y-4 group-hover:translate-y-0">
               <span className="bg-primary text-white px-5 py-2.5 rounded-md text-sm font-heading uppercase tracking-wider flex items-center gap-2 font-bold shadow-lg">
-                <Eye className="w-4 h-4" /> צפייה מהירה
+                <Eye className="w-4 h-4" /> {t('product.quickView')}
               </span>
             </div>
             {product.is_bestseller && (
               <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-heading uppercase tracking-wider font-bold px-3 py-1">
-                רב מכר
+                {t('product.bestSeller')}
               </Badge>
             )}
           </div>
@@ -64,7 +66,7 @@ export default function ProductCard({ product }) {
             </div>
             {product.b2b_bulk_discount_threshold && (
               <p className="text-[10px] sm:text-xs text-primary mt-1 font-bold hidden sm:block">
-                הזמנה של {product.b2b_bulk_discount_threshold}+ יחידות → {product.b2b_bulk_discount_percent}% הנחה
+                {product.b2b_bulk_discount_threshold}+ {t('product.bulkOrder')} {product.b2b_bulk_discount_percent}%
               </p>
             )}
           </div>

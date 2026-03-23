@@ -5,23 +5,14 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const megaMenuData = {
-  industry: [
-    { label: 'צבא ולוחמים', icon: Shield, href: '/shop?category=construction' },
-    { label: 'שטח ותפעול', icon: TreePine, href: '/shop?category=outdoor' },
-    { label: 'עבודה ותעשייה', icon: HardHat, href: '/shop?category=general' },
-  ],
-  tech: [
-    { label: 'עדשות מקוטבות', href: '/shop?tech=polarized' },
-    { label: 'פוטוכרומטיות', href: '/shop?tech=photochromic' },
-    { label: 'סינון אור כחול', href: '/shop?tech=blue_light' },
-    { label: 'מתאים למשקפי ראייה', href: '/shop?tech=prescription_ready' },
-  ],
-};
+const megaMenuIcons = [Shield, TreePine, HardHat];
+const industryHrefs = ['/shop?category=construction', '/shop?category=outdoor', '/shop?category=general'];
+const techHrefs = ['/shop?tech=polarized', '/shop?tech=photochromic', '/shop?tech=blue_light', '/shop?tech=prescription_ready'];
 
 export default function Header() {
   const { itemCount, setIsCartOpen } = useCart();
-  const { locale, switchLanguage } = useLanguage();
+  const { locale, switchLanguage, t, isRTL } = useLanguage();
+  const prefix = locale === 'en' ? '/en' : '';
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -38,7 +29,7 @@ export default function Header() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground text-center text-xs py-1.5 font-medium tracking-wider uppercase">
-        משלוח חינם מעל ₪500 · משקפי שמש טקטיות לשטח ועבודה
+        {t('topBar')}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -59,8 +50,8 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Link to="/" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              בית
+            <Link to={`${prefix}/`} className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
+              {t('nav.home')}
             </Link>
             <div
               className="relative"
@@ -68,7 +59,7 @@ export default function Header() {
               onMouseLeave={() => setMegaOpen(false)}
             >
               <button className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase flex items-center gap-1">
-                חנות <ChevronDown className="w-3.5 h-3.5" />
+                {t('nav.shop')} <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <AnimatePresence>
                 {megaOpen && (
@@ -81,28 +72,28 @@ export default function Header() {
                   >
                     <div className="grid grid-cols-2 gap-8">
                       <div>
-                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי שימוש</h4>
+                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">{t('nav.byUse')}</h4>
                         <div className="space-y-2">
-                          {megaMenuData.industry.map(item => (
+                          {t('megaMenu.industry').map((item, idx) => (
                             <Link
-                              key={item.label}
-                              to={item.href}
+                              key={idx}
+                              to={`${prefix}${industryHrefs[idx]}`}
                               className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/20 transition-colors text-secondary-foreground/80 hover:text-white"
                               onClick={() => setMegaOpen(false)}
                             >
-                              <item.icon className="w-4 h-4 text-primary" />
+                              {React.createElement(megaMenuIcons[idx], { className: 'w-4 h-4 text-primary' })}
                               <span className="text-sm">{item.label}</span>
                             </Link>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי טכנולוגיה</h4>
+                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">{t('nav.byTech')}</h4>
                         <div className="space-y-2">
-                          {megaMenuData.tech.map(item => (
+                          {t('megaMenu.tech').map((item, idx) => (
                             <Link
-                              key={item.label}
-                              to={item.href}
+                              key={idx}
+                              to={`${prefix}${techHrefs[idx]}`}
                               className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/20 transition-colors text-secondary-foreground/80 hover:text-white"
                               onClick={() => setMegaOpen(false)}
                             >
@@ -115,25 +106,25 @@ export default function Header() {
                     </div>
                     <div className="mt-6 pt-4 border-t border-border">
                       <Link
-                        to="/shop"
+                        to={`${prefix}/shop`}
                         className="text-primary text-sm font-medium hover:underline"
                         onClick={() => setMegaOpen(false)}
                       >
-                        כל המוצרים →
+                        {t('nav.allProducts')} →
                       </Link>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-            <Link to="/shop" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              כל המוצרים
+            <Link to={`${prefix}/shop`} className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
+              {t('nav.allProducts')}
             </Link>
-            <Link to="/blog" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              בלוג
+            <Link to={`${prefix}/blog`} className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
+              {t('nav.blog')}
             </Link>
-            <Link to="/wholesale" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              סיטונאות
+            <Link to={`${prefix}/wholesale`} className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
+              {t('nav.wholesale')}
             </Link>
           </nav>
 
@@ -180,7 +171,7 @@ export default function Header() {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="חיפוש משקפי שמש..."
+                  placeholder={t('search')}
                   className="w-full pl-10 pr-4 py-3 bg-muted/20 border border-border rounded-lg text-secondary-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   autoFocus
                 />
@@ -200,11 +191,11 @@ export default function Header() {
             className="overflow-hidden bg-secondary border-t border-border lg:hidden"
           >
             <nav className="px-4 py-4 space-y-3">
-              <Link to="/" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">בית</Link>
-              <Link to="/shop" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">כל המוצרים</Link>
-              <Link to="/shop?category=construction" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">צבא ולוחמים</Link>
-              <Link to="/shop?category=outdoor" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">שטח ותפעול</Link>
-              <Link to="/shop?category=general" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">עבודה ותעשייה</Link>
+              <Link to={`${prefix}/`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">{t('nav.home')}</Link>
+              <Link to={`${prefix}/shop`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">{t('nav.allProducts')}</Link>
+              {t('megaMenu.industry').map((item, idx) => (
+                <Link key={idx} to={`${prefix}${industryHrefs[idx]}`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm ps-4">{item.label}</Link>
+              ))}
             </nav>
           </motion.div>
         )}

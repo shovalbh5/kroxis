@@ -1,16 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HardHat, FlaskConical, TreePine, Wrench, ChevronRight } from 'lucide-react';
+import { HardHat, FlaskConical, TreePine, Wrench, ChevronRight, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
-const industries = [
-  { label: 'צבא ולוחמים', desc: 'משקפי שמש טקטיות לתנאי לחימה ואימונים', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1579912437766-7896df6d3cd3?w=800&q=80' },
-  { label: 'שטח ותפעול', desc: 'עדשות מקוטבות לעבודה ממושכת בשטח פתוח', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80' },
-  { label: 'עבודה ותעשייה', desc: 'משקפי שמש עמידות לסביבות עבודה מאתגרות', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80' },
-  { label: 'אופנה טקטית', desc: 'סטייל אגרסיבי ליומיום עם הגנה מלאה מהשמש', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80' },
+const industryIcons = [HardHat, TreePine, Wrench, FlaskConical];
+const industryCategories = ['construction', 'outdoor', 'general', 'lab'];
+const industryImages = [
+  'https://images.unsplash.com/photo-1579912437766-7896df6d3cd3?w=800&q=80',
+  'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80',
+  'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80',
+  'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80',
 ];
 
 export default function IndustryGrid() {
+  const { t, isRTL, locale } = useLanguage();
+  const items = t('industry.items');
+  const ArrowIcon = isRTL ? ChevronLeft : ChevronRight;
   return (
     <section className="relative py-24 sm:py-32 bg-secondary overflow-hidden">
       {/* Tactical background pattern */}
@@ -28,31 +34,31 @@ export default function IndustryGrid() {
         >
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-16 h-[1px] bg-primary" />
-            <span className="text-primary text-[11px] font-heading uppercase tracking-[0.5em] font-bold">בחר את שדה הקרב שלך</span>
+            <span className="text-primary text-[11px] font-heading uppercase tracking-[0.5em] font-bold">{t('industry.badge')}</span>
             <div className="w-16 h-[1px] bg-primary" />
           </div>
           <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl uppercase tracking-tight font-bold text-white">
-            מוכן <span className="text-primary">לכל</span> סביבה
+            {t('industry.title_1')} <span className="text-primary">{t('industry.title_2')}</span> {t('industry.title_3')}
           </h2>
         </motion.div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          {industries.map((ind, i) => (
+          {items.map((ind, i) => (
             <motion.div
-              key={ind.category}
+              key={industryCategories[i]}
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
-                to={`/shop?category=${ind.category}`}
+                to={`${locale === 'en' ? '/en' : ''}/shop?category=${industryCategories[i]}`}
                 className="group relative block h-[280px] sm:h-[320px] overflow-hidden"
               >
                 {/* Image */}
                 <img
-                  src={ind.image}
+                  src={industryImages[i]}
                   alt={ind.label}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
@@ -79,7 +85,7 @@ export default function IndustryGrid() {
                 <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 bg-primary flex items-center justify-center">
-                      <ind.icon className="w-5 h-5 text-white" />
+                      {React.createElement(industryIcons[i], { className: 'w-5 h-5 text-white' })}
                     </div>
                     <div className="h-[2px] flex-1 bg-gradient-to-l from-transparent to-primary/50" />
                   </div>
@@ -88,8 +94,8 @@ export default function IndustryGrid() {
                   </h3>
                   <p className="text-sm text-white/60 font-medium mb-4 max-w-xs">{ind.desc}</p>
                   <div className="flex items-center gap-2 text-primary text-sm font-heading uppercase tracking-wider font-bold opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
-                    <span>גלה עכשיו</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>{t('industry.discover')}</span>
+                    <ArrowIcon className="w-4 h-4" />
                   </div>
                 </div>
               </Link>
