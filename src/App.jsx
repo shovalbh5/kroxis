@@ -20,6 +20,7 @@ import SalesPopup from '@/components/marketing/SalesPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import WhatsAppChat from '@/pages/admin/WhatsAppChat';
+import LiveChatAdmin from '@/pages/admin/LiveChatAdmin';
 import Warranty from '@/pages/Warranty';
 import B2BPortal from '@/pages/B2BPortal';
 import Contact from '@/pages/Contact';
@@ -27,7 +28,7 @@ import FAQ from '@/pages/FAQ';
 import TermsOfService from '@/pages/TermsOfService';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ReturnPolicy from '@/pages/ReturnPolicy';
-import WhatsAppButton from '@/components/WhatsAppButton';
+import LiveChatWidget from '@/components/LiveChatWidget';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -82,11 +83,12 @@ const AuthenticatedApp = () => {
         </Route>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/whatsapp" element={<WhatsAppChat />} />
+        <Route path="/admin/livechat" element={<LiveChatAdmin />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
       <SalesPopup />
-      <WhatsAppButton />
+      <LiveChatWidget />
     </>
   );
 };
