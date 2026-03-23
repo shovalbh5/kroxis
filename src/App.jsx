@@ -12,6 +12,11 @@ import Home from '@/pages/Home';
 import Shop from '@/pages/Shop';
 import ProductDetail from '@/pages/ProductDetail';
 import Checkout from '@/pages/Checkout';
+import Blog from '@/pages/Blog';
+import BlogPost from '@/pages/BlogPost';
+import Wholesale from '@/pages/Wholesale';
+import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -37,15 +42,30 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <Routes>
-      <Route element={<SiteLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Route>
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/wholesale" element={<Wholesale />} />
+          
+          {/* Hebrew language routes */}
+          <Route path="/he" element={<Home />} />
+          <Route path="/he/shop" element={<Shop />} />
+          <Route path="/he/product/:id" element={<ProductDetail />} />
+          <Route path="/he/checkout" element={<Checkout />} />
+          <Route path="/he/blog" element={<Blog />} />
+          <Route path="/he/blog/:slug" element={<BlogPost />} />
+          <Route path="/he/wholesale" element={<Wholesale />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <ExitIntentPopup />
+    </>
   );
 };
 
@@ -53,12 +73,14 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <CartProvider>
-          <Router>
-            <AuthenticatedApp />
-          </Router>
-          <Toaster />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <Router>
+              <AuthenticatedApp />
+            </Router>
+            <Toaster />
+          </CartProvider>
+        </LanguageProvider>
       </QueryClientProvider>
     </AuthProvider>
   )

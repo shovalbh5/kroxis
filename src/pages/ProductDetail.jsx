@@ -11,6 +11,10 @@ import { useCart } from '@/context/CartContext';
 import ProductGallery from '@/components/products/ProductGallery';
 import LensConfigurator from '@/components/products/LensConfigurator';
 import TechSpecs from '@/components/products/TechSpecs';
+import ReviewSection from '@/components/products/ReviewSection';
+import FrequentlyBoughtTogether from '@/components/products/FrequentlyBoughtTogether';
+import UpsellModal from '@/components/marketing/UpsellModal';
+import { generateProductSEO, applySEO } from '@/utils/seo';
 import { motion } from 'framer-motion';
 
 export default function ProductDetail() {
@@ -21,6 +25,7 @@ export default function ProductDetail() {
 
   const [lensOption, setLensOption] = useState('standard');
   const [quantity, setQuantity] = useState(1);
+  const [showUpsell, setShowUpsell] = useState(false);
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', productId],
@@ -31,13 +36,26 @@ export default function ProductDetail() {
     enabled: !!productId,
   });
 
+  const { data: recommendations } = useQuery({
+    queryKey: ['recommendations', product?.category],
+    queryFn: async () => {
+      if (!product) return [];
+      const products = await base44.entities.Product.filter({ category: product.category });
+      return products.filter(p => p.id !== product.id).slice(0, 2);
+    },
+    enabled: !!product,
+  });
+
+  React.useEffect(() => {
+    if (product) {
+      applySEO(generateProductSEO(product));
+    }
+  }, [product]);
+
   const handleAddToCart = () => {
     if (!product) return;
     addItem(product, lensOption, '', quantity);
-    toast({
-      title: 'Added to cart',
-      description: `${product.title} × ${quantity}`,
-    });
+    setShowUpsell(true);
   };
 
   const surcharges = { standard: 0, polarized: 30, blue_light: 20 };
@@ -169,6 +187,26 @@ export default function ProductDetail() {
           <TechSpecs product={product} />
         </motion.div>
       </div>
+
+      {/* Frequently Bought Together */}
+      {recommendations?.length > 0 && (
+        <div className="mt-10">
+          <FrequentlyBoughtTogether
+            mainProduct={product}
+            recommendations={recommendations}
+          />
+        </div>
+      )}
+
+      {/* Reviews */}
+      <ReviewSection productId={productId} />
+
+      {/* Upsell Modal */}
+      <UpsellModal
+        isOpen={showUpsell}
+        onClose={() => setShowUpsell(false)}
+        addedProduct={product}
+      />
     </div>
   );
 }

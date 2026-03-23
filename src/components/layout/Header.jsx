@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ShoppingBag, Menu, X, ChevronDown, HardHat, FlaskConical, TreePine, Shield } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, ChevronDown, HardHat, FlaskConical, TreePine, Shield, Globe } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const megaMenuData = {
@@ -20,6 +21,7 @@ const megaMenuData = {
 
 export default function Header() {
   const { itemCount, setIsCartOpen } = useCart();
+  const { locale, switchLanguage } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -123,10 +125,23 @@ export default function Header() {
             <Link to="/shop" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
               All Products
             </Link>
+            <Link to="/blog" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+              Blog
+            </Link>
+            <Link to="/wholesale" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+              Wholesale
+            </Link>
           </nav>
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => switchLanguage(locale === 'en' ? 'he' : 'en')}
+              className="text-secondary-foreground/80 hover:text-primary transition-colors p-2"
+              title={locale === 'en' ? 'Switch to Hebrew' : 'Switch to English'}
+            >
+              <Globe className="w-5 h-5" />
+            </button>
             <button onClick={() => setSearchOpen(!searchOpen)} className="text-secondary-foreground/80 hover:text-primary transition-colors p-2">
               <Search className="w-5 h-5" />
             </button>
