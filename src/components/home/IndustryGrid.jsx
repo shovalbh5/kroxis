@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const industries = [
   { label: 'בנייה ותשתיות', desc: 'הגנה מפגיעות, אבק וחלקיקים באתרי בנייה', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80' },
-  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1581093458791-9d42e3c2fd45?w=800&q=80' },
+  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80' },
   { label: 'עבודות שטח', desc: 'עדשות מקוטבות לעבודה ממושכת בשמש', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80' },
   { label: 'תעשייה כללית', desc: 'משקפי מגן לשימוש יומיומי בכל סביבת עבודה', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80' },
 ];
