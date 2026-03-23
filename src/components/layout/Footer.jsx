@@ -31,9 +31,9 @@ export default function Footer() {
                 onChange={e => setEmail(e.target.value)}
                 className="bg-muted/20 border-border text-secondary-foreground placeholder:text-secondary-foreground/40"
               />
-              <Button className="shrink-0 font-heading uppercase tracking-wider">
+              <Button className="shrink-0 font-heading uppercase tracking-wider bg-primary text-white hover:bg-primary/90 font-bold">
                 <Mail className="w-4 h-4 mr-2" />
-                Subscribe
+                הרשמה
               </Button>
             </div>
           </div>

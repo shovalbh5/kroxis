@@ -91,10 +91,10 @@ export default function Shop() {
               <Button
                 variant="outline"
                 size="sm"
-                className="lg:hidden"
+                className="lg:hidden border-2 font-bold"
                 onClick={() => setShowFilters(!showFilters)}
               >
-                <SlidersHorizontal className="w-4 h-4 mr-2" /> Filters
+                <SlidersHorizontal className="w-4 h-4 mr-2" /> סינון
               </Button>
               <span className="text-sm text-muted-foreground">{filtered.length} products</span>
             </div>
@@ -141,8 +141,8 @@ export default function Shop() {
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">No products match your filters.</p>
-              <Button variant="outline" className="mt-4" onClick={() => setFilters({ categories: [], techs: [], certs: [] })}>
-                Clear Filters
+              <Button variant="outline" className="mt-4 border-2 font-bold" onClick={() => setFilters({ categories: [], techs: [], certs: [] })}>
+                נקה סינון
               </Button>
             </div>
           ) : (

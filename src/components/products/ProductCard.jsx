@@ -31,7 +31,7 @@ export default function ProductCard({ product }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-y-4 group-hover:translate-y-0">
-              <span className="bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-heading uppercase tracking-wider flex items-center gap-2 font-bold">
+              <span className="bg-primary text-white px-5 py-2.5 rounded-md text-sm font-heading uppercase tracking-wider flex items-center gap-2 font-bold shadow-lg">
                 <Eye className="w-4 h-4" /> צפייה מהירה
               </span>
             </div>
