@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.21';
 
 const VERIFY_TOKEN = Deno.env.get("WHATSAPP_VERIFY_TOKEN");
+console.log(`VERIFY_TOKEN loaded: '${VERIFY_TOKEN}'`);
 
 Deno.serve(async (req) => {
   const url = new URL(req.url);
