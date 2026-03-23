@@ -36,22 +36,22 @@ export default function HeroSection({ heroImage }) {
             transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-2 mb-4"
           >
-            <div className="w-8 h-[2px] bg-primary" />
-            <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Professional Grade Eyewear</span>
+            <div className="w-10 h-[2px] bg-primary" />
+            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">כלי עבודה לדרג הפיקודי</span>
           </motion.div>
 
-          <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl font-bold text-white uppercase leading-[0.95] tracking-tight mb-6">
-            Built for<br />
-            <span className="text-primary">the Grind</span>
+          <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase leading-[0.9] tracking-tighter mb-6">
+            הנדסה של<br />
+            <span className="text-primary">כלי כבדים</span>
           </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-secondary-foreground/70 text-base sm:text-lg max-w-md leading-relaxed"
+            className="text-secondary-foreground/80 text-lg sm:text-xl max-w-xl leading-relaxed font-medium"
           >
-            Engineered for the toughest environments. ANSI Z87.1+ certified impact protection meets industrial luxury.
+            הגנה מקסימלית בסטנדרט בינלאומי. עמידות בליסטית עם עיצוב שמשדר סמכות באתר.
           </motion.p>
 
           <motion.div
@@ -61,15 +61,15 @@ export default function HeroSection({ heroImage }) {
             className="flex flex-col sm:flex-row gap-4 mt-10"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-              <Button asChild size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm transition-all duration-300">
+              <Button asChild size="lg" className="h-14 px-10 font-heading uppercase tracking-wider text-base font-bold transition-all duration-300">
                 <Link to="/shop">
-                  Shop the Collection <ArrowRight className="w-4 h-4 ml-2" />
+                  הציוד המקצועי <ArrowRight className="w-5 h-5 ml-3" />
                 </Link>
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-              <Button variant="outline" size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-white transition-all duration-300">
-                <Play className="w-4 h-4 mr-2" /> Watch Stress Test
+              <Button variant="outline" size="lg" className="h-14 px-10 font-heading uppercase tracking-wider text-base font-bold border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-white transition-all duration-300">
+                <Play className="w-5 h-5 mr-3" /> מבחן עמידות
               </Button>
             </motion.div>
           </motion.div>

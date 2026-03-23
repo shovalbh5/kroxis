@@ -31,13 +31,13 @@ export default function ProductCard({ product }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-y-4 group-hover:translate-y-0">
-              <span className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-xs font-heading uppercase tracking-wider flex items-center gap-2">
-                <Eye className="w-3.5 h-3.5" /> Quick View
+              <span className="bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-heading uppercase tracking-wider flex items-center gap-2 font-bold">
+                <Eye className="w-4 h-4" /> צפייה מהירה
               </span>
             </div>
             {product.is_bestseller && (
-              <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-heading uppercase tracking-wider">
-                Bestseller
+              <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-heading uppercase tracking-wider font-bold px-3 py-1">
+                רב מכר
               </Badge>
             )}
           </div>
@@ -52,10 +52,10 @@ export default function ProductCard({ product }) {
                 </span>
               ))}
             </div>
-            <h3 className="font-heading text-sm uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate mb-2">
+            <h3 className="font-heading text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate mb-2 font-bold">
               {product.title}
             </h3>
-            <p className="text-xs text-muted-foreground line-clamp-1 mb-3">{product.description}</p>
+            <p className="text-sm text-muted-foreground/80 line-clamp-1 mb-3 font-medium">{product.description}</p>
             <div className="flex items-center gap-2">
               <span className="font-heading text-lg">${product.price?.toFixed(2)}</span>
               {product.compare_at_price && product.compare_at_price > product.price && (
@@ -63,8 +63,8 @@ export default function ProductCard({ product }) {
               )}
             </div>
             {product.b2b_bulk_discount_threshold && (
-              <p className="text-[10px] text-primary mt-1 font-medium">
-                Buy {product.b2b_bulk_discount_threshold}+ for {product.b2b_bulk_discount_percent}% off
+              <p className="text-xs text-primary mt-1 font-bold">
+                {product.b2b_bulk_discount_threshold}+ יחידות ← {product.b2b_bulk_discount_percent}% הנחה
               </p>
             )}
           </div>

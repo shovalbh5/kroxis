@@ -57,8 +57,8 @@ export default function Shop() {
       <div className="mb-10">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
-            <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight mb-3">All Products</h1>
-            <p className="text-muted-foreground">Professional-grade safety eyewear for every industry.</p>
+            <h1 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight mb-3 font-bold">כל הציוד</h1>
+            <p className="text-muted-foreground text-lg font-medium">משקפי מגן בדרג הנדסי. לכל סוג אתר, מעבדה או תפעול.</p>
           </div>
           <a
             href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"

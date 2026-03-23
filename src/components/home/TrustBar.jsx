@@ -3,10 +3,10 @@ import { Users, Shield, Truck, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const stats = [
-  { icon: Users, value: '50,000+', label: 'Workers Protected' },
-  { icon: Shield, value: 'Lifetime', label: 'Frame Warranty' },
-  { icon: Truck, value: 'Global', label: 'Shipping Available' },
-  { icon: Clock, value: '24/7', label: 'Customer Support' },
+  { icon: Users, value: '50,000+', label: 'מפקדי אתר מוגנים' },
+  { icon: Shield, value: 'לכל החיים', label: 'אחריות על המסגרת' },
+  { icon: Truck, value: 'עולמי', label: 'משלוח בינלאומי' },
+  { icon: Clock, value: '24/7', label: 'תמיכה מקצועית' },
 ];
 
 export default function TrustBar() {
@@ -23,9 +23,9 @@ export default function TrustBar() {
               transition={{ delay: i * 0.1 }}
               className="text-center"
             >
-              <stat.icon className="w-6 h-6 text-primary mx-auto mb-4" />
-              <div className="font-heading text-2xl sm:text-3xl font-bold mb-2">{stat.value}</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+              <stat.icon className="w-7 h-7 text-primary mx-auto mb-4" />
+              <div className="font-heading text-3xl sm:text-4xl font-bold mb-2">{stat.value}</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">{stat.label}</div>
             </motion.div>
           ))}
         </div>

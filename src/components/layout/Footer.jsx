@@ -20,8 +20,8 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
-              <h3 className="font-heading text-2xl uppercase tracking-wider mb-2">Join the Crew</h3>
-              <p className="text-secondary-foreground/60 text-sm">Get 10% off your first order and early access to new drops.</p>
+              <h3 className="font-heading text-2xl uppercase tracking-wider mb-2 font-bold">הצטרף לדרג הפיקודי</h3>
+              <p className="text-secondary-foreground/70 text-base font-medium">10% הנחה על ההזמנה הראשונה וגישה מוקדמת לציוד חדש</p>
             </div>
             <div className="flex gap-2 w-full max-w-md">
               <Input
@@ -45,8 +45,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
             <span className="font-heading text-xl font-bold tracking-widest text-white">KROXIS</span>
-            <p className="text-secondary-foreground/60 text-sm mt-4 leading-relaxed">
-              Professional-grade eyewear engineered for those who build, protect, and innovate.
+            <p className="text-secondary-foreground/70 text-base mt-4 leading-relaxed font-medium">
+              ציוד אופטי בדרגת הנדסה. למי שמוביל פרויקטים ולא מתפשר על איכות.
             </p>
           </div>
           <div>

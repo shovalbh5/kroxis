@@ -24,10 +24,10 @@ export default function FeaturedCarousel({ products }) {
         <div className="flex items-end justify-between mb-12">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-[2px] bg-primary" />
-              <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Featured</span>
+              <div className="w-10 h-[2px] bg-primary" />
+              <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">המובחרים</span>
             </div>
-            <h2 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">The Heavy Hitters</h2>
+            <h2 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight font-bold">כלי העבודה הכבדים</h2>
           </div>
           <div className="hidden sm:flex gap-2">
             <button
