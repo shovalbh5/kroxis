@@ -50,7 +50,7 @@ export default function SalesPopup() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -100, opacity: 0 }}
           transition={{ type: 'spring', damping: 20 }}
-          className="fixed bottom-6 left-6 z-50 max-w-xs"
+          className="fixed bottom-24 left-6 z-50 max-w-xs"
         >
           <div className="bg-secondary border border-border rounded-xl shadow-2xl p-4 flex items-start gap-3">
             <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center shrink-0">
