@@ -19,11 +19,11 @@ export default function FeaturedCarousel({ products }) {
   if (!products?.length) return null;
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-20 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-10">
+        <div className="flex items-end justify-between mb-12">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-[2px] bg-primary" />
               <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Featured</span>
             </div>
@@ -47,7 +47,7 @@ export default function FeaturedCarousel({ products }) {
 
         <div
           ref={scrollRef}
-          className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {products.map((product) => (
