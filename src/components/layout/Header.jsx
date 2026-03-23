@@ -51,9 +51,9 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="https://media.base44.com/images/public/69c0edec05cbd3064b4b2279/fa9b64527_Gemini_Generated_Image_5d5gf85d5gf85d5g.png" 
+              src="https://media.base44.com/images/public/69c0edec05cbd3064b4b2279/fdd4eb076_Gemini_Generated_Image_5d5gf85d5gf85d5g-removebg-preview.png" 
               alt="KROXIS Logo" 
-              className="h-10 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
 
