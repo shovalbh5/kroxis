@@ -90,21 +90,21 @@ const translations = {
 };
 
 export function LanguageProvider({ children }) {
-  const [locale, setLocale] = useState('en');
-  const [direction, setDirection] = useState('ltr');
+  const [locale, setLocale] = useState('he');
+  const [direction, setDirection] = useState('rtl');
 
   useEffect(() => {
     const path = window.location.pathname;
-    if (path.startsWith('/he')) {
-      setLocale('he');
-      setDirection('rtl');
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = 'he';
-    } else {
+    if (path.startsWith('/en')) {
       setLocale('en');
       setDirection('ltr');
       document.documentElement.dir = 'ltr';
       document.documentElement.lang = 'en';
+    } else {
+      setLocale('he');
+      setDirection('rtl');
+      document.documentElement.dir = 'rtl';
+      document.documentElement.lang = 'he';
     }
   }, []);
 
@@ -121,16 +121,16 @@ export function LanguageProvider({ children }) {
     const currentPath = window.location.pathname;
     let newPath;
     
-    if (newLocale === 'he') {
-      newPath = currentPath.startsWith('/he') ? currentPath : `/he${currentPath}`;
-      setDirection('rtl');
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = 'he';
-    } else {
-      newPath = currentPath.replace(/^\/he/, '') || '/';
+    if (newLocale === 'en') {
+      newPath = currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`;
       setDirection('ltr');
       document.documentElement.dir = 'ltr';
       document.documentElement.lang = 'en';
+    } else {
+      newPath = currentPath.replace(/^\/en/, '') || '/';
+      setDirection('rtl');
+      document.documentElement.dir = 'rtl';
+      document.documentElement.lang = 'he';
     }
     
     setLocale(newLocale);

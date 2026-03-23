@@ -136,11 +136,11 @@ export default function Header() {
           {/* Right actions */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => switchLanguage(locale === 'en' ? 'he' : 'en')}
-              className="text-secondary-foreground/80 hover:text-primary transition-colors p-2"
-              title={locale === 'en' ? 'Switch to Hebrew' : 'Switch to English'}
+              onClick={() => switchLanguage(locale === 'he' ? 'en' : 'he')}
+              className="text-secondary-foreground/80 hover:text-primary transition-colors p-2 font-medium text-sm"
+              title={locale === 'he' ? 'Switch to English' : 'עבור לעברית'}
             >
-              <Globe className="w-5 h-5" />
+              {locale === 'he' ? 'EN' : 'עב'}
             </button>
             <button onClick={() => setSearchOpen(!searchOpen)} className="text-secondary-foreground/80 hover:text-primary transition-colors p-2">
               <Search className="w-5 h-5" />

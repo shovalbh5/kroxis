@@ -53,14 +53,14 @@ const AuthenticatedApp = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/wholesale" element={<Wholesale />} />
           
-          {/* Hebrew language routes */}
-          <Route path="/he" element={<Home />} />
-          <Route path="/he/shop" element={<Shop />} />
-          <Route path="/he/product/:id" element={<ProductDetail />} />
-          <Route path="/he/checkout" element={<Checkout />} />
-          <Route path="/he/blog" element={<Blog />} />
-          <Route path="/he/blog/:slug" element={<BlogPost />} />
-          <Route path="/he/wholesale" element={<Wholesale />} />
+          {/* English language routes */}
+          <Route path="/en" element={<Home />} />
+          <Route path="/en/shop" element={<Shop />} />
+          <Route path="/en/product/:id" element={<ProductDetail />} />
+          <Route path="/en/checkout" element={<Checkout />} />
+          <Route path="/en/blog" element={<Blog />} />
+          <Route path="/en/blog/:slug" element={<BlogPost />} />
+          <Route path="/en/wholesale" element={<Wholesale />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
