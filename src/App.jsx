@@ -19,6 +19,7 @@ import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
 import SalesPopup from '@/components/marketing/SalesPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
+import WhatsAppChat from '@/pages/admin/WhatsAppChat';
 import Warranty from '@/pages/Warranty';
 import B2BPortal from '@/pages/B2BPortal';
 import Contact from '@/pages/Contact';
@@ -79,6 +80,7 @@ const AuthenticatedApp = () => {
           <Route path="/returns" element={<ReturnPolicy />} />
         </Route>
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/whatsapp" element={<WhatsAppChat />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
