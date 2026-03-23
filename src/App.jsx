@@ -17,6 +17,7 @@ import BlogPost from '@/pages/BlogPost';
 import Wholesale from '@/pages/Wholesale';
 import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
+import AdminDashboard from '@/pages/admin/AdminDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -62,6 +63,7 @@ const AuthenticatedApp = () => {
           <Route path="/en/blog/:slug" element={<BlogPost />} />
           <Route path="/en/wholesale" element={<Wholesale />} />
         </Route>
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
