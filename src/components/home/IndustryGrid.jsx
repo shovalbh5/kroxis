@@ -12,10 +12,10 @@ const industries = [
 
 export default function IndustryGrid() {
   return (
-    <section className="py-16 sm:py-20 bg-muted/30">
+    <section className="py-20 sm:py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 mb-2">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-2 mb-3">
             <div className="w-8 h-[2px] bg-primary" />
             <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Industries</span>
             <div className="w-8 h-[2px] bg-primary" />
@@ -34,15 +34,15 @@ export default function IndustryGrid() {
             >
               <Link
                 to={`/shop?category=${ind.category}`}
-                className="group block p-6 sm:p-8 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg text-center"
+                className="group block p-8 sm:p-10 rounded-xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg text-center"
               >
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${ind.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-16 h-16 mx-auto mb-5 rounded-xl bg-gradient-to-br ${ind.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                   <ind.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="font-heading text-sm sm:text-base uppercase tracking-wide group-hover:text-primary transition-colors">
+                <h3 className="font-heading text-sm sm:text-base uppercase tracking-wide group-hover:text-primary transition-colors mb-2">
                   {ind.label}
                 </h3>
-                <p className="text-xs text-muted-foreground mt-2 hidden sm:block">{ind.desc}</p>
+                <p className="text-xs text-muted-foreground hidden sm:block">{ind.desc}</p>
               </Link>
             </motion.div>
           ))}
