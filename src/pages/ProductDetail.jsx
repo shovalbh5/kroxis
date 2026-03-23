@@ -15,6 +15,7 @@ import ReviewSection from '@/components/products/ReviewSection';
 import FrequentlyBoughtTogether from '@/components/products/FrequentlyBoughtTogether';
 import UpsellModal from '@/components/marketing/UpsellModal';
 import ProductSchema from '@/components/seo/ProductSchema';
+import ShareButtons from '@/components/sharing/ShareButtons';
 import { generateProductSEO, applySEO } from '@/utils/seo';
 import { motion } from 'framer-motion';
 
@@ -118,6 +119,12 @@ export default function ProductDetail() {
           </div>
 
           <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">{product.title}</h1>
+
+          {/* Share */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-muted-foreground">שתף:</span>
+            <ShareButtons url={window.location.href} title={product.title} />
+          </div>
 
           <div className="flex items-center gap-3">
             <span className="font-heading text-3xl">${product.price?.toFixed(2)}</span>
