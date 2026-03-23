@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Award, Truck, Mail } from 'lucide-react';
+import { Shield, Award, Truck, Mail, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -83,11 +83,29 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-secondary-foreground/40">© {new Date().getFullYear()} KROXIS. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <Truck className="w-4 h-4 text-secondary-foreground/40" />
-            <span className="text-xs text-secondary-foreground/40">Free shipping over $150</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+            <p className="text-xs text-secondary-foreground/40">© {new Date().getFullYear()} KROXIS. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <Truck className="w-4 h-4 text-secondary-foreground/40" />
+              <span className="text-xs text-secondary-foreground/40">Free shipping over $150</span>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-secondary-foreground/60">
+              <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
+              <span>•</span>
+              <span>📞 054-717-2301</span>
+            </div>
+            <a
+              href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#2eb8e6] text-white rounded-lg font-medium text-sm transition-colors"
+            >
+              <Navigation className="w-4 h-4" />
+              Navigate with Waze
+            </a>
           </div>
         </div>
       </div>
