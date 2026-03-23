@@ -3,7 +3,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.21';
 const ACCESS_TOKEN = Deno.env.get("WHATSAPP_ACCESS_TOKEN");
 const PHONE_NUMBER_ID = Deno.env.get("WHATSAPP_PHONE_NUMBER_ID");
 
-async function sendWhatsAppMessage(to, payload) {
+async function sendWhatsAppTemplate(to, templateName, languageCode) {
   const response = await fetch(
     `https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`,
     {
@@ -15,28 +15,15 @@ async function sendWhatsAppMessage(to, payload) {
       body: JSON.stringify({
         messaging_product: "whatsapp",
         to,
-        ...payload,
+        type: "template",
+        template: {
+          name: templateName,
+          language: { code: languageCode },
+        },
       }),
     }
   );
   return response.json();
-}
-
-async function sendTemplateMessage(to, templateName, languageCode) {
-  return sendWhatsAppMessage(to, {
-    type: "template",
-    template: {
-      name: templateName,
-      language: { code: languageCode },
-    },
-  });
-}
-
-async function sendTextMessage(to, text) {
-  return sendWhatsAppMessage(to, {
-    type: "text",
-    text: { body: text },
-  });
 }
 
 Deno.serve(async (req) => {
@@ -56,45 +43,21 @@ Deno.serve(async (req) => {
   }
   cleanPhone = cleanPhone.replace('+', '');
 
+  // Send template message to business owner (always works, no 24h restriction)
   const ownerPhone = '972525568069';
-  const notifyText = `📩 הודעה חדשה מהאתר!\n\n👤 שם: ${name || 'לא צוין'}\n📱 טלפון: ${phone}\n💬 הודעה: ${message}`;
+  const ownerResult = await sendWhatsAppTemplate(ownerPhone, "hello_world", "en_US");
+  console.log("Owner template result:", JSON.stringify(ownerResult));
 
-  // Try sending text message to owner first, fallback to template if 24h window expired
-  let ownerResult = await sendTextMessage(ownerPhone, notifyText);
-  console.log("Owner text attempt:", JSON.stringify(ownerResult));
+  // Send template message to customer
+  const customerResult = await sendWhatsAppTemplate(cleanPhone, "hello_world", "en_US");
+  console.log("Customer template result:", JSON.stringify(customerResult));
 
-  if (ownerResult.error) {
-    // Text failed (likely 24h window) — send template to re-open conversation
-    const templateResult = await sendTemplateMessage(ownerPhone, "hello_world", "en_US");
-    console.log("Owner template result:", JSON.stringify(templateResult));
-    
-    // Also try sending the actual notification as a follow-up text after template
-    // (template re-opens the window, then text can follow)
-    if (!templateResult.error) {
-      // Small delay to let template open the conversation window
-      await new Promise(r => setTimeout(r, 2000));
-      ownerResult = await sendTextMessage(ownerPhone, notifyText);
-      console.log("Owner text retry after template:", JSON.stringify(ownerResult));
-    }
-  }
-
-  // Send confirmation to customer — same logic
-  const confirmText = `היי${name ? ' ' + name : ''}! 👋\nקיבלנו את ההודעה שלך ב-KROXIS.\nניצור איתך קשר בהקדם האפשרי! 🔥`;
-
-  let customerResult = await sendTextMessage(cleanPhone, confirmText);
-  console.log("Customer text attempt:", JSON.stringify(customerResult));
-
-  if (customerResult.error) {
-    const templateResult = await sendTemplateMessage(cleanPhone, "hello_world", "en_US");
-    console.log("Customer template result:", JSON.stringify(templateResult));
-  }
-
-  // Save message record
+  // Save the inquiry in the database so admin can see it
   const base44 = createClientFromRequest(req);
   await base44.asServiceRole.entities.WhatsAppMessage.create({
     from_number: cleanPhone,
     from_name: name || 'אורח',
-    message_text: message,
+    message_text: `[פנייה מהאתר] ${name || 'לא צוין'} - ${phone} - ${message}`,
     direction: "incoming",
     wa_message_id: ownerResult.messages?.[0]?.id || "",
     status: "received"
