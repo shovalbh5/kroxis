@@ -20,21 +20,21 @@ export default function PageNotFound({}) {
     });
     
     return (
-        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
+        <div className="min-h-screen flex items-center justify-center p-6 bg-secondary">
             <div className="max-w-md w-full">
                 <div className="text-center space-y-6">
                     {/* 404 Error Code */}
                     <div className="space-y-2">
-                        <h1 className="text-7xl font-light text-slate-300">404</h1>
-                        <div className="h-0.5 w-16 bg-slate-200 mx-auto"></div>
+                        <h1 className="text-7xl font-heading font-bold text-primary">404</h1>
+                        <div className="h-0.5 w-16 bg-primary mx-auto"></div>
                     </div>
                     
                     {/* Main Message */}
                     <div className="space-y-3">
-                        <h2 className="text-2xl font-medium text-slate-800">
+                        <h2 className="text-2xl font-heading uppercase tracking-wider text-secondary-foreground">
                             Page Not Found
                         </h2>
-                        <p className="text-slate-600 leading-relaxed">
+                        <p className="text-secondary-foreground/60 leading-relaxed">
                             The page <span className="font-medium text-slate-700">"{pageName}"</span> could not be found in this application.
                         </p>
                     </div>
