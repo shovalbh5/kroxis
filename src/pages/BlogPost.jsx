@@ -41,7 +41,7 @@ export default function BlogPost() {
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <p className="text-muted-foreground">Loading article...</p>
+        <p className="text-muted-foreground">טוען מאמר...</p>
       </div>
     );
   }
@@ -49,8 +49,8 @@ export default function BlogPost() {
   if (!post) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <p className="text-muted-foreground text-lg">Article not found.</p>
-        <Button asChild className="mt-4"><Link to="/blog">Back to Blog</Link></Button>
+        <p className="text-muted-foreground text-lg">המאמר לא נמצא.</p>
+        <Button asChild className="mt-4"><Link to="/blog">חזרה לבלוג</Link></Button>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export default function BlogPost() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
       {/* Back button */}
       <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Back to Blog
+        <ArrowLeft className="w-4 h-4" /> חזרה לבלוג
       </Link>
 
       {/* Article header */}
@@ -80,13 +80,13 @@ export default function BlogPost() {
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              {new Date(post.published_date).toLocaleDateString('en-US', {
+              {new Date(post.published_date).toLocaleDateString('he-IL', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
             </span>
-            {post.author && <span>By {post.author}</span>}
+            {post.author && <span>מאת {post.author}</span>}
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export default function BlogPost() {
       {/* Share buttons */}
       <div className="flex items-center gap-3 py-6 border-y border-border">
         <span className="text-sm text-muted-foreground flex items-center gap-2">
-          <Share2 className="w-4 h-4" /> Share:
+          <Share2 className="w-4 h-4" /> שתפו:
         </span>
         <Button
           variant="outline"
@@ -127,7 +127,7 @@ export default function BlogPost() {
           size="sm"
           onClick={() => navigator.clipboard.writeText(window.location.href)}
         >
-          Copy Link
+          העתק קישור
         </Button>
       </div>
 
@@ -136,7 +136,7 @@ export default function BlogPost() {
         <div className="mt-12">
           <Separator className="mb-8" />
           <h2 className="font-heading text-2xl uppercase tracking-tight mb-6">
-            Recommended Products
+            מוצרים מומלצים
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {relatedProducts.map(product => (

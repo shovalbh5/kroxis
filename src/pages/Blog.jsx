@@ -33,14 +33,14 @@ export default function Blog() {
       <div className="text-center mb-12">
         <div className="flex items-center justify-center gap-2 mb-3">
           <div className="w-8 h-[2px] bg-primary" />
-          <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Knowledge Base</span>
+          <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">מאמרים ומדריכים</span>
           <div className="w-8 h-[2px] bg-primary" />
         </div>
         <h1 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight mb-4">
-          Work-Safety Insights
+          תובנות מהשטח
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Expert guides, industry news, and safety best practices for professionals who demand protection.
+          מדריכים מקצועיים, חדשות מהתעשייה וטיפים לבחירת משקפי שמש טקטיות לאנשי שטח ועבודה.
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export default function Blog() {
       <div className="mb-8 space-y-4">
         <Input
           type="search"
-          placeholder="Search articles..."
+          placeholder="חיפוש מאמרים..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="max-w-md mx-auto"
@@ -59,7 +59,7 @@ export default function Blog() {
             className="cursor-pointer"
             onClick={() => setSelectedTag(null)}
           >
-            All Topics
+            כל הנושאים
           </Badge>
           {allTags.map(tag => (
             <Badge
@@ -76,10 +76,10 @@ export default function Blog() {
 
       {/* Posts grid */}
       {isLoading ? (
-        <div className="text-center py-20">Loading articles...</div>
+        <div className="text-center py-20">טוען מאמרים...</div>
       ) : filteredPosts.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-muted-foreground">No articles found.</p>
+          <p className="text-muted-foreground">לא נמצאו מאמרים.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -120,7 +120,7 @@ export default function Blog() {
                       {post.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-1 text-primary text-sm font-medium">
-                      Read More <ArrowRight className="w-4 h-4" />
+                      קרא עוד <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
                 </div>
