@@ -130,12 +130,11 @@ export default function AccessibilityMenu() {
       {/* Accessibility Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 left-6 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all flex items-center gap-2 font-medium"
+        className="fixed bottom-4 left-4 z-50 bg-primary text-white p-2 rounded-full shadow-md hover:bg-primary/90 transition-all"
         aria-label="תפריט נגישות"
         title="תפריט נגישות"
       >
-        <Eye className="w-6 h-6" />
-        <span className="text-sm">נגישות</span>
+        <Eye className="w-4 h-4" />
       </button>
 
       {/* Accessibility Panel */}
