@@ -36,7 +36,7 @@ export default function WhatsAppButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 left-6 z-50 w-80 max-w-[calc(100vw-3rem)] rounded-2xl shadow-2xl overflow-hidden border border-border"
+            className="fixed bottom-24 right-6 z-50 w-80 max-w-[calc(100vw-3rem)] rounded-2xl shadow-2xl overflow-hidden border border-border"
           >
             {/* Header */}
             <div className="bg-green-600 p-4 flex items-center gap-3">
@@ -109,10 +109,15 @@ export default function WhatsAppButton() {
       {/* FAB Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 px-5 py-3 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
         aria-label="Chat on WhatsApp"
       >
-        {open ? <X className="w-7 h-7" /> : <MessageCircle className="w-7 h-7 fill-white" />}
+        {open ? <X className="w-6 h-6" /> : (
+          <>
+            <MessageCircle className="w-6 h-6 fill-white" />
+            <span className="text-sm font-bold hidden sm:inline">דברו איתנו</span>
+          </>
+        )}
       </button>
     </>
   );
