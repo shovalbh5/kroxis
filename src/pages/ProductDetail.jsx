@@ -16,6 +16,7 @@ import FrequentlyBoughtTogether from '@/components/products/FrequentlyBoughtToge
 import UpsellModal from '@/components/marketing/UpsellModal';
 import ProductSchema from '@/components/seo/ProductSchema';
 import ShareButtons from '@/components/sharing/ShareButtons';
+import TrustBadges from '@/components/products/TrustBadges';
 import { generateProductSEO, applySEO } from '@/utils/seo';
 import { motion } from 'framer-motion';
 
@@ -176,23 +177,10 @@ export default function ProductDetail() {
             </Button>
           </div>
 
-          {/* Guarantees */}
-          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
-            <div className="text-center">
-              <Truck className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">משלוח חינם</p>
-            </div>
-            <div className="text-center">
-              <Shield className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">אחריות לכל החיים</p>
-            </div>
-            <div className="text-center">
-              <RefreshCw className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">30 יום החזרה</p>
-            </div>
-          </div>
+          {/* Trust Badges */}
+          <TrustBadges />
 
-          {/* Tech specs */}
+          {/* Tech specs */
           <TechSpecs product={product} />
         </motion.div>
       </div>

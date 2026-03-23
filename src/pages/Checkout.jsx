@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { ArrowLeft, ShieldCheck, Lock } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,6 +9,8 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/components/ui/use-toast';
 import { useCart } from '@/context/CartContext';
 import CouponInput from '@/components/checkout/CouponInput';
+import { Link as RouterLink } from 'react-router-dom';
+import { Checkbox } from '@/components/ui/checkbox';
 import { motion } from 'framer-motion';
 
 export default function Checkout() {
@@ -18,6 +20,7 @@ export default function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
 
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [form, setForm] = useState({
     customer_name: '',
     customer_email: '',
@@ -133,7 +136,20 @@ export default function Checkout() {
 
           <Separator />
 
-          <Button type="submit" disabled={isSubmitting} className="w-full h-13 font-heading uppercase tracking-wider text-sm">
+          {/* Terms checkbox */}
+          <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg" dir="rtl">
+            <Checkbox
+              id="terms"
+              checked={agreedToTerms}
+              onCheckedChange={setAgreedToTerms}
+              className="mt-0.5"
+            />
+            <label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
+              אני מאשר/ת שקראתי ואני מסכים/ה ל<RouterLink to="/terms" target="_blank" className="text-primary hover:underline">תקנון האתר</RouterLink>, <RouterLink to="/privacy" target="_blank" className="text-primary hover:underline">מדיניות הפרטיות</RouterLink> ו<RouterLink to="/returns" target="_blank" className="text-primary hover:underline">מדיניות ההחזרות</RouterLink>. אני מבין/ה שמשקפי בטיחות KROXIS אינם מחליפים ציוד מגן אישי נוסף הנדרש על פי חוק.
+            </label>
+          </div>
+
+          <Button type="submit" disabled={isSubmitting || !agreedToTerms} className="w-full h-13 font-heading uppercase tracking-wider text-sm">
             <Lock className="w-4 h-4 mr-2" />
             {isSubmitting ? 'מעבד...' : `ביצוע הזמנה — $${total.toFixed(2)}`}
           </Button>

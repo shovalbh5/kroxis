@@ -65,6 +65,9 @@ export default function Footer() {
               <Link to="/b2b" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">פורטל עסקי</Link>
               <Link to="/contact" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">יצירת קשר</Link>
               <Link to="/faq" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">שאלות נפוצות</Link>
+              <Link to="/terms" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">תקנון האתר</Link>
+              <Link to="/privacy" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">מדיניות פרטיות</Link>
+              <Link to="/returns" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">מדיניות החזרות</Link>
             </div>
           </div>
           <div>

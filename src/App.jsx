@@ -16,12 +16,16 @@ import Blog from '@/pages/Blog';
 import BlogPost from '@/pages/BlogPost';
 import Wholesale from '@/pages/Wholesale';
 import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
+import SalesPopup from '@/components/marketing/SalesPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import Warranty from '@/pages/Warranty';
 import B2BPortal from '@/pages/B2BPortal';
 import Contact from '@/pages/Contact';
 import FAQ from '@/pages/FAQ';
+import TermsOfService from '@/pages/TermsOfService';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import ReturnPolicy from '@/pages/ReturnPolicy';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -70,11 +74,15 @@ const AuthenticatedApp = () => {
           <Route path="/b2b" element={<B2BPortal />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/returns" element={<ReturnPolicy />} />
         </Route>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
+      <SalesPopup />
     </>
   );
 };
