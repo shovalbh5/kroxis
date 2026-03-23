@@ -10,10 +10,11 @@ export default function SiteLayout() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <CartDrawer />
-      <main className="flex-1 pt-[88px]">
+      <main id="main-content" className="flex-1 pt-[88px]" role="main">
         <Outlet />
       </main>
       <Footer />
+      <AccessibilityMenu />
     </div>
   );
 }
