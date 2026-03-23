@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 
 const crossSells = [
-  { name: 'Anti-Fog Spray', price: 12.99 },
-  { name: 'Hard-Shell Case', price: 19.99 },
-  { name: 'Microfiber Cloth Pack', price: 7.99 },
+  { name: 'ספריי אנטי-פוג', price: 12.99 },
+  { name: 'נרתיק קשיח', price: 19.99 },
+  { name: 'חבילת מטליות מיקרופייבר', price: 7.99 },
 ];
 
 export default function CartDrawer() {
@@ -40,7 +40,7 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5" />
-                <span className="font-heading text-lg uppercase tracking-wide">Cart ({itemCount})</span>
+                <span className="font-heading text-lg uppercase tracking-wide">עגלה ({itemCount})</span>
               </div>
               <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-muted rounded-lg transition-colors">
                 <X className="w-5 h-5" />
@@ -52,8 +52,8 @@ export default function CartDrawer() {
               <div className="flex items-center gap-2 text-xs mb-1.5">
                 <Truck className="w-3.5 h-3.5 text-primary" />
                 {freeShipping
-                  ? <span className="text-primary font-medium">You've unlocked free shipping!</span>
-                  : <span className="text-muted-foreground">Add ${(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} more for free shipping</span>
+                  ? <span className="text-primary font-medium">זכית במשלוח חינם!</span>
+                  : <span className="text-muted-foreground">הוסף ${(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} למשלוח חינם</span>
                 }
               </div>
               <Progress value={shippingProgress} className="h-1.5" />
@@ -64,9 +64,9 @@ export default function CartDrawer() {
               {items.length === 0 ? (
                 <div className="text-center py-12">
                   <ShoppingBag className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">Your cart is empty</p>
+                  <p className="text-muted-foreground">העגלה ריקה</p>
                   <Button asChild className="mt-4" onClick={() => setIsCartOpen(false)}>
-                    <Link to="/shop">Start Shopping</Link>
+                    <Link to="/shop">לחנות</Link>
                   </Button>
                 </div>
               ) : (
@@ -122,7 +122,7 @@ export default function CartDrawer() {
 
                   {/* Cross-sells */}
                   <div className="pt-4 border-t border-border">
-                    <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">Frequently Bought Together</h4>
+                    <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">נקנים ביחד לעיתים קרובות</h4>
                     <div className="space-y-2">
                       {crossSells.map(cs => (
                         <div key={cs.name} className="flex items-center justify-between p-2 bg-muted/50 rounded-md">
@@ -140,17 +140,17 @@ export default function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-border p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="text-muted-foreground">סכום ביניים</span>
                   <span className="text-lg font-bold">${subtotal.toFixed(2)}</span>
                 </div>
                 <Button asChild className="w-full h-12 font-heading uppercase tracking-wider text-sm" onClick={() => setIsCartOpen(false)}>
-                  <Link to="/checkout">Proceed to Checkout</Link>
+                  <Link to="/checkout">לתשלום</Link>
                 </Button>
                 <button
                   onClick={() => setIsCartOpen(false)}
                   className="w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Continue Shopping
+                  המשך קנייה
                 </button>
               </div>
             )}

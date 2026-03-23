@@ -28,15 +28,15 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
       addItem(product, 'standard', '', 1);
     });
     toast({
-      title: 'Added to cart',
-      description: `${selectedProducts.length} items added`,
+      title: 'נוסף לעגלה',
+      description: `${selectedProducts.length} פריטים נוספו`,
     });
   };
 
   return (
     <div className="p-6 bg-card border border-border rounded-lg">
       <h3 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-4">
-        Frequently Bought Together
+        נקנים ביחד לעיתים קרובות
       </h3>
 
       <div className="space-y-3 mb-4">
@@ -59,7 +59,7 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
               </div>
             </div>
             {idx === 0 && (
-              <span className="text-xs text-primary">This item</span>
+              <span className="text-xs text-primary">פריט זה</span>
             )}
           </div>
         ))}
@@ -67,9 +67,9 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
 
       <div className="flex items-center justify-between p-3 bg-muted/50 rounded-md mb-3">
         <div>
-          <p className="text-sm font-medium">Total for {selectedProducts.length} items</p>
+          <p className="text-sm font-medium">סה״כ ל-{selectedProducts.length} פריטים</p>
           {savings > 0 && (
-            <p className="text-xs text-primary">Save ${savings.toFixed(2)}</p>
+            <p className="text-xs text-primary">חוסך ${savings.toFixed(2)}</p>
           )}
         </div>
         <span className="font-heading text-xl">${totalPrice.toFixed(2)}</span>
@@ -77,7 +77,7 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
 
       <Button onClick={handleAddAll} className="w-full" disabled={selectedProducts.length === 0}>
         <Check className="w-4 h-4 mr-2" />
-        Add {selectedProducts.length} to Cart
+        הוסף {selectedProducts.length} לעגלה
       </Button>
     </div>
   );

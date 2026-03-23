@@ -2,15 +2,15 @@ import React from 'react';
 import { Check } from 'lucide-react';
 
 const lensOptions = [
-  { value: 'standard', label: 'Standard Clear', price: 0, desc: 'Impact-resistant polycarbonate' },
-  { value: 'polarized', label: 'Polarized', price: 30, desc: 'Glare reduction for outdoor work' },
-  { value: 'blue_light', label: 'Blue Light Filter', price: 20, desc: 'Digital screen protection' },
+  { value: 'standard', label: 'שקוף סטנדרטי', price: 0, desc: 'פוליקרבונט עמיד בפני פגיעה' },
+  { value: 'polarized', label: 'פולארי', price: 30, desc: 'הפחתת סנוור לעבודה בחוץ' },
+  { value: 'blue_light', label: 'סינון אור כחול', price: 20, desc: 'הגנה מפני מסכים דיגיטליים' },
 ];
 
 export default function LensConfigurator({ selected, onChange }) {
   return (
     <div className="space-y-3">
-      <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground">Lens Option</h4>
+      <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground">סוג עדשה</h4>
       <div className="space-y-2">
         {lensOptions.map(opt => (
           <button

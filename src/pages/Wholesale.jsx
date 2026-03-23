@@ -40,7 +40,7 @@ export default function Wholesale() {
     mutationFn: (data) => base44.entities.WholesaleRequest.create(data),
     onSuccess: () => {
       setStep('success');
-      toast({ title: 'Request submitted!', description: 'Our team will contact you within 24 hours.' });
+      toast({ title: 'הבקשה נשלחה!', description: 'צוות ה-B2B שלנו ייצור קשר תוך 24 שעות.' });
     },
   });
 
@@ -81,12 +81,12 @@ export default function Wholesale() {
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
           <CheckCircle className="w-16 h-16 text-primary mx-auto mb-6" />
-          <h1 className="font-heading text-3xl uppercase tracking-tight mb-4">Request Received</h1>
+          <h1 className="font-heading text-3xl uppercase tracking-tight mb-4">הבקשה התקבלה</h1>
           <p className="text-muted-foreground mb-8">
-            Thank you for your interest in KROXIS wholesale. Our B2B team will review your request and contact you within 24 hours.
+            תודה על ההתעניינות ב-KROXIS סיטונאי. צוות ה-B2B שלנו יבחן את הבקשה וייצור קשר תוך 24 שעות.
           </p>
           <Button onClick={() => { setStep('browse'); setSelectedProducts({}); }}>
-            Browse More Products
+            עיין במוצרים נוספים
           </Button>
         </motion.div>
       </div>
@@ -102,10 +102,10 @@ export default function Wholesale() {
           <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">B2B Portal</span>
         </div>
         <h1 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight mb-4">
-          Wholesale Pricing
+          מחירי סיטונאות
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Volume discounts for contractors, distributors, and safety managers. Protect your entire crew with professional-grade eyewear.
+          הנחות כמות לקבלנים, מפיצים ומנהלי בטיחות. הגנו על כל הצוות שלכם עם ציוד מקצועי.
         </p>
       </div>
 
@@ -122,7 +122,7 @@ export default function Wholesale() {
               <h3 className="font-heading text-lg uppercase tracking-wide mb-2">{tier.label}</h3>
               <div className="text-3xl font-heading font-bold text-primary mb-2">{tier.discount}%</div>
               <p className="text-xs text-muted-foreground">
-                {tier.min}+ units
+                {tier.min}+ יחידות
               </p>
             </div>
           </div>
@@ -136,13 +136,13 @@ export default function Wholesale() {
             <div className="mb-8 p-6 bg-card border border-primary/30 rounded-lg">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-heading text-lg uppercase tracking-wide">Your Selection</h3>
+                  <h3 className="font-heading text-lg uppercase tracking-wide">הבחירה שלך</h3>
                   <p className="text-sm text-muted-foreground">
-                    {totalQuantity} units • {currentTier?.label} tier • {currentTier?.discount}% discount
+                    {totalQuantity} יחידות • דרג {currentTier?.label} • {currentTier?.discount}% הנחה
                   </p>
                 </div>
                 <Button onClick={() => setStep('request')}>
-                  Request Quote
+                  בקש הצעת מחיר
                 </Button>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function Wholesale() {
                   {quantity > 0 && (
                     <div className="mb-3 p-2 bg-primary/10 rounded-md">
                       <p className="text-xs text-primary font-medium">
-                        Total: ${(unitPrice * quantity).toFixed(2)} • Save ${savings.toFixed(2)}
+                        סה״כ: ${(unitPrice * quantity).toFixed(2)} • חיסכון: ${savings.toFixed(2)}
                       </p>
                     </div>
                   )}
@@ -210,17 +210,17 @@ export default function Wholesale() {
       {step === 'request' && (
         <div className="max-w-2xl mx-auto">
           <Button variant="outline" onClick={() => setStep('browse')} className="mb-6">
-            ← Back to Products
+            ← חזרה למוצרים
           </Button>
 
           <div className="p-8 bg-card border border-border rounded-lg">
             <h2 className="font-heading text-2xl uppercase tracking-tight mb-6">
-              Request Wholesale Quote
+              בקשת הצעת מחיר סיטונאית
             </h2>
             <form onSubmit={handleSubmitRequest} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="company">Company Name</Label>
+                  <Label htmlFor="company">שם חברה</Label>
                   <Input
                     id="company"
                     required
@@ -229,7 +229,7 @@ export default function Wholesale() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="contact">Contact Name</Label>
+                  <Label htmlFor="contact">איש קשר</Label>
                   <Input
                     id="contact"
                     required
@@ -241,7 +241,7 @@ export default function Wholesale() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">אימייל</Label>
                   <Input
                     id="email"
                     type="email"
@@ -251,7 +251,7 @@ export default function Wholesale() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="phone">Phone</Label>
+                  <Label htmlFor="phone">טלפון</Label>
                   <Input
                     id="phone"
                     value={form.phone}
@@ -261,34 +261,34 @@ export default function Wholesale() {
               </div>
 
               <div>
-                <Label htmlFor="industry">Industry</Label>
+                <Label htmlFor="industry">תעשייה</Label>
                 <Select value={form.industry} onValueChange={(value) => setForm(prev => ({ ...prev, industry: value }))}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select industry" />
+                    <SelectValue placeholder="בחר תעשייה" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="construction">Construction</SelectItem>
-                    <SelectItem value="lab">Lab & Medical</SelectItem>
-                    <SelectItem value="outdoor">Outdoor & Utility</SelectItem>
-                    <SelectItem value="general">General Industrial</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="construction">בנייה ותשתיות</SelectItem>
+                    <SelectItem value="lab">מעבדות ורפואה</SelectItem>
+                    <SelectItem value="outdoor">שטח ותפעול</SelectItem>
+                    <SelectItem value="general">תעשייה כללית</SelectItem>
+                    <SelectItem value="other">אחר</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <Label htmlFor="message">Additional Information</Label>
+                <Label htmlFor="message">מידע נוסף</Label>
                 <Textarea
                   id="message"
                   rows={4}
                   value={form.message}
                   onChange={(e) => setForm(prev => ({ ...prev, message: e.target.value }))}
-                  placeholder="Tell us about your needs..."
+                  placeholder="ספרו לנו על הצרכים שלכם..."
                 />
               </div>
 
               <Button type="submit" className="w-full" disabled={createRequestMutation.isPending}>
-                {createRequestMutation.isPending ? 'Submitting...' : 'Submit Quote Request'}
+                {createRequestMutation.isPending ? 'שולח...' : 'שלח בקשת הצעת מחיר'}
               </Button>
             </form>
           </div>

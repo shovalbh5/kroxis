@@ -334,7 +334,7 @@ export default function AccessibilityMenu() {
       )}
 
       {/* Accessibility Styles */}
-      <style jsx global>{`
+      <style>{`
         .high-contrast {
           filter: contrast(1.5);
         }
