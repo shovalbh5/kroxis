@@ -6,7 +6,7 @@ import FeaturedCarousel from '@/components/home/FeaturedCarousel';
 import IndustryGrid from '@/components/home/IndustryGrid';
 import TrustBar from '@/components/home/TrustBar';
 
-const HERO_IMAGE = '/__generating__/img_a266df706f88.png';
+const HERO_IMAGE = 'https://media.base44.com/images/public/69c0edec05cbd3064b4b2279/403427992_generated_d25fa65d.png';
 
 export default function Home() {
   const { data: featuredProducts } = useQuery({
