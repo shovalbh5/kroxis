@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { SlidersHorizontal, X, LayoutGrid, List } from 'lucide-react';
+import { SlidersHorizontal, X, LayoutGrid, List, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -55,8 +55,26 @@ export default function Shop() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">All Products</h1>
-        <p className="text-muted-foreground mt-2">Professional-grade safety eyewear for every industry.</p>
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">All Products</h1>
+            <p className="text-muted-foreground mt-2">Professional-grade safety eyewear for every industry.</p>
+          </div>
+          <a
+            href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#2eb8e6] text-white rounded-lg font-medium text-sm transition-colors whitespace-nowrap"
+          >
+            <Navigation className="w-4 h-4" />
+            Navigate with Waze
+          </a>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
+          <span>•</span>
+          <span>📞 054-717-2301</span>
+        </div>
       </div>
 
       <div className="flex gap-8">
