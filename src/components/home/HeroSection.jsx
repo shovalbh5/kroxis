@@ -73,7 +73,7 @@ export default function HeroSection({ heroImage }) {
       </div>
 
       {/* Bottom gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/70 to-transparent" />
     </section>
   );
 }
