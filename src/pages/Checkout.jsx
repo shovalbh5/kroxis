@@ -145,7 +145,7 @@ export default function Checkout() {
               className="mt-0.5"
             />
             <label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-              אני מאשר/ת שקראתי ואני מסכים/ה ל<RouterLink to="/terms" target="_blank" className="text-primary hover:underline">תקנון האתר</RouterLink>, <RouterLink to="/privacy" target="_blank" className="text-primary hover:underline">מדיניות הפרטיות</RouterLink> ו<RouterLink to="/returns" target="_blank" className="text-primary hover:underline">מדיניות ההחזרות</RouterLink>. אני מבין/ה שמשקפי בטיחות KROXIS אינם מחליפים ציוד מגן אישי נוסף הנדרש על פי חוק.
+              אני מאשר/ת שקראתי ואני מסכים/ה ל<RouterLink to="/terms" target="_blank" className="text-primary hover:underline">תקנון האתר</RouterLink>, <RouterLink to="/privacy" target="_blank" className="text-primary hover:underline">מדיניות הפרטיות</RouterLink> ו<RouterLink to="/returns" target="_blank" className="text-primary hover:underline">מדיניות ההחזרות</RouterLink>. אני מבין/ה שמשקפי KROXIS הן משקפי שמש טקטיות ואינן מחליפות ציוד מגן אישי נוסף הנדרש על פי חוק.
             </label>
           </div>
 

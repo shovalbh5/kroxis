@@ -7,13 +7,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const megaMenuData = {
   industry: [
-    { label: 'בנייה ותשתיות', icon: HardHat, href: '/shop?category=construction' },
-    { label: 'מעבדות ורפואה', icon: FlaskConical, href: '/shop?category=lab' },
-    { label: 'עבודות שטח', icon: TreePine, href: '/shop?category=outdoor' },
+    { label: 'צבא ולוחמים', icon: Shield, href: '/shop?category=construction' },
+    { label: 'שטח ותפעול', icon: TreePine, href: '/shop?category=outdoor' },
+    { label: 'עבודה ותעשייה', icon: HardHat, href: '/shop?category=general' },
   ],
   tech: [
-    { label: 'אנטי פוג', href: '/shop?tech=anti_fog' },
     { label: 'עדשות מקוטבות', href: '/shop?tech=polarized' },
+    { label: 'פוטוכרומטיות', href: '/shop?tech=photochromic' },
     { label: 'סינון אור כחול', href: '/shop?tech=blue_light' },
     { label: 'מתאים למשקפי ראייה', href: '/shop?tech=prescription_ready' },
   ],
@@ -38,7 +38,7 @@ export default function Header() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground text-center text-xs py-1.5 font-medium tracking-wider uppercase">
-        משלוח חינם מעל ₪500 · כל המוצרים בתקן ANSI Z87.1+
+        משלוח חינם מעל ₪500 · משקפי שמש טקטיות לשטח ועבודה
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -81,7 +81,7 @@ export default function Header() {
                   >
                     <div className="grid grid-cols-2 gap-8">
                       <div>
-                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי תעשייה</h4>
+                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי שימוש</h4>
                         <div className="space-y-2">
                           {megaMenuData.industry.map(item => (
                             <Link
@@ -180,7 +180,7 @@ export default function Header() {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="חיפוש מוצרים, תקנים..."
+                  placeholder="חיפוש משקפי שמש..."
                   className="w-full pl-10 pr-4 py-3 bg-muted/20 border border-border rounded-lg text-secondary-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   autoFocus
                 />
@@ -202,9 +202,9 @@ export default function Header() {
             <nav className="px-4 py-4 space-y-3">
               <Link to="/" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">בית</Link>
               <Link to="/shop" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">כל המוצרים</Link>
-              <Link to="/shop?category=construction" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">בנייה ותשתיות</Link>
-              <Link to="/shop?category=lab" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">מעבדות ורפואה</Link>
+              <Link to="/shop?category=construction" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">צבא ולוחמים</Link>
               <Link to="/shop?category=outdoor" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">שטח ותפעול</Link>
+              <Link to="/shop?category=general" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">עבודה ותעשייה</Link>
             </nav>
           </motion.div>
         )}

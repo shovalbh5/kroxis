@@ -20,7 +20,7 @@ export default function Warranty() {
         </div>
 
         <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-          ב-KROXIS אנחנו מאמינים באיכות ללא פשרות. לכן כל משקפי הבטיחות שלנו מגיעים עם <strong className="text-foreground">אחריות לכל החיים</strong> על המסגרת ו-<strong className="text-foreground">שנתיים אחריות מלאה</strong> על העדשות.
+          ב-KROXIS אנחנו מאמינים באיכות ללא פשרות. לכן כל משקפי השמש הטקטיות שלנו מגיעות עם <strong className="text-foreground">אחריות לכל החיים</strong> על המסגרת ו-<strong className="text-foreground">שנתיים אחריות מלאה</strong> על העדשות.
         </p>
 
         <div className="bg-card border border-border rounded-xl p-8 mb-10">

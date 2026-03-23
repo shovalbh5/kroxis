@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const certifications = [
-  { label: 'ANSI Z87.1+', icon: Shield },
-  { label: 'CE EN166', icon: Award },
-  { label: 'MIL-PRF', icon: Shield },
+  { label: 'UV400 Protection', icon: Shield },
+  { label: 'MIL-STD Rated', icon: Award },
+  { label: 'Polarized Lenses', icon: Shield },
 ];
 
 export default function Footer() {
@@ -46,15 +46,15 @@ export default function Footer() {
           <div>
             <span className="font-heading text-3xl font-bold tracking-widest text-white">KROXIS</span>
             <p className="text-secondary-foreground/70 text-base mt-4 leading-relaxed font-medium">
-              משקפי בטיחות מקצועיים בתקנים בינלאומיים. הגנה, נוחות ואיכות ללא פשרות.
+              משקפי שמש טקטיות לאנשי שטח, צבא ולוחמים. הגנה, סטייל ועמידות ללא פשרות.
             </p>
           </div>
           <div>
             <h4 className="font-heading text-xs uppercase tracking-widest text-primary mb-5">חנות</h4>
             <div className="space-y-3">
-              <Link to="/shop?category=construction" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">בנייה ותשתיות</Link>
-              <Link to="/shop?category=lab" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">מעבדות ורפואה</Link>
+              <Link to="/shop?category=construction" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">צבא ולוחמים</Link>
               <Link to="/shop?category=outdoor" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">שטח ותפעול</Link>
+              <Link to="/shop?category=general" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">עבודה ותעשייה</Link>
               <Link to="/shop" className="block text-sm text-secondary-foreground/60 hover:text-primary transition-colors">כל המוצרים</Link>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-heading text-xs uppercase tracking-widest text-primary mb-5">תקנים</h4>
+            <h4 className="font-heading text-xs uppercase tracking-widest text-primary mb-5">איכות</h4>
             <div className="space-y-4">
               {certifications.map(cert => (
                 <div key={cert.label} className="flex items-center gap-2">

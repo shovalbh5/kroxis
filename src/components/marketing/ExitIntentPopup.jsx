@@ -60,31 +60,31 @@ export default function ExitIntentPopup() {
             </motion.div>
 
             <h2 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight text-white mb-3">
-              Wait! Don't Go
+              רגע! לא ללכת
             </h2>
             <p className="text-secondary-foreground/70 text-lg mb-2">
-              Get <span className="text-primary font-bold text-2xl">10% OFF</span> Your First Order
+              קבלו <span className="text-primary font-bold text-2xl">10% הנחה</span> על ההזמנה הראשונה
             </p>
             <p className="text-secondary-foreground/60 text-sm mb-6">
-              Join 50,000+ workers who trust KROXIS for professional-grade eye protection
+              הצטרפו ל-50,000+ אנשי שטח ולוחמים שסומכים על KROXIS
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="הזן את האימייל שלך"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="h-12 bg-muted/20 border-border text-secondary-foreground text-center"
               />
               <Button type="submit" size="lg" className="w-full h-12 font-heading uppercase tracking-wider">
-                Claim My 10% Discount
+                לקבל 10% הנחה
               </Button>
             </form>
 
             <p className="text-xs text-secondary-foreground/40 mt-4">
-              Code: <span className="font-mono text-primary">KROXIS10</span> • Valid for 48 hours
+              קוד: <span className="font-mono text-primary">KROXIS10</span> • בתוקף 48 שעות
             </p>
           </motion.div>
         </div>

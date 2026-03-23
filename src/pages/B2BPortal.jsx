@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const perks = [
   { icon: TrendingDown, title: 'הנחות כמות', desc: 'עד 25% הנחה על הזמנות גדולות – ככל שמזמינים יותר, החיסכון גדל.' },
-  { icon: Shield, title: 'ציוד בתקן מחמיר', desc: 'כל המוצרים עומדים בתקני ANSI Z87.1+, CE EN166 ו-MIL-PRF.' },
+  { icon: Shield, title: 'איכות ללא פשרות', desc: 'כל המוצרים עומדים בתקני עמידות צבאיים עם הגנת UV400 מלאה.' },
   { icon: Truck, title: 'לוגיסטיקה מהירה', desc: 'אספקה ישירה לאתר – משלוח חינם מעל ₪2,000 להזמנות עסקיות.' },
   { icon: Users, title: 'מנהל לקוח ייעודי', desc: 'נציג B2B שמכיר את הצרכים שלכם ומלווה אתכם לאורך כל הדרך.' },
 ];
@@ -21,7 +21,7 @@ export default function B2BPortal() {
         </div>
 
         <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-          KROXIS עובדת עם קבלנים, מפעלים, ארגוני בטיחות וחברות הנדסה בכל רחבי הארץ. אנחנו מציעים פתרון ציוד מגן מותאם אישית עם תנאי מחיר ושירות שמתאימים לעסקים.
+          KROXIS עובדת עם יחידות צבאיות, חברות שמירה, צוותי שטח וארגונים בכל רחבי הארץ. אנחנו מציעים משקפי שמש טקטיות בהתאמה אישית עם תנאי מחיר ושירות שמתאימים לעסקים.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
@@ -37,10 +37,10 @@ export default function B2BPortal() {
         <div className="bg-card border border-border rounded-xl p-8 mb-10">
           <h2 className="font-heading text-2xl uppercase tracking-wide mb-4 font-bold">מי יכול להצטרף?</h2>
           <ul className="space-y-2 text-muted-foreground">
-            <li>• קבלני בנייה ותשתיות</li>
-            <li>• מנהלי בטיחות במפעלים</li>
-            <li>• מעבדות מחקר ורפואה</li>
-            <li>• מפיצים וסוחרי ציוד מגן</li>
+            <li>• יחידות צבאיות ולוחמים</li>
+            <li>• חברות שמירה ואבטחה</li>
+            <li>• צוותי שטח ותפעול</li>
+            <li>• מפיצים וסוחרי ציוד טקטי</li>
             <li>• כל עסק שצריך 10+ יחידות</li>
           </ul>
         </div>

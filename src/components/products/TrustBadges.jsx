@@ -2,8 +2,8 @@ import React from 'react';
 import { Shield, Lock, Truck, RefreshCw, Award } from 'lucide-react';
 
 const badges = [
-  { icon: Shield, label: 'ANSI Z87.1+' },
-  { icon: Award, label: 'CE EN166' },
+  { icon: Shield, label: 'UV400 הגנה מלאה' },
+  { icon: Award, label: 'עמידות MIL-STD' },
   { icon: Lock, label: 'תשלום מאובטח' },
   { icon: Truck, label: 'משלוח חינם 500₪+' },
   { icon: RefreshCw, label: '30 יום החזרה' },

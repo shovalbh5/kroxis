@@ -105,7 +105,7 @@ export default function Wholesale() {
           מחירי סיטונאות
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          הנחות כמות לקבלנים, מפיצים ומנהלי בטיחות. הגנו על כל הצוות שלכם עם ציוד מקצועי.
+          הנחות כמות ליחידות, צוותי שטח ומפיצים. ציידו את כל הצוות שלכם עם משקפי שמש טקטיות מקצועיות.
         </p>
       </div>
 
@@ -267,10 +267,10 @@ export default function Wholesale() {
                     <SelectValue placeholder="בחר תעשייה" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="construction">בנייה ותשתיות</SelectItem>
-                    <SelectItem value="lab">מעבדות ורפואה</SelectItem>
+                    <SelectItem value="construction">צבא ולוחמים</SelectItem>
                     <SelectItem value="outdoor">שטח ותפעול</SelectItem>
-                    <SelectItem value="general">תעשייה כללית</SelectItem>
+                    <SelectItem value="general">עבודה ותעשייה</SelectItem>
+                    <SelectItem value="lab">אבטחה ושמירה</SelectItem>
                     <SelectItem value="other">אחר</SelectItem>
                   </SelectContent>
                 </Select>

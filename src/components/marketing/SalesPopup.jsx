@@ -3,7 +3,7 @@ import { ShoppingBag, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const cities = ['חיפה', 'תל אביב', 'ירושלים', 'באר שבע', 'ראשון לציון', 'פתח תקווה', 'נתניה', 'אשדוד', 'רמת גן', 'הרצליה', 'כפר סבא', 'רחובות', 'מודיעין', 'עכו', 'נצרת'];
-const names = ['דני', 'יוסי', 'מוחמד', 'אורי', 'עומר', 'אלי', 'חיים', 'סאמי', 'ניר', 'רון', 'אמיר', 'גיל', 'טל', 'איתי', 'עידו'];
+const names = ['דני', 'יוסי', 'מוחמד', 'אורי', 'עומר', 'אלי', 'חיים', 'סאמי', 'ניר', 'רון', 'אמיר', 'גיל', 'טל', 'איתי', 'עידו', 'ארז', 'שחר', 'דור'];
 const products = ['KROXIS Iron-Sight', 'KROXIS Phantom-X', 'KROXIS TitanGuard', 'KROXIS StealthPro', 'KROXIS VoltShield', 'KROXIS HazeClear'];
 const timeframes = ['לפני דקה', 'לפני 3 דקות', 'לפני 5 דקות', 'לפני 8 דקות', 'עכשיו'];
 

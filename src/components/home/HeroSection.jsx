@@ -10,8 +10,8 @@ export default function HeroSection({ heroImage }) {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1504917595217-d4dc5ede4f22?w=1920&q=80"
-          alt="Construction worker with safety gear"
+          src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1920&q=80"
+          alt="Tactical field operator with sunglasses"
           className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
@@ -33,11 +33,11 @@ export default function HeroSection({ heroImage }) {
             className="flex items-center gap-2 mb-4"
           >
             <div className="w-10 h-[2px] bg-primary" />
-            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">משקפי בטיחות מקצועיים</span>
+            <span className="text-primary text-xs font-heading uppercase tracking-[0.35em] font-semibold">משקפי שמש טקטיות</span>
           </motion.div>
 
           <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase leading-[0.9] tracking-tighter mb-6">
-            הגנה ברמה<br />
+            ראייה ברמה<br />
             <span className="text-primary">אחרת לגמרי</span>
           </h1>
 
@@ -47,7 +47,7 @@ export default function HeroSection({ heroImage }) {
             transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-secondary-foreground/80 text-lg sm:text-xl max-w-xl leading-relaxed font-medium"
           >
-            משקפי בטיחות בתקן ANSI Z87.1+ עם עדשות אנטי-פוג, עמידות לפגיעות ועיצוב נוח לשימוש כל היום.
+            משקפי שמש טקטיות לאנשי שטח, צבא ולוחמים. עדשות מקוטבות, עמידות בפגיעות ונוחות לשימוש ממושך בכל תנאי שטח.
           </motion.p>
 
           <motion.div

@@ -4,10 +4,10 @@ import { HardHat, FlaskConical, TreePine, Wrench, ChevronRight } from 'lucide-re
 import { motion } from 'framer-motion';
 
 const industries = [
-  { label: 'בנייה ותשתיות', desc: 'הגנה מפגיעות, אבק וחלקיקים באתרי בנייה', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80' },
-  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80' },
-  { label: 'עבודות שטח', desc: 'עדשות מקוטבות לעבודה ממושכת בשמש', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80' },
-  { label: 'תעשייה כללית', desc: 'משקפי מגן לשימוש יומיומי בכל סביבת עבודה', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80' },
+  { label: 'צבא ולוחמים', desc: 'משקפי שמש טקטיות לתנאי לחימה ואימונים', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1579912437766-7896df6d3cd3?w=800&q=80' },
+  { label: 'שטח ותפעול', desc: 'עדשות מקוטבות לעבודה ממושכת בשטח פתוח', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80' },
+  { label: 'עבודה ותעשייה', desc: 'משקפי שמש עמידות לסביבות עבודה מאתגרות', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80' },
+  { label: 'אופנה טקטית', desc: 'סטייל אגרסיבי ליומיום עם הגנה מלאה מהשמש', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80' },
 ];
 
 export default function IndustryGrid() {

@@ -4,24 +4,24 @@ import { Shield, Zap, Scale, Layers } from 'lucide-react';
 
 export default function TechSpecs({ product }) {
   const specs = [
-    { icon: Zap, label: 'Impact Resistance', value: product.impact_resistance || 'High Velocity (ANSI Z87.1+)' },
-    { icon: Shield, label: 'UV Protection', value: product.uv_protection || '99.9% UV400' },
-    { icon: Scale, label: 'Weight', value: product.weight_grams ? `${product.weight_grams}g` : '28g' },
-    { icon: Layers, label: 'Frame Material', value: product.frame_material || 'TR90 Swiss Tech' },
+    { icon: Zap, label: 'עמידות לפגיעות', value: product.impact_resistance || 'עמידות גבוהה MIL-STD' },
+    { icon: Shield, label: 'הגנת UV', value: product.uv_protection || '99.9% UV400' },
+    { icon: Scale, label: 'משקל', value: product.weight_grams ? `${product.weight_grams}g` : '28g' },
+    { icon: Layers, label: 'חומר מסגרת', value: product.frame_material || 'TR90 Swiss Tech' },
   ];
 
   const certLabels = {
-    ANSI_Z87: 'ANSI Z87.1+ (High Velocity Impact)',
-    CE_EN166: 'CE EN166 (European Standard)',
+    ANSI_Z87: 'ANSI Z87.1+ (עמידות בפגיעות)',
+    CE_EN166: 'CE EN166 (תקן אירופי)',
     OSHA: 'OSHA Compliant',
-    MIL_PRF: 'MIL-PRF-31013 (Military Grade)',
+    MIL_PRF: 'MIL-PRF-31013 (תקן צבאי)',
   };
 
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="specs">
         <AccordionTrigger className="font-heading text-sm uppercase tracking-wider">
-          Technical Specifications
+          מפרט טכני
         </AccordionTrigger>
         <AccordionContent>
           <div className="grid grid-cols-2 gap-4 py-2">
@@ -39,7 +39,7 @@ export default function TechSpecs({ product }) {
       </AccordionItem>
       <AccordionItem value="certs">
         <AccordionTrigger className="font-heading text-sm uppercase tracking-wider">
-          Safety Certifications
+          תקני עמידות
         </AccordionTrigger>
         <AccordionContent>
           <div className="space-y-2 py-2">
@@ -49,21 +49,21 @@ export default function TechSpecs({ product }) {
                 <span className="text-sm">{certLabels[cert] || cert}</span>
               </div>
             )) || (
-              <p className="text-sm text-muted-foreground">Contact us for certification details.</p>
+              <p className="text-sm text-muted-foreground">צרו קשר לפרטי תקנים.</p>
             )}
           </div>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="shipping">
         <AccordionTrigger className="font-heading text-sm uppercase tracking-wider">
-          Shipping & Warranty
+          משלוח ואחריות
         </AccordionTrigger>
         <AccordionContent>
           <div className="space-y-2 py-2 text-sm">
-            <p>• Free shipping on orders over $150</p>
-            <p>• Lifetime frame warranty</p>
-            <p>• 30-day satisfaction guarantee</p>
-            <p>• International shipping available</p>
+            <p>• משלוח חינם מעל ₪500</p>
+            <p>• אחריות לכל החיים על המסגרת</p>
+            <p>• 30 יום שביעות רצון מובטחת</p>
+            <p>• משלוח בינלאומי</p>
           </div>
         </AccordionContent>
       </AccordionItem>
