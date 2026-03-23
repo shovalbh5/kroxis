@@ -14,22 +14,23 @@ export default function ProductCard({ product }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -8 }}
     >
       <Link to={`/product/${product.id}`} className="group block">
-        <div className="relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-300 group-hover:shadow-xl group-hover:border-primary/30">
+        <div className="relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:border-primary/50">
           {/* Image */}
           <div className="relative aspect-square overflow-hidden bg-muted">
             <img
               src={product.images?.[0] || '/placeholder.jpg'}
               alt={product.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-y-4 group-hover:translate-y-0">
               <span className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-xs font-heading uppercase tracking-wider flex items-center gap-2">
                 <Eye className="w-3.5 h-3.5" /> Quick View
               </span>
@@ -51,7 +52,7 @@ export default function ProductCard({ product }) {
                 </span>
               ))}
             </div>
-            <h3 className="font-heading text-sm uppercase tracking-wide group-hover:text-primary transition-colors truncate">
+            <h3 className="font-heading text-sm uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate">
               {product.title}
             </h3>
             <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{product.description}</p>

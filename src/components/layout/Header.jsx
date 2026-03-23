@@ -35,7 +35,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground text-center text-xs py-1.5 font-medium tracking-wider uppercase">
         Free Shipping on Orders Over $150 · ANSI Z87.1+ Certified
@@ -59,7 +59,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Link to="/" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+            <Link to="/" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
               Home
             </Link>
             <div
@@ -67,16 +67,16 @@ export default function Header() {
               onMouseEnter={() => setMegaOpen(true)}
               onMouseLeave={() => setMegaOpen(false)}
             >
-              <button className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase flex items-center gap-1">
+              <button className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase flex items-center gap-1">
                 Shop <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <AnimatePresence>
                 {megaOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.15 }}
+                    initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[480px] bg-secondary border border-border rounded-lg shadow-2xl p-6"
                   >
                     <div className="grid grid-cols-2 gap-8">
@@ -126,13 +126,13 @@ export default function Header() {
                 )}
               </AnimatePresence>
             </div>
-            <Link to="/shop" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+            <Link to="/shop" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
               All Products
             </Link>
-            <Link to="/blog" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+            <Link to="/blog" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
               Blog
             </Link>
-            <Link to="/wholesale" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-colors uppercase">
+            <Link to="/wholesale" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
               Wholesale
             </Link>
           </nav>
@@ -141,17 +141,17 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => switchLanguage(locale === 'he' ? 'en' : 'he')}
-              className="text-secondary-foreground/80 hover:text-primary transition-colors p-2 font-medium text-sm"
+              className="text-secondary-foreground/80 hover:text-primary transition-all duration-300 hover:scale-110 p-2 font-medium text-sm"
               title={locale === 'he' ? 'Switch to English' : 'עבור לעברית'}
             >
               {locale === 'he' ? 'EN' : 'עב'}
             </button>
-            <button onClick={() => setSearchOpen(!searchOpen)} className="text-secondary-foreground/80 hover:text-primary transition-colors p-2">
+            <button onClick={() => setSearchOpen(!searchOpen)} className="text-secondary-foreground/80 hover:text-primary transition-all duration-300 hover:scale-110 p-2">
               <Search className="w-5 h-5" />
             </button>
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative text-secondary-foreground/80 hover:text-primary transition-colors p-2"
+              className="relative text-secondary-foreground/80 hover:text-primary transition-all duration-300 hover:scale-110 p-2"
             >
               <ShoppingBag className="w-5 h-5" />
               {itemCount > 0 && (

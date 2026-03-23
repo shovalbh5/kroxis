@@ -25,15 +25,15 @@ export default function HeroSection({ heroImage }) {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center">
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
+          initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-xl"
         >
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-2 mb-4"
           >
             <div className="w-8 h-[2px] bg-primary" />
@@ -46,28 +46,32 @@ export default function HeroSection({ heroImage }) {
           </h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-secondary-foreground/70 mt-6 text-base sm:text-lg max-w-md leading-relaxed"
           >
             Engineered for the toughest environments. ANSI Z87.1+ certified impact protection meets industrial luxury.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.7, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-3 mt-8"
           >
-            <Button asChild size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm">
-              <Link to="/shop">
-                Shop the Collection <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-white">
-              <Play className="w-4 h-4 mr-2" /> Watch Stress Test
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
+              <Button asChild size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm transition-all duration-300">
+                <Link to="/shop">
+                  Shop the Collection <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
+              <Button variant="outline" size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-white transition-all duration-300">
+                <Play className="w-4 h-4 mr-2" /> Watch Stress Test
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
