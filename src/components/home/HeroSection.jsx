@@ -7,15 +7,19 @@ import { motion } from 'framer-motion';
 export default function HeroSection({ heroImage }) {
   return (
     <section className="relative h-[90vh] min-h-[600px] overflow-hidden bg-secondary">
-      {/* Background */}
+      {/* Background Video */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="KROXIS eyewear in action"
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-50"
+        >
+          <source src="https://cdn.pixabay.com/video/2023/04/17/159080-820144228_large.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
       </div>
 
       {/* Content */}
