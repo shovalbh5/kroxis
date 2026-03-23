@@ -43,8 +43,8 @@ export default function ProductCard({ product }) {
           </div>
 
           {/* Info */}
-          <div className="p-4">
-            <div className="flex items-center gap-1.5 mb-2">
+          <div className="p-5">
+            <div className="flex items-center gap-1.5 mb-3">
               {product.safety_certs?.slice(0, 2).map(cert => (
                 <span key={cert} className="flex items-center gap-0.5 text-[10px] text-muted-foreground">
                   <Shield className="w-2.5 h-2.5 text-primary" />
@@ -52,11 +52,11 @@ export default function ProductCard({ product }) {
                 </span>
               ))}
             </div>
-            <h3 className="font-heading text-sm uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate">
+            <h3 className="font-heading text-sm uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate mb-2">
               {product.title}
             </h3>
-            <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{product.description}</p>
-            <div className="flex items-center gap-2 mt-3">
+            <p className="text-xs text-muted-foreground line-clamp-1 mb-3">{product.description}</p>
+            <div className="flex items-center gap-2">
               <span className="font-heading text-lg">${product.price?.toFixed(2)}</span>
               {product.compare_at_price && product.compare_at_price > product.price && (
                 <span className="text-xs text-muted-foreground line-through">${product.compare_at_price.toFixed(2)}</span>

@@ -40,7 +40,7 @@ export default function HeroSection({ heroImage }) {
             <span className="text-primary text-xs font-heading uppercase tracking-[0.3em]">Professional Grade Eyewear</span>
           </motion.div>
 
-          <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl font-bold text-white uppercase leading-[0.95] tracking-tight">
+          <h1 className="font-heading text-5xl sm:text-6xl md:text-7xl font-bold text-white uppercase leading-[0.95] tracking-tight mb-6">
             Built for<br />
             <span className="text-primary">the Grind</span>
           </h1>
@@ -49,7 +49,7 @@ export default function HeroSection({ heroImage }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-secondary-foreground/70 mt-6 text-base sm:text-lg max-w-md leading-relaxed"
+            className="text-secondary-foreground/70 text-base sm:text-lg max-w-md leading-relaxed"
           >
             Engineered for the toughest environments. ANSI Z87.1+ certified impact protection meets industrial luxury.
           </motion.p>
@@ -58,7 +58,7 @@ export default function HeroSection({ heroImage }) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-3 mt-8"
+            className="flex flex-col sm:flex-row gap-4 mt-10"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
               <Button asChild size="lg" className="h-13 px-8 font-heading uppercase tracking-wider text-sm transition-all duration-300">

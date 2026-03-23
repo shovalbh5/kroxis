@@ -52,13 +52,13 @@ export default function Shop() {
   }, [products, filters, sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       {/* Page header */}
-      <div className="mb-8">
-        <div className="flex items-start justify-between gap-4 mb-4">
+      <div className="mb-10">
+        <div className="flex items-start justify-between gap-4 mb-6">
           <div>
-            <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">All Products</h1>
-            <p className="text-muted-foreground mt-2">Professional-grade safety eyewear for every industry.</p>
+            <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight mb-3">All Products</h1>
+            <p className="text-muted-foreground">Professional-grade safety eyewear for every industry.</p>
           </div>
           <a
             href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"
@@ -86,7 +86,7 @@ export default function Shop() {
         {/* Main content */}
         <div className="flex-1">
           {/* Toolbar */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"
