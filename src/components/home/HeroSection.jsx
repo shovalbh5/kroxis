@@ -14,7 +14,10 @@ export default function HeroSection({ heroImage }) {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover opacity-50"
+          onLoadedData={(e) => e.target.play()}
+          onEnded={(e) => e.target.play()}
         >
           <source src="https://cdn.pixabay.com/video/2023/04/17/159080-820144228_large.mp4" type="video/mp4" />
         </video>
