@@ -85,17 +85,17 @@ export default function Shop() {
               >
                 <SlidersHorizontal className="w-4 h-4 mr-2" /> סינון
               </Button>
-              <span className="text-sm text-muted-foreground">{filtered.length} products</span>
+              <span className="text-sm text-muted-foreground">{filtered.length} מוצרים</span>
             </div>
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-40">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="newest">Newest</SelectItem>
-                <SelectItem value="price_asc">Price: Low → High</SelectItem>
-                <SelectItem value="price_desc">Price: High → Low</SelectItem>
-                <SelectItem value="name">Name A-Z</SelectItem>
+                <SelectItem value="newest">חדשים ביותר</SelectItem>
+                <SelectItem value="price_asc">מחיר: נמוך → גבוה</SelectItem>
+                <SelectItem value="price_desc">מחיר: גבוה → נמוך</SelectItem>
+                <SelectItem value="name">שם א-ת</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -129,7 +129,7 @@ export default function Shop() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-muted-foreground text-lg">No products match your filters.</p>
+              <p className="text-muted-foreground text-lg">לא נמצאו מוצרים מתאימים לסינון</p>
               <Button variant="outline" className="mt-4 border-2 font-bold" onClick={() => setFilters({ categories: [], techs: [], certs: [] })}>
                 נקה סינון
               </Button>

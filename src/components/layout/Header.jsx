@@ -38,7 +38,7 @@ export default function Header() {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled ? 'bg-secondary/95 backdrop-blur-md shadow-lg' : 'bg-secondary'}`}>
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground text-center text-xs py-1.5 font-medium tracking-wider uppercase">
-        Free Shipping on Orders Over $150 · ANSI Z87.1+ Certified
+        משלוח חינם מעל $150 · תקן ANSI Z87.1+
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -60,7 +60,7 @@ export default function Header() {
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
             <Link to="/" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              Home
+              בית
             </Link>
             <div
               className="relative"
@@ -68,7 +68,7 @@ export default function Header() {
               onMouseLeave={() => setMegaOpen(false)}
             >
               <button className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase flex items-center gap-1">
-                Shop <ChevronDown className="w-3.5 h-3.5" />
+                חנות <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <AnimatePresence>
                 {megaOpen && (
@@ -81,7 +81,7 @@ export default function Header() {
                   >
                     <div className="grid grid-cols-2 gap-8">
                       <div>
-                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">By Industry</h4>
+                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי תעשייה</h4>
                         <div className="space-y-2">
                           {megaMenuData.industry.map(item => (
                             <Link
@@ -97,7 +97,7 @@ export default function Header() {
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">By Technology</h4>
+                        <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">לפי טכנולוגיה</h4>
                         <div className="space-y-2">
                           {megaMenuData.tech.map(item => (
                             <Link
@@ -119,7 +119,7 @@ export default function Header() {
                         className="text-primary text-sm font-medium hover:underline"
                         onClick={() => setMegaOpen(false)}
                       >
-                        View All Products →
+                        כל המוצרים →
                       </Link>
                     </div>
                   </motion.div>
@@ -127,13 +127,13 @@ export default function Header() {
               </AnimatePresence>
             </div>
             <Link to="/shop" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              All Products
+              כל המוצרים
             </Link>
             <Link to="/blog" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              Blog
+              בלוג
             </Link>
             <Link to="/wholesale" className="text-secondary-foreground/80 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 hover:scale-105 uppercase">
-              Wholesale
+              סיטונאות
             </Link>
           </nav>
 
@@ -180,7 +180,7 @@ export default function Header() {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search products, certifications..."
+                  placeholder="חיפוש מוצרים, תקנים..."
                   className="w-full pl-10 pr-4 py-3 bg-muted/20 border border-border rounded-lg text-secondary-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   autoFocus
                 />
@@ -200,11 +200,11 @@ export default function Header() {
             className="overflow-hidden bg-secondary border-t border-border lg:hidden"
           >
             <nav className="px-4 py-4 space-y-3">
-              <Link to="/" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">Home</Link>
-              <Link to="/shop" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">All Products</Link>
-              <Link to="/shop?category=construction" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">Construction</Link>
-              <Link to="/shop?category=lab" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">Lab & Medical</Link>
-              <Link to="/shop?category=outdoor" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">Outdoor & Utility</Link>
+              <Link to="/" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">בית</Link>
+              <Link to="/shop" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">כל המוצרים</Link>
+              <Link to="/shop?category=construction" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">בנייה ותשתיות</Link>
+              <Link to="/shop?category=lab" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">מעבדות ורפואה</Link>
+              <Link to="/shop?category=outdoor" onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm pl-4">שטח ותפעול</Link>
             </nav>
           </motion.div>
         )}

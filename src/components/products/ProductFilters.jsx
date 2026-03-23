@@ -4,18 +4,18 @@ import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
-  { value: 'construction', label: 'Construction' },
-  { value: 'lab', label: 'Lab & Medical' },
-  { value: 'outdoor', label: 'Outdoor' },
-  { value: 'general', label: 'General' },
+  { value: 'construction', label: 'בנייה ותשתיות' },
+  { value: 'lab', label: 'מעבדות ורפואה' },
+  { value: 'outdoor', label: 'שטח ותפעול' },
+  { value: 'general', label: 'תעשייה כללית' },
 ];
 
 const techOptions = [
-  { value: 'anti_fog', label: 'Anti-Fog' },
-  { value: 'polarized', label: 'Polarized' },
-  { value: 'blue_light', label: 'Blue Light' },
-  { value: 'prescription_ready', label: 'Prescription Ready' },
-  { value: 'photochromic', label: 'Photochromic' },
+  { value: 'anti_fog', label: 'נגד ערפול' },
+  { value: 'polarized', label: 'פולארי' },
+  { value: 'blue_light', label: 'סינון אור כחול' },
+  { value: 'prescription_ready', label: 'מוכן למשקפי ראייה' },
+  { value: 'photochromic', label: 'מתכהה אוטומטי' },
 ];
 
 const certOptions = [
@@ -43,12 +43,12 @@ export default function ProductFilters({ filters, setFilters }) {
     <div className="space-y-6">
       {hasFilters && (
         <button onClick={clearAll} className="flex items-center gap-1 text-xs text-primary hover:underline">
-          <X className="w-3 h-3" /> Clear all filters
+          <X className="w-3 h-3" /> נקה סינון
         </button>
       )}
 
       <div>
-        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">Industry</h4>
+        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">תעשייה</h4>
         <div className="space-y-2">
           {categories.map(cat => (
             <button
@@ -67,7 +67,7 @@ export default function ProductFilters({ filters, setFilters }) {
       </div>
 
       <div>
-        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">Lens Technology</h4>
+        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">טכנולוגיית עדשות</h4>
         <div className="space-y-2">
           {techOptions.map(tech => (
             <button
@@ -88,7 +88,7 @@ export default function ProductFilters({ filters, setFilters }) {
       <div>
         <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">
           <Shield className="w-3.5 h-3.5 inline mr-1" />
-          Safety Rating
+          תקני בטיחות
         </h4>
         <div className="flex flex-wrap gap-2">
           {certOptions.map(cert => (
