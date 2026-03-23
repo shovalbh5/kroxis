@@ -27,6 +27,7 @@ import FAQ from '@/pages/FAQ';
 import TermsOfService from '@/pages/TermsOfService';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ReturnPolicy from '@/pages/ReturnPolicy';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -85,6 +86,7 @@ const AuthenticatedApp = () => {
       </Routes>
       <ExitIntentPopup />
       <SalesPopup />
+      <WhatsAppButton />
     </>
   );
 };
