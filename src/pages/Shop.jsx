@@ -52,14 +52,14 @@ export default function Shop() {
   }, [products, filters, sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-12">
       {/* Page header */}
-      <div className="mb-10">
-        <div className="mb-6">
-          <h1 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight mb-3 font-bold">כל הציוד</h1>
-          <p className="text-muted-foreground text-lg font-medium">משקפי מגן בדרג הנדסי. לכל סוג אתר, מעבדה או תפעול.</p>
+      <div className="mb-6 sm:mb-10">
+        <div className="mb-4 sm:mb-6">
+          <h1 className="font-heading text-3xl sm:text-5xl uppercase tracking-tight mb-2 sm:mb-3 font-bold">כל הציוד</h1>
+          <p className="text-muted-foreground text-sm sm:text-lg font-medium">משקפי מגן בדרג הנדסי. לכל סוג אתר, מעבדה או תפעול.</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
           <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
           <span>•</span>
           <a href="tel:054-717-2301" className="hover:text-primary transition-colors">📞 054-717-2301</a>
@@ -75,7 +75,7 @@ export default function Shop() {
         {/* Main content */}
         <div className="flex-1">
           {/* Toolbar */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-4 sm:mb-8">
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"
@@ -118,9 +118,9 @@ export default function Shop() {
 
           {/* Products grid */}
           {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
               {Array(6).fill(0).map((_, i) => (
-                <div key={i} className="space-y-3">
+                <div key={i} className="space-y-2 sm:space-y-3">
                   <Skeleton className="aspect-square rounded-lg" />
                   <Skeleton className="h-4 w-3/4" />
                   <Skeleton className="h-4 w-1/2" />
@@ -135,7 +135,7 @@ export default function Shop() {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
               {filtered.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
