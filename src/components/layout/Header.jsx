@@ -49,8 +49,12 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="font-heading text-2xl font-bold text-white tracking-widest">
-            KROXIS
+          <Link to="/" className="flex items-center">
+            <img 
+              src="https://media.base44.com/images/public/69c0edec05cbd3064b4b2279/fa9b64527_Gemini_Generated_Image_5d5gf85d5gf85d5g.png" 
+              alt="KROXIS Logo" 
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}
