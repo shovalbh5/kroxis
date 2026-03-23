@@ -62,7 +62,7 @@ export default function Shop() {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
           <span>•</span>
-          <span>📞 054-717-2301</span>
+          <a href="tel:054-717-2301" className="hover:text-primary transition-colors">📞 054-717-2301</a>
         </div>
       </div>
 

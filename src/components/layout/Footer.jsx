@@ -95,7 +95,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-sm text-secondary-foreground/60">
               <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
               <span>•</span>
-              <span>📞 054-717-2301</span>
+              <a href="tel:054-717-2301" className="hover:text-primary transition-colors">📞 054-717-2301</a>
             </div>
             <a
               href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"
