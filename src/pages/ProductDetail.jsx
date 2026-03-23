@@ -14,6 +14,7 @@ import TechSpecs from '@/components/products/TechSpecs';
 import ReviewSection from '@/components/products/ReviewSection';
 import FrequentlyBoughtTogether from '@/components/products/FrequentlyBoughtTogether';
 import UpsellModal from '@/components/marketing/UpsellModal';
+import ProductSchema from '@/components/seo/ProductSchema';
 import { generateProductSEO, applySEO } from '@/utils/seo';
 import { motion } from 'framer-motion';
 
@@ -79,17 +80,18 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <p className="text-muted-foreground text-lg">Product not found.</p>
-        <Button asChild className="mt-4"><Link to="/shop">Back to Shop</Link></Button>
+        <p className="text-muted-foreground text-lg">מוצר לא נמצא</p>
+        <Button asChild className="mt-4"><Link to="/shop">חזרה לחנות</Link></Button>
       </div>
     );
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <ProductSchema product={product} />
       {/* Breadcrumb */}
       <Link to="/shop" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Back to Shop
+        <ArrowLeft className="w-4 h-4" /> חזרה לחנות
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -130,7 +132,7 @@ export default function ProductDetail() {
           {product.b2b_bulk_discount_threshold && (
             <div className="p-3 bg-primary/10 border border-primary/20 rounded-lg">
               <p className="text-sm font-medium text-primary">
-                🏗️ Contractor Pricing: Buy {product.b2b_bulk_discount_threshold}+ for {product.b2b_bulk_discount_percent}% off
+                🏗️ מחיר קבלנים: קנה {product.b2b_bulk_discount_threshold}+ יחידות וקבל {product.b2b_bulk_discount_percent}% הנחה
               </p>
             </div>
           )}
@@ -141,7 +143,7 @@ export default function ProductDetail() {
           {/* Color */}
           {product.colors?.length > 0 && (
             <div>
-              <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">Color</h4>
+              <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">צבע</h4>
               <div className="flex gap-2">
                 {product.colors.map(color => (
                   <span key={color} className="px-3 py-1.5 text-xs border border-border rounded-md">{color}</span>
@@ -163,7 +165,7 @@ export default function ProductDetail() {
             </div>
             <Button onClick={handleAddToCart} size="lg" className="flex-1 h-12 font-heading uppercase tracking-wider text-sm">
               <ShoppingBag className="w-4 h-4 mr-2" />
-              Add to Cart — ${totalPrice.toFixed(2)}
+              הוסף לעגלה — ${totalPrice.toFixed(2)}
             </Button>
           </div>
 
@@ -171,15 +173,15 @@ export default function ProductDetail() {
           <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
             <div className="text-center">
               <Truck className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Free Shipping</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">משלוח חינם</p>
             </div>
             <div className="text-center">
               <Shield className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Lifetime Warranty</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">אחריות לכל החיים</p>
             </div>
             <div className="text-center">
               <RefreshCw className="w-5 h-5 mx-auto text-primary mb-1" />
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">30-Day Returns</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">30 יום החזרה</p>
             </div>
           </div>
 
