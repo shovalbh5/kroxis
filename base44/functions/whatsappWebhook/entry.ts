@@ -12,6 +12,7 @@ Deno.serve(async (req) => {
   const challenge = url.searchParams.get("hub.challenge");
 
   if (mode === "subscribe" && token && challenge) {
+    console.log(`Verification attempt - received token: '${token}', expected: '${VERIFY_TOKEN}', match: ${token === VERIFY_TOKEN}`);
     if (token === VERIFY_TOKEN) {
       console.log("Webhook verified successfully");
       return new Response(challenge, {
@@ -19,7 +20,6 @@ Deno.serve(async (req) => {
         headers: { "Content-Type": "text/plain" }
       });
     }
-    console.log("Verification failed - token mismatch");
     return new Response("Forbidden", { status: 403 });
   }
 
