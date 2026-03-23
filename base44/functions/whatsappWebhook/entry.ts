@@ -3,18 +3,28 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.21';
 const VERIFY_TOKEN = Deno.env.get("WHATSAPP_VERIFY_TOKEN");
 
 Deno.serve(async (req) => {
-  // Webhook verification (GET request from Meta)
-  if (req.method === "GET") {
-    const url = new URL(req.url);
-    const mode = url.searchParams.get("hub.mode");
-    const token = url.searchParams.get("hub.verify_token");
-    const challenge = url.searchParams.get("hub.challenge");
+  const url = new URL(req.url);
 
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+  // Webhook verification (GET request from Meta)
+  // Also handle verification via query params on any method
+  const mode = url.searchParams.get("hub.mode");
+  const token = url.searchParams.get("hub.verify_token");
+  const challenge = url.searchParams.get("hub.challenge");
+
+  if (mode === "subscribe" && token && challenge) {
+    if (token === VERIFY_TOKEN) {
       console.log("Webhook verified successfully");
-      return new Response(challenge, { status: 200 });
+      return new Response(challenge, {
+        status: 200,
+        headers: { "Content-Type": "text/plain" }
+      });
     }
+    console.log("Verification failed - token mismatch");
     return new Response("Forbidden", { status: 403 });
+  }
+
+  if (req.method === "GET") {
+    return new Response("OK", { status: 200 });
   }
 
   // Handle incoming messages (POST request)
