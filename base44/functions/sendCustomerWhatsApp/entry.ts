@@ -20,7 +20,7 @@ Deno.serve(async (req) => {
   }
   cleanPhone = cleanPhone.replace('+', '');
 
-  // Send message to business number (the owner) notifying about customer inquiry
+  // Send notification to business owner
   const ownerPhone = '972525568069';
   const notifyMessage = `📩 הודעה חדשה מהאתר!\n\n👤 שם: ${name || 'לא צוין'}\n📱 טלפון: ${phone}\n💬 הודעה: ${message}`;
 
@@ -42,11 +42,34 @@ Deno.serve(async (req) => {
   );
 
   const result = await response.json();
-  console.log("Send result:", JSON.stringify(result));
+  console.log("Owner notify result:", JSON.stringify(result));
 
   if (!response.ok) {
     return Response.json({ error: result.error?.message || "Failed to send" }, { status: 500 });
   }
+
+  // Send confirmation message to the customer
+  const confirmMessage = `היי${name ? ' ' + name : ''}! 👋\nקיבלנו את ההודעה שלך ב-KROXIS.\nניצור איתך קשר בהקדם האפשרי! 🔥`;
+
+  const customerResponse = await fetch(
+    `https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        to: cleanPhone,
+        type: "text",
+        text: { body: confirmMessage },
+      }),
+    }
+  );
+
+  const customerResult = await customerResponse.json();
+  console.log("Customer confirm result:", JSON.stringify(customerResult));
 
   // Save message record
   const base44 = createClientFromRequest(req);
