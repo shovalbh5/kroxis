@@ -57,7 +57,7 @@ export default function Shop() {
       <div className="mb-6 sm:mb-10">
         <div className="mb-4 sm:mb-6">
           <h1 className="font-heading text-3xl sm:text-5xl uppercase tracking-tight mb-2 sm:mb-3 font-bold">כל הציוד</h1>
-          <p className="text-muted-foreground text-sm sm:text-lg font-medium">משקפי מגן בדרג הנדסי. לכל סוג אתר, מעבדה או תפעול.</p>
+          <p className="text-muted-foreground text-sm sm:text-lg font-medium">משקפי שמש טקטיות לאנשי שטח, צבא ועבודה.</p>
         </div>
         <div className="flex flex-wrap items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
           <span>📍 א.ת נוף הארץ, ראש העין, כפר קאסם</span>
@@ -107,9 +107,16 @@ export default function Shop() {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="overflow-hidden lg:hidden mb-6"
               >
-                <div className="p-4 bg-card border border-border rounded-lg">
+                <div className="p-4 sm:p-5 bg-card border border-border rounded-xl shadow-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-heading text-sm uppercase tracking-wider font-bold">סינון מוצרים</h3>
+                    <button onClick={() => setShowFilters(false)} className="p-1.5 rounded-full hover:bg-muted transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                   <ProductFilters filters={filters} setFilters={setFilters} />
                 </div>
               </motion.div>

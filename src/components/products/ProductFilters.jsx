@@ -1,21 +1,21 @@
 import React from 'react';
-import { Shield, X } from 'lucide-react';
+import { Shield, X, Check } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
-  { value: 'construction', label: 'בנייה ותשתיות' },
-  { value: 'lab', label: 'מעבדות ורפואה' },
+  { value: 'construction', label: 'צבא ולוחמים' },
   { value: 'outdoor', label: 'שטח ותפעול' },
-  { value: 'general', label: 'תעשייה כללית' },
+  { value: 'general', label: 'עבודה ותעשייה' },
+  { value: 'lab', label: 'אופנה טקטית' },
 ];
 
 const techOptions = [
-  { value: 'anti_fog', label: 'נגד ערפול' },
-  { value: 'polarized', label: 'פולארי' },
+  { value: 'polarized', label: 'מקוטבות' },
+  { value: 'photochromic', label: 'פוטוכרומטיות' },
   { value: 'blue_light', label: 'סינון אור כחול' },
-  { value: 'prescription_ready', label: 'מוכן למשקפי ראייה' },
-  { value: 'photochromic', label: 'מתכהה אוטומטי' },
+  { value: 'anti_fog', label: 'נגד ערפול' },
+  { value: 'prescription_ready', label: 'מתאים למשקפי ראייה' },
 ];
 
 const certOptions = [
@@ -39,67 +39,69 @@ export default function ProductFilters({ filters, setFilters }) {
   const clearAll = () => setFilters({ categories: [], techs: [], certs: [] });
   const hasFilters = (filters.categories?.length || 0) + (filters.techs?.length || 0) + (filters.certs?.length || 0) > 0;
 
+  const FilterChip = ({ active, label, onClick }) => (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
+        active
+          ? 'bg-primary text-white border-primary shadow-sm'
+          : 'bg-card text-foreground border-border hover:border-primary/50 hover:bg-muted/50'
+      }`}
+    >
+      {active && <Check className="w-3.5 h-3.5" />}
+      {label}
+    </button>
+  );
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5" dir="rtl">
       {hasFilters && (
-        <button onClick={clearAll} className="flex items-center gap-1 text-xs text-primary hover:underline">
-          <X className="w-3 h-3" /> נקה סינון
+        <button onClick={clearAll} className="flex items-center gap-1.5 text-xs text-primary hover:underline font-semibold">
+          <X className="w-3.5 h-3.5" /> נקה הכל
         </button>
       )}
 
       <div>
-        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">תעשייה</h4>
-        <div className="space-y-2">
+        <h4 className="font-heading text-[11px] uppercase tracking-widest text-muted-foreground mb-2.5 font-bold">שימוש</h4>
+        <div className="flex flex-wrap gap-2">
           {categories.map(cat => (
-            <button
+            <FilterChip
               key={cat.value}
+              active={filters.categories?.includes(cat.value)}
+              label={cat.label}
               onClick={() => toggleFilter('categories', cat.value)}
-              className={`block w-full text-left text-sm px-3 py-2 rounded-md transition-colors ${
-                filters.categories?.includes(cat.value)
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted text-foreground'
-              }`}
-            >
-              {cat.label}
-            </button>
+            />
           ))}
         </div>
       </div>
 
       <div>
-        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">טכנולוגיית עדשות</h4>
-        <div className="space-y-2">
+        <h4 className="font-heading text-[11px] uppercase tracking-widest text-muted-foreground mb-2.5 font-bold">סוג עדשות</h4>
+        <div className="flex flex-wrap gap-2">
           {techOptions.map(tech => (
-            <button
+            <FilterChip
               key={tech.value}
+              active={filters.techs?.includes(tech.value)}
+              label={tech.label}
               onClick={() => toggleFilter('techs', tech.value)}
-              className={`block w-full text-left text-sm px-3 py-2 rounded-md transition-colors ${
-                filters.techs?.includes(tech.value)
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted text-foreground'
-              }`}
-            >
-              {tech.label}
-            </button>
+            />
           ))}
         </div>
       </div>
 
       <div>
-        <h4 className="font-heading text-xs uppercase tracking-widest text-muted-foreground mb-3">
-          <Shield className="w-3.5 h-3.5 inline mr-1" />
-          תקני בטיחות
+        <h4 className="font-heading text-[11px] uppercase tracking-widest text-muted-foreground mb-2.5 font-bold">
+          <Shield className="w-3.5 h-3.5 inline ml-1" />
+          תקני עמידות
         </h4>
         <div className="flex flex-wrap gap-2">
           {certOptions.map(cert => (
-            <Badge
+            <FilterChip
               key={cert.value}
-              variant={filters.certs?.includes(cert.value) ? 'default' : 'outline'}
-              className="cursor-pointer text-xs"
+              active={filters.certs?.includes(cert.value)}
+              label={cert.label}
               onClick={() => toggleFilter('certs', cert.value)}
-            >
-              {cert.label}
-            </Badge>
+            />
           ))}
         </div>
       </div>
