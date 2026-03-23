@@ -64,9 +64,9 @@ export default function HeroSection({ heroImage }) {
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-              <Button variant="outline" size="lg" className="h-14 px-10 font-heading uppercase tracking-wider text-base font-bold border-2 border-white/80 text-white hover:bg-white/20 hover:text-white hover:border-white transition-all duration-300">
-                <Play className="w-5 h-5 mr-3" /> סרטון המוצר
-              </Button>
+              <button className="inline-flex items-center justify-center gap-2 h-14 px-10 font-heading uppercase tracking-wider text-base font-bold border-2 border-white/80 text-white bg-transparent rounded-md hover:bg-white/20 hover:border-white transition-all duration-300">
+                <Play className="w-5 h-5" /> סרטון המוצר
+              </button>
             </motion.div>
           </motion.div>
         </motion.div>
