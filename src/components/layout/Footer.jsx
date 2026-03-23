@@ -44,7 +44,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <span className="font-heading text-xl font-bold tracking-widest text-white">KROXIS</span>
+            <span className="font-heading text-3xl font-bold tracking-widest text-white">KROXIS</span>
             <p className="text-secondary-foreground/70 text-base mt-4 leading-relaxed font-medium">
               משקפי בטיחות מקצועיים בתקנים בינלאומיים. הגנה, נוחות ואיכות ללא פשרות.
             </p>
