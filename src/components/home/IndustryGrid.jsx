@@ -4,10 +4,10 @@ import { HardHat, FlaskConical, TreePine, Wrench, ChevronRight } from 'lucide-re
 import { motion } from 'framer-motion';
 
 const industries = [
-  { label: 'בנייה ותשתיות', desc: 'הגנה מפגיעות, אבק וחלקיקים באתרי בנייה', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80' },
-  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&q=80' },
-  { label: 'עבודות שטח', desc: 'עדשות מקוטבות לעבודה ממושכת בשמש', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80' },
-  { label: 'תעשייה כללית', desc: 'משקפי מגן לשימוש יומיומי בכל סביבת עבודה', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80' },
+  { label: 'בנייה ותשתיות', desc: 'הגנה מפגיעות, אבק וחלקיקים באתרי בנייה', icon: HardHat, category: 'construction', image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80' },
+  { label: 'מעבדות ורפואה', desc: 'עדשות נגד אדים וכימיקלים לסביבות סטריליות', icon: FlaskConical, category: 'lab', image: 'https://images.unsplash.com/photo-1581093458791-9d42e3c2fd45?w=800&q=80' },
+  { label: 'עבודות שטח', desc: 'עדשות מקוטבות לעבודה ממושכת בשמש', icon: TreePine, category: 'outdoor', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80' },
+  { label: 'תעשייה כללית', desc: 'משקפי מגן לשימוש יומיומי בכל סביבת עבודה', icon: Wrench, category: 'general', image: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&q=80' },
 ];
 
 export default function IndustryGrid() {

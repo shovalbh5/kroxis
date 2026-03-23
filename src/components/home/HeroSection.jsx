@@ -10,8 +10,8 @@ export default function HeroSection({ heroImage }) {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
-          alt="Safety eyewear"
+          src="https://images.unsplash.com/photo-1504917595217-d4dc5ede4f22?w=1920&q=80"
+          alt="Construction worker with safety gear"
           className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
