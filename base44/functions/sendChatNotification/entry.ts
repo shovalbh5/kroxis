@@ -12,9 +12,7 @@ Deno.serve(async (req) => {
     return Response.json({ error: 'Missing message' }, { status: 400 });
   }
 
-  // Send WhatsApp notification to owner
-  const text = `💬 הודעה חדשה מהאתר!\n\nשם: ${visitorName}\nהודעה: ${message}`;
-
+  // Use template message - always works (no 24h restriction)
   const response = await fetch(
     `https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`,
     {
@@ -26,8 +24,11 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         messaging_product: "whatsapp",
         to: OWNER_PHONE,
-        type: "text",
-        text: { body: text },
+        type: "template",
+        template: {
+          name: "hello_world",
+          language: { code: "en_US" },
+        },
       }),
     }
   );
