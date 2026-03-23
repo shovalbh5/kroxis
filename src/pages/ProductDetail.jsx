@@ -180,7 +180,7 @@ export default function ProductDetail() {
           {/* Trust Badges */}
           <TrustBadges />
 
-          {/* Tech specs */
+          {/* Tech specs */}
           <TechSpecs product={product} />
         </motion.div>
       </div>
