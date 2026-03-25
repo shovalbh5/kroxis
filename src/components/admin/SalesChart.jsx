@@ -16,8 +16,8 @@ export default function SalesChart({ orders }) {
   }, [orders]);
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <h3 className="font-heading text-lg font-bold mb-4">מכירות - 7 ימים אחרונים</h3>
+    <div className="bg-background border border-border/50 rounded-2xl p-6 sm:p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
+      <h3 className="font-heading text-lg font-bold mb-6 tracking-tight border-b border-border/50 pb-4">מכירות - 7 ימים אחרונים</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>

@@ -95,21 +95,16 @@ export default function AdminDashboard() {
         />
 
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
-          <SalesChart orders={orders} />
-          <TopProducts orders={orders} products={products} />
-        </div>
-
-        {/* Second Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
-          <LowStockAlerts products={products} />
-          <B2bSplit orders={orders} />
-          <div className="lg:col-span-1" />
-        </div>
-
-        {/* Orders Table */}
-        <div className="mt-6">
-          <RecentOrders orders={orders} />
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
+          <div className="xl:col-span-2 space-y-6">
+            <SalesChart orders={orders} />
+            <RecentOrders orders={orders} />
+          </div>
+          <div className="space-y-6">
+            <LowStockAlerts products={products} />
+            <TopProducts orders={orders} products={products} />
+            <B2bSplit orders={orders} />
+          </div>
         </div>
       </div>
     </div>

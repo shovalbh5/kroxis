@@ -4,14 +4,14 @@ import { DollarSign, ShoppingBag, Users, TrendingUp, TrendingDown } from 'lucide
 function StatCard({ label, value, change, icon: Icon, changeLabel }) {
   const isPositive = change >= 0;
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-background border border-border/50 rounded-2xl p-6 shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+      <div className="flex items-center justify-between mb-4">
         <span className="text-sm text-muted-foreground font-medium">{label}</span>
-        <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-primary" />
+        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+          <Icon className="w-5 h-5 text-primary" />
         </div>
       </div>
-      <div className="text-2xl sm:text-3xl font-heading font-bold">{value}</div>
+      <div className="text-3xl sm:text-4xl font-heading font-bold tracking-tight text-foreground">{value}</div>
       {change !== undefined && (
         <div className={`flex items-center gap-1 mt-2 text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
           {isPositive ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
