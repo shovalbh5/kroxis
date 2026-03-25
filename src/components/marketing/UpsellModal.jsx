@@ -47,12 +47,7 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl p-0 overflow-hidden">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-muted transition-colors"
-        >
-          <X className="w-4 h-4" />
-        </button>
+
 
         <div className="p-6 sm:p-8">
           {/* Success message */}
