@@ -25,6 +25,7 @@ import AdminOrders from '@/pages/admin/AdminOrders';
 import AdminCustomers from '@/pages/admin/AdminCustomers';
 import AdminCoupons from '@/pages/admin/AdminCoupons';
 import AdminBlog from '@/pages/admin/AdminBlog';
+import AdminSettings from '@/pages/admin/AdminSettings';
 import WhatsAppChat from '@/pages/admin/WhatsAppChat';
 import LiveChatAdmin from '@/pages/admin/LiveChatAdmin';
 import Warranty from '@/pages/Warranty';
@@ -94,6 +95,7 @@ const AuthenticatedApp = () => {
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="coupons" element={<AdminCoupons />} />
           <Route path="blog" element={<AdminBlog />} />
+          <Route path="settings" element={<AdminSettings />} />
           <Route path="whatsapp" element={<WhatsAppChat />} />
           <Route path="livechat" element={<LiveChatAdmin />} />
         </Route>

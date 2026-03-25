@@ -10,6 +10,7 @@ import {
   FileText, 
   MessageCircle, 
   MessageSquare,
+  Settings,
   LogOut,
   Menu,
   X
@@ -25,6 +26,7 @@ const navItems = [
   { path: '/admin/blog', icon: FileText, label: 'ניהול בלוג' },
   { path: '/admin/whatsapp', icon: MessageCircle, label: 'וואטסאפ' },
   { path: '/admin/livechat', icon: MessageSquare, label: 'צ\'אט חי' },
+  { path: '/admin/settings', icon: Settings, label: 'הגדרות חנות' },
 ];
 
 export default function AdminLayout() {

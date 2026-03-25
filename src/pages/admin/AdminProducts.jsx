@@ -6,11 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/use-toast';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export default function AdminProducts() {
   const [search, setSearch] = useState('');
   const [editingProduct, setEditingProduct] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [description, setDescription] = useState('');
+  const [longDescription, setLongDescription] = useState('');
   const queryClient = useQueryClient();
 
   const { data: products = [], isLoading } = useQuery({
@@ -49,19 +53,28 @@ export default function AdminProducts() {
 
   const handleEdit = (product) => {
     setEditingProduct(product);
+    setDescription(product.description || '');
+    setLongDescription(product.long_description || '');
     setIsDialogOpen(true);
   };
 
   const handleCreate = () => {
     setEditingProduct({
-      title: '', slug: '', price: 0, category: 'general', images: [], stock_level: 10
+      title: '', slug: '', price: 0, category: 'general', images: [], stock_level: 10, is_featured: false, is_bestseller: false
     });
+    setDescription('');
+    setLongDescription('');
     setIsDialogOpen(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    
+    // Parse multiple images separated by comma or newline
+    const imagesRaw = formData.get('images') || '';
+    const imagesArray = imagesRaw.split(/[\n,]+/).map(i => i.trim()).filter(i => i.length > 0);
+
     const data = {
       ...editingProduct,
       title: formData.get('title'),
@@ -70,7 +83,11 @@ export default function AdminProducts() {
       compare_at_price: parseFloat(formData.get('compare_at_price')) || undefined,
       category: formData.get('category'),
       stock_level: parseInt(formData.get('stock_level'), 10),
-      images: formData.get('image') ? [formData.get('image')] : editingProduct?.images || []
+      images: imagesArray.length > 0 ? imagesArray : editingProduct?.images || [],
+      description: description,
+      long_description: longDescription,
+      is_featured: formData.get('is_featured') === 'on',
+      is_bestseller: formData.get('is_bestseller') === 'on'
     };
     saveMutation.mutate(data);
   };
@@ -188,12 +205,44 @@ export default function AdminProducts() {
                 <label className="text-sm font-medium">מלאי</label>
                 <Input name="stock_level" type="number" defaultValue={editingProduct?.stock_level} required />
               </div>
+              
+              <div className="col-span-2 flex gap-6 mt-2">
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" id="is_featured" name="is_featured" defaultChecked={editingProduct?.is_featured} className="w-4 h-4" />
+                  <label htmlFor="is_featured" className="text-sm font-medium">מוצר מומלץ (Featured)</label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" id="is_bestseller" name="is_bestseller" defaultChecked={editingProduct?.is_bestseller} className="w-4 h-4" />
+                  <label htmlFor="is_bestseller" className="text-sm font-medium">רב מכר (Bestseller)</label>
+                </div>
+              </div>
+
               <div className="col-span-2 space-y-2">
-                <label className="text-sm font-medium">קישור לתמונה ראשית</label>
-                <Input name="image" defaultValue={editingProduct?.images?.[0] || ''} dir="ltr" className="text-left" />
+                <label className="text-sm font-medium">קישורים לתמונות (הפרד בפסיק או שורה חדשה)</label>
+                <textarea 
+                  name="images" 
+                  defaultValue={editingProduct?.images?.join('\n') || ''} 
+                  dir="ltr" 
+                  className="w-full p-2 border border-input rounded-md text-left text-sm h-24 font-mono" 
+                  placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"
+                />
+              </div>
+
+              <div className="col-span-2 space-y-2">
+                <label className="text-sm font-medium">תיאור קצר</label>
+                <div className="bg-background rounded-md" dir="ltr">
+                  <ReactQuill theme="snow" value={description} onChange={setDescription} className="h-32 mb-12 text-right" />
+                </div>
+              </div>
+
+              <div className="col-span-2 space-y-2 mt-8">
+                <label className="text-sm font-medium">תיאור מלא (מופיע בעמוד המוצר)</label>
+                <div className="bg-background rounded-md" dir="ltr">
+                  <ReactQuill theme="snow" value={longDescription} onChange={setLongDescription} className="h-48 mb-12 text-right" />
+                </div>
               </div>
             </div>
-            <div className="flex justify-end gap-3 pt-4 border-t border-border">
+            <div className="flex justify-end gap-3 pt-8 border-t border-border">
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>ביטול</Button>
               <Button type="submit" disabled={saveMutation.isPending}>
                 {saveMutation.isPending ? 'שומר...' : 'שמור מוצר'}
