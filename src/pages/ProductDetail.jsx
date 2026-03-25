@@ -128,9 +128,9 @@ export default function ProductDetail() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="font-heading text-3xl">${product.price?.toFixed(2)}</span>
+            <span className="font-heading text-3xl">₪{product.price?.toFixed(2)}</span>
             {product.compare_at_price && product.compare_at_price > product.price && (
-              <span className="text-lg text-muted-foreground line-through">${product.compare_at_price.toFixed(2)}</span>
+              <span className="text-lg text-muted-foreground line-through">₪{product.compare_at_price.toFixed(2)}</span>
             )}
           </div>
 
@@ -173,7 +173,7 @@ export default function ProductDetail() {
             </div>
             <Button onClick={handleAddToCart} size="lg" className="flex-1 h-12 font-heading uppercase tracking-wider text-sm">
               <ShoppingBag className="w-4 h-4 mr-2" />
-              הוסף לעגלה — ${totalPrice.toFixed(2)}
+              הוסף לעגלה — ₪{totalPrice.toFixed(2)}
             </Button>
           </div>
 

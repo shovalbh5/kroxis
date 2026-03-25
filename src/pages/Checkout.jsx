@@ -151,7 +151,7 @@ export default function Checkout() {
 
           <Button type="submit" disabled={isSubmitting || !agreedToTerms} className="w-full h-13 font-heading uppercase tracking-wider text-sm">
             <Lock className="w-4 h-4 mr-2" />
-            {isSubmitting ? 'מעבד...' : `ביצוע הזמנה — $${total.toFixed(2)}`}
+            {isSubmitting ? 'מעבד...' : `ביצוע הזמנה — ₪${total.toFixed(2)}`}
           </Button>
 
           <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1">
@@ -172,7 +172,7 @@ export default function Checkout() {
                       <p className="text-xs text-primary capitalize">{item.lens_option.replace('_', ' ')}</p>
                     )}
                   </div>
-                  <span>${((item.price + item.lens_surcharge) * item.quantity).toFixed(2)}</span>
+                  <span>₪{((item.price + item.lens_surcharge) * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -188,16 +188,16 @@ export default function Checkout() {
             </div>
 
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-muted-foreground">סכום ביניים</span><span>${subtotal.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">סכום ביניים</span><span>₪{subtotal.toFixed(2)}</span></div>
               {couponDiscount > 0 && (
-                <div className="flex justify-between text-primary"><span>הנחת קופון</span><span>-${couponDiscount.toFixed(2)}</span></div>
+                <div className="flex justify-between text-primary"><span>הנחת קופון</span><span>-₪{couponDiscount.toFixed(2)}</span></div>
               )}
-              <div className="flex justify-between"><span className="text-muted-foreground">משלוח</span><span>{(freeShipping || isFreeShippingCoupon) ? 'חינם' : `$${shippingCost.toFixed(2)}`}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">משלוח</span><span>{(freeShipping || isFreeShippingCoupon) ? 'חינם' : `₪${shippingCost.toFixed(2)}`}</span></div>
             </div>
             <Separator className="my-4" />
             <div className="flex justify-between font-heading text-lg">
               <span>סה״כ</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₪{total.toFixed(2)}</span>
             </div>
           </div>
         </div>

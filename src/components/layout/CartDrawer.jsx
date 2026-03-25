@@ -53,7 +53,7 @@ export default function CartDrawer() {
                 <Truck className="w-3.5 h-3.5 text-primary" />
                 {freeShipping
                   ? <span className="text-primary font-medium">זכית במשלוח חינם!</span>
-                  : <span className="text-muted-foreground">הוסף ${(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} למשלוח חינם</span>
+                  : <span className="text-muted-foreground">הוסף ₪{(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} למשלוח חינם</span>
                 }
               </div>
               <Progress value={shippingProgress} className="h-1.5" />
@@ -89,7 +89,7 @@ export default function CartDrawer() {
                         <div className="flex-1 min-w-0">
                           <h4 className="font-medium text-sm truncate">{item.title}</h4>
                           {item.lens_option !== 'standard' && (
-                            <p className="text-xs text-primary capitalize">{item.lens_option.replace('_', ' ')} (+${item.lens_surcharge})</p>
+                            <p className="text-xs text-primary capitalize">{item.lens_option.replace('_', ' ')} (+₪{item.lens_surcharge})</p>
                           )}
                           <div className="flex items-center justify-between mt-2">
                             <div className="flex items-center gap-1.5 bg-muted rounded-md">
@@ -107,7 +107,7 @@ export default function CartDrawer() {
                                 <Plus className="w-3.5 h-3.5" />
                               </button>
                             </div>
-                            <span className="font-medium text-sm">${lineTotal.toFixed(2)}</span>
+                            <span className="font-medium text-sm">₪{lineTotal.toFixed(2)}</span>
                           </div>
                         </div>
                         <button
@@ -127,7 +127,7 @@ export default function CartDrawer() {
                       {crossSells.map(cs => (
                         <div key={cs.name} className="flex items-center justify-between p-2 bg-muted/50 rounded-md">
                           <span className="text-sm">{cs.name}</span>
-                          <span className="text-sm font-medium text-primary">${cs.price}</span>
+                          <span className="text-sm font-medium text-primary">₪{cs.price}</span>
                         </div>
                       ))}
                     </div>
@@ -141,7 +141,7 @@ export default function CartDrawer() {
               <div className="border-t border-border p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">סכום ביניים</span>
-                  <span className="text-lg font-bold">${subtotal.toFixed(2)}</span>
+                  <span className="text-lg font-bold">₪{subtotal.toFixed(2)}</span>
                 </div>
                 <Button asChild className="w-full h-12 font-heading uppercase tracking-wider text-sm" onClick={() => setIsCartOpen(false)}>
                   <Link to="/checkout">לתשלום</Link>

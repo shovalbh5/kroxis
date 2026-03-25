@@ -55,7 +55,7 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{product.title}</p>
-                <p className="text-xs text-muted-foreground">${product.price?.toFixed(2)}</p>
+                <p className="text-xs text-muted-foreground">₪{product.price?.toFixed(2)}</p>
               </div>
             </div>
             {idx === 0 && (
@@ -69,10 +69,10 @@ export default function FrequentlyBoughtTogether({ mainProduct, recommendations 
         <div>
           <p className="text-sm font-medium">סה״כ ל-{selectedProducts.length} פריטים</p>
           {savings > 0 && (
-            <p className="text-xs text-primary">חוסך ${savings.toFixed(2)}</p>
+            <p className="text-xs text-primary">חוסך ₪{savings.toFixed(2)}</p>
           )}
         </div>
-        <span className="font-heading text-xl">${totalPrice.toFixed(2)}</span>
+        <span className="font-heading text-xl">₪{totalPrice.toFixed(2)}</span>
       </div>
 
       <Button onClick={handleAddAll} className="w-full" disabled={selectedProducts.length === 0}>

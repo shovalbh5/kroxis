@@ -34,7 +34,7 @@ export default function LensConfigurator({ selected, onChange }) {
               </div>
             </div>
             {opt.price > 0 && (
-              <span className="text-sm font-medium text-primary">+${opt.price}</span>
+              <span className="text-sm font-medium text-primary">+₪{opt.price}</span>
             )}
           </button>
         ))}

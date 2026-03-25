@@ -59,9 +59,9 @@ export default function ProductCard({ product }) {
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground/80 line-clamp-1 mb-2 sm:mb-3 font-medium hidden sm:block">{product.description}</p>
             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-              <span className="font-heading text-sm sm:text-lg">${product.price?.toFixed(2)}</span>
+              <span className="font-heading text-sm sm:text-lg">₪{product.price?.toFixed(2)}</span>
               {product.compare_at_price && product.compare_at_price > product.price && (
-                <span className="text-[10px] sm:text-xs text-muted-foreground line-through">${product.compare_at_price.toFixed(2)}</span>
+                <span className="text-[10px] sm:text-xs text-muted-foreground line-through">₪{product.compare_at_price.toFixed(2)}</span>
               )}
             </div>
             {product.b2b_bulk_discount_threshold && (

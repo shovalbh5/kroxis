@@ -97,7 +97,7 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
                   <h4 className="font-medium text-sm mb-1">{upsell.title}</h4>
                   <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{upsell.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="font-heading text-lg">${upsell.price}</span>
+                    <span className="font-heading text-lg">₪{upsell.price}</span>
                     <Button
                       size="sm"
                       variant="outline"
