@@ -93,66 +93,71 @@ export default function AdminProducts() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold">ניהול מוצרים</h1>
-        <Button onClick={handleCreate}><Plus className="w-4 h-4 mr-2" /> הוסף מוצר חדש</Button>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">ניהול מוצרים</h1>
+          <p className="text-muted-foreground mt-1">נהל את הקטלוג, המלאי והמחירים של החנות.</p>
+        </div>
+        <Button onClick={handleCreate} className="rounded-full px-6 shadow-md hover:shadow-lg transition-all"><Plus className="w-4 h-4 mr-2" /> מוצר חדש</Button>
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-4">
-        <div className="relative max-w-md mb-6">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input 
-            placeholder="חיפוש מוצר..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pr-10"
-          />
+      <div className="bg-background rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50 overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-border/50 bg-muted/10">
+          <div className="relative max-w-md">
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input 
+              placeholder="חיפוש מוצר לפי שם או מזהה..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pr-10 bg-background border-border/50 rounded-xl h-11 focus-visible:ring-primary/20"
+            />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right">
             <thead>
-              <tr className="border-b border-border text-muted-foreground text-sm">
-                <th className="pb-3 font-medium">תמונה</th>
-                <th className="pb-3 font-medium">שם מוצר</th>
-                <th className="pb-3 font-medium">מחיר</th>
-                <th className="pb-3 font-medium">מלאי</th>
-                <th className="pb-3 font-medium">קטגוריה</th>
-                <th className="pb-3 font-medium">פעולות</th>
+              <tr className="border-b border-border/50 text-muted-foreground text-xs uppercase tracking-wider bg-muted/5">
+                <th className="px-6 py-4 font-medium">תמונה</th>
+                <th className="px-6 py-4 font-medium">שם מוצר</th>
+                <th className="px-6 py-4 font-medium">מחיר</th>
+                <th className="px-6 py-4 font-medium">מלאי</th>
+                <th className="px-6 py-4 font-medium">קטגוריה</th>
+                <th className="px-6 py-4 font-medium">פעולות</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/50">
               {isLoading ? (
                 <tr><td colSpan="6" className="py-8 text-center text-muted-foreground">טוען מוצרים...</td></tr>
               ) : filteredProducts.length === 0 ? (
                 <tr><td colSpan="6" className="py-8 text-center text-muted-foreground">לא נמצאו מוצרים</td></tr>
               ) : (
                 filteredProducts.map(product => (
-                  <tr key={product.id} className="group hover:bg-muted/50 transition-colors">
-                    <td className="py-3">
+                  <tr key={product.id} className="group hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4">
                       {product.images?.[0] ? (
-                        <img src={product.images[0]} alt={product.title} className="w-12 h-12 rounded object-cover border border-border" />
+                        <img src={product.images[0]} alt={product.title} className="w-14 h-14 rounded-xl object-cover border border-border/50 shadow-sm" />
                       ) : (
-                        <div className="w-12 h-12 rounded bg-muted flex items-center justify-center border border-border">
+                        <div className="w-14 h-14 rounded-xl bg-muted/50 flex items-center justify-center border border-border/50">
                           <ImageIcon className="w-5 h-5 text-muted-foreground" />
                         </div>
                       )}
                     </td>
-                    <td className="py-3 font-medium">{product.title}</td>
-                    <td className="py-3">₪{product.price}</td>
-                    <td className="py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${product.stock_level > 10 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    <td className="px-6 py-4 font-medium text-foreground">{product.title}</td>
+                    <td className="px-6 py-4 font-mono text-sm">₪{product.price}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${product.stock_level > 10 ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-red-500/10 text-red-600 dark:text-red-400'}`}>
                         {product.stock_level} יח'
                       </span>
                     </td>
-                    <td className="py-3">{product.category}</td>
-                    <td className="py-3">
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(product)}>
+                    <td className="px-6 py-4 text-muted-foreground text-sm">{product.category}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-primary/10 hover:text-primary" onClick={() => handleEdit(product)}>
                           <Pencil className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => {
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-destructive/70 hover:text-destructive hover:bg-destructive/10" onClick={() => {
                           if (window.confirm('האם אתה בטוח שברצונך למחוק מוצר זה?')) {
                             deleteMutation.mutate(product.id);
                           }

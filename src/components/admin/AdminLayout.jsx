@@ -71,36 +71,43 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 flex" dir="rtl">
+    <div className="min-h-screen bg-[#F5F5F7] dark:bg-background flex font-body selection:bg-primary/20" dir="rtl">
       {/* Mobile Sidebar Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden transition-opacity"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside className={`
-        fixed lg:sticky top-0 right-0 h-screen w-64 bg-secondary text-secondary-foreground z-50
-        transition-transform duration-300 ease-in-out flex flex-col
+        fixed lg:sticky top-0 right-0 h-screen w-64 bg-background/80 backdrop-blur-2xl border-l border-border/50 z-50
+        transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]
         ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
       `}>
-        <div className="p-6 flex items-center justify-between">
-          <Link to="/" className="font-heading text-2xl font-bold text-primary tracking-wider">
+        <div className="p-8 flex items-center justify-between">
+          <Link to="/" className="font-heading text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             KROXIS
           </Link>
-          <button className="lg:hidden" onClick={() => setMobileMenuOpen(false)}>
-            <X className="w-6 h-6" />
+          <button className="lg:hidden text-muted-foreground hover:text-foreground transition-colors" onClick={() => setMobileMenuOpen(false)}>
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="px-6 pb-4 mb-4 border-b border-secondary-foreground/10">
-          <p className="text-sm text-secondary-foreground/60">מחובר כ:</p>
-          <p className="font-medium truncate">{user.full_name || user.email}</p>
+        <div className="px-8 pb-6 mb-2">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary font-medium border border-primary/10">
+              {(user.full_name || user.email).charAt(0).toUpperCase()}
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs text-muted-foreground font-medium mb-0.5">מחובר כ</p>
+              <p className="font-medium text-sm truncate text-foreground">{user.full_name || user.email}</p>
+            </div>
+          </div>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto pb-4 custom-scrollbar">
           {navItems.map((item) => {
             const isActive = item.exact 
               ? location.pathname === item.path 
@@ -112,26 +119,26 @@ export default function AdminLayout() {
                 to={item.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
+                  flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium
                   ${isActive 
-                    ? 'bg-primary text-primary-foreground font-medium' 
-                    : 'text-secondary-foreground/80 hover:bg-secondary-foreground/10 hover:text-secondary-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-[0.98]' 
+                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground hover:scale-[0.98]'
                   }
                 `}
               >
-                <item.icon className="w-5 h-5" />
+                <item.icon className={`w-4 h-4 ${isActive ? 'opacity-100' : 'opacity-70'}`} />
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-secondary-foreground/10">
+        <div className="p-4 mt-auto">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-400 hover:bg-red-400/10 transition-colors"
+            className="flex items-center gap-3 px-4 py-2.5 w-full rounded-xl text-sm font-medium text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-colors"
           >
-            <LogOut className="w-5 h-5" />
+            <LogOut className="w-4 h-4" />
             התנתק
           </button>
         </div>
@@ -140,14 +147,14 @@ export default function AdminLayout() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
-        <header className="lg:hidden bg-background border-b border-border p-4 flex items-center justify-between sticky top-0 z-30">
-          <div className="font-heading text-xl font-bold">ניהול KROXIS</div>
-          <button onClick={() => setMobileMenuOpen(true)}>
-            <Menu className="w-6 h-6" />
+        <header className="lg:hidden bg-background/80 backdrop-blur-xl border-b border-border/50 p-4 flex items-center justify-between sticky top-0 z-30">
+          <div className="font-heading text-lg font-bold">ניהול KROXIS</div>
+          <button onClick={() => setMobileMenuOpen(true)} className="p-2 -mr-2 text-muted-foreground hover:text-foreground">
+            <Menu className="w-5 h-5" />
           </button>
         </header>
 
-        <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-x-hidden">
+        <div className="flex-1 p-4 sm:p-8 lg:p-10 overflow-x-hidden max-w-[1600px] mx-auto w-full">
           <Outlet />
         </div>
       </main>

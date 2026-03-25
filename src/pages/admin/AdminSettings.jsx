@@ -49,18 +49,17 @@ export default function AdminSettings() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Settings className="w-6 h-6" /> הגדרות חנות
-        </h1>
+    <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">הגדרות חנות</h1>
+        <p className="text-muted-foreground">נהל את ההגדרות הכלליות, משלוחים ומיסים של החנות שלך.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         
         {/* פרטי חנות */}
-        <div className="bg-card border border-border rounded-xl p-6">
-          <h2 className="text-lg font-bold mb-4 flex items-center gap-2 border-b border-border pb-2">
+        <div className="bg-background rounded-2xl p-6 sm:p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50">
+          <h2 className="text-lg font-bold mb-6 flex items-center gap-2 border-b border-border/50 pb-4">
             <Phone className="w-5 h-5 text-primary" /> פרטי התקשרות וחנות
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -88,8 +87,8 @@ export default function AdminSettings() {
         </div>
 
         {/* משלוחים */}
-        <div className="bg-card border border-border rounded-xl p-6">
-          <h2 className="text-lg font-bold mb-4 flex items-center gap-2 border-b border-border pb-2">
+        <div className="bg-background rounded-2xl p-6 sm:p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50">
+          <h2 className="text-lg font-bold mb-6 flex items-center gap-2 border-b border-border/50 pb-4">
             <Truck className="w-5 h-5 text-primary" /> הגדרות משלוח
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -106,8 +105,8 @@ export default function AdminSettings() {
         </div>
 
         {/* מיסים */}
-        <div className="bg-card border border-border rounded-xl p-6">
-          <h2 className="text-lg font-bold mb-4 flex items-center gap-2 border-b border-border pb-2">
+        <div className="bg-background rounded-2xl p-6 sm:p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50">
+          <h2 className="text-lg font-bold mb-6 flex items-center gap-2 border-b border-border/50 pb-4">
             <Calculator className="w-5 h-5 text-primary" /> מיסים ומע"מ
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
