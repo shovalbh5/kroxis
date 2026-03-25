@@ -69,7 +69,12 @@ export default function AdminDashboard() {
       <div className="min-h-screen flex items-center justify-center bg-background" dir="rtl">
         <div className="text-center p-8">
           <h1 className="font-heading text-3xl font-bold mb-2">גישה חסומה</h1>
-          <p className="text-muted-foreground">דף זה זמין למנהלים בלבד.</p>
+          <p className="text-muted-foreground mb-6">דף זה זמין למנהלים בלבד.</p>
+          {!user && (
+            <Button onClick={() => base44.auth.redirectToLogin()}>
+              התחבר למערכת
+            </Button>
+          )}
         </div>
       </div>
     );
