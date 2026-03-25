@@ -18,10 +18,10 @@ export default function TopProducts({ orders, products }) {
   const maxQty = top5[0]?.qty || 1;
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-4">
+    <div className="bg-background border border-border/50 rounded-2xl p-6 sm:p-8 shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
+      <div className="flex items-center gap-2 mb-6 border-b border-border/50 pb-4">
         <Trophy className="w-5 h-5 text-primary" />
-        <h3 className="font-heading text-lg font-bold">מוצרים מובילים</h3>
+        <h3 className="font-heading text-lg font-bold tracking-tight">מוצרים מובילים</h3>
       </div>
       <div className="space-y-3">
         {top5.length === 0 && <p className="text-sm text-muted-foreground">אין נתונים עדיין</p>}
