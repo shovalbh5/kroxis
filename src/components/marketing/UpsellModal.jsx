@@ -9,24 +9,24 @@ import { motion } from 'framer-motion';
 const upsellProducts = [
   {
     id: 'upsell-1',
-    title: 'Hard-Shell Protective Case',
+    title: 'נרתיק מגן קשיח',
     price: 19.99,
-    image: '/__generating__/img_case_hardshell.png',
-    description: 'Impact-resistant EVA case with custom foam insert',
+    image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
+    description: 'נרתיק EVA עמיד בפני פגיעות עם ריפוד פנימי',
   },
   {
     id: 'upsell-2',
-    title: 'Anti-Fog Cleaning Kit',
+    title: 'ערכת ניקוי אנטי-פוג',
     price: 12.99,
-    image: '/__generating__/img_cleaning_kit.png',
-    description: 'Professional-grade spray + microfiber cloth pack',
+    image: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop',
+    description: 'ספריי מקצועי + חבילת מטליות מיקרופייבר',
   },
   {
     id: 'upsell-3',
-    title: 'Lens Replacement Set',
+    title: 'סט עדשות חלופיות',
     price: 29.99,
-    image: '/__generating__/img_lens_replacement.png',
-    description: 'Spare polarized lenses for quick swap',
+    image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
+    description: 'עדשות פולאריות חלופיות להחלפה מהירה',
   },
 ];
 
@@ -64,19 +64,19 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
               <CheckCircle className="w-8 h-8 text-primary" />
             </div>
-            <h2 className="font-heading text-2xl uppercase tracking-tight mb-2">Added to Cart!</h2>
+            <h2 className="font-heading text-2xl uppercase tracking-tight mb-2">נוסף לעגלה!</h2>
             <p className="text-muted-foreground">
-              {addedProduct?.title || 'Product'} is ready for checkout
+              {addedProduct?.title || 'מוצר'} מוכן לתשלום
             </p>
           </motion.div>
 
           {/* Upsell section */}
           <div className="border-t border-border pt-6">
             <h3 className="font-heading text-sm uppercase tracking-widest text-muted-foreground mb-4 text-center">
-              Complete Your Protection
+              השלם את ההגנה שלך
             </h3>
             <p className="text-center text-sm text-muted-foreground mb-6">
-              Workers in your industry also bought:
+              אנשי מקצוע בתחום שלך גם קנו:
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -104,7 +104,7 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
                       className="h-8 text-xs"
                       onClick={() => handleAddUpsell(upsell)}
                     >
-                      <Plus className="w-3 h-3 mr-1" /> Add
+                      <Plus className="w-3 h-3 mr-1" /> הוסף
                     </Button>
                   </div>
                 </motion.div>
@@ -115,10 +115,10 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
           {/* Actions */}
           <div className="flex gap-3 mt-6">
             <Button variant="outline" onClick={onClose} className="flex-1">
-              Continue Shopping
+              המשך קנייה
             </Button>
             <Button asChild className="flex-1" onClick={onClose}>
-              <Link to="/checkout">Proceed to Checkout</Link>
+              <Link to="/checkout">לתשלום</Link>
             </Button>
           </div>
         </div>
