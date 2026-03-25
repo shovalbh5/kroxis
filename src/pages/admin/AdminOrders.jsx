@@ -64,56 +64,59 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">ניהול הזמנות</h1>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">ניהול הזמנות</h1>
+        <p className="text-muted-foreground">צפה, נהל ועדכן סטטוסים של הזמנות לקוחות.</p>
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-4">
-        <div className="relative max-w-md mb-6">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input 
-            placeholder="חיפוש לפי מספר הזמנה, שם או אימייל..." 
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pr-10"
-          />
+      <div className="bg-background rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50 overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-border/50 bg-muted/5">
+          <div className="relative max-w-md">
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input 
+              placeholder="חיפוש לפי מספר הזמנה, שם או אימייל..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pr-10 bg-background border-border/50 rounded-xl h-11 focus-visible:ring-primary/20"
+            />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right">
             <thead>
-              <tr className="border-b border-border text-muted-foreground text-sm">
-                <th className="pb-3 font-medium">מספר הזמנה</th>
-                <th className="pb-3 font-medium">תאריך</th>
-                <th className="pb-3 font-medium">לקוח</th>
-                <th className="pb-3 font-medium">סכום</th>
-                <th className="pb-3 font-medium">סטטוס</th>
-                <th className="pb-3 font-medium">פעולות</th>
+              <tr className="border-b border-border/50 text-muted-foreground text-xs uppercase tracking-wider bg-muted/5">
+                <th className="px-6 py-4 font-medium">מספר הזמנה</th>
+                <th className="px-6 py-4 font-medium">תאריך</th>
+                <th className="px-6 py-4 font-medium">לקוח</th>
+                <th className="px-6 py-4 font-medium">סכום</th>
+                <th className="px-6 py-4 font-medium">סטטוס</th>
+                <th className="px-6 py-4 font-medium">פעולות</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/50">
               {isLoading ? (
                 <tr><td colSpan="6" className="py-8 text-center text-muted-foreground">טוען הזמנות...</td></tr>
               ) : filteredOrders.length === 0 ? (
                 <tr><td colSpan="6" className="py-8 text-center text-muted-foreground">לא נמצאו הזמנות</td></tr>
               ) : (
                 filteredOrders.map(order => (
-                  <tr key={order.id} className="group hover:bg-muted/50 transition-colors">
-                    <td className="py-3 font-mono text-sm">#{order.id.slice(-6).toUpperCase()}</td>
-                    <td className="py-3 text-sm">{format(new Date(order.created_date), 'dd/MM/yyyy HH:mm')}</td>
-                    <td className="py-3">
-                      <div className="font-medium">{order.customer_name}</div>
-                      <div className="text-xs text-muted-foreground">{order.customer_email}</div>
+                  <tr key={order.id} className="group hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4 font-mono text-sm text-muted-foreground">#{order.id.slice(-6).toUpperCase()}</td>
+                    <td className="px-6 py-4 text-sm text-foreground">{format(new Date(order.created_date), 'dd/MM/yyyy HH:mm')}</td>
+                    <td className="px-6 py-4">
+                      <div className="font-medium text-foreground">{order.customer_name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{order.customer_email}</div>
                     </td>
-                    <td className="py-3 font-medium">₪{order.total?.toFixed(2)}</td>
-                    <td className="py-3">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[order.status || 'pending']}`}>
+                    <td className="px-6 py-4 font-medium text-foreground">₪{order.total?.toFixed(2)}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.status || 'pending']}`}>
                         {statusTranslations[order.status || 'pending']}
                       </span>
                     </td>
-                    <td className="py-3">
-                      <Button variant="outline" size="sm" onClick={() => setSelectedOrder(order)}>
+                    <td className="px-6 py-4">
+                      <Button variant="ghost" size="sm" className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors" onClick={() => setSelectedOrder(order)}>
                         <Eye className="w-4 h-4 ml-2" /> צפה ונהל
                       </Button>
                     </td>

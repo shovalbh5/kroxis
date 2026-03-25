@@ -72,46 +72,49 @@ export default function AdminBlog() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">ניהול בלוג</h1>
-        <Button onClick={handleCreate}><Plus className="w-4 h-4 mr-2" /> פוסט חדש</Button>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">ניהול בלוג</h1>
+          <p className="text-muted-foreground">צור ונהל מאמרים לבלוג של החנות.</p>
+        </div>
+        <Button onClick={handleCreate} className="rounded-full px-6 shadow-md hover:shadow-lg transition-all"><Plus className="w-4 h-4 mr-2" /> פוסט חדש</Button>
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-4">
+      <div className="bg-background rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right">
             <thead>
-              <tr className="border-b border-border text-muted-foreground text-sm">
-                <th className="pb-3 font-medium">כותרת</th>
-                <th className="pb-3 font-medium">מחבר</th>
-                <th className="pb-3 font-medium">תאריך</th>
-                <th className="pb-3 font-medium">סטטוס</th>
-                <th className="pb-3 font-medium">פעולות</th>
+              <tr className="border-b border-border/50 text-muted-foreground text-xs uppercase tracking-wider bg-muted/5">
+                <th className="px-6 py-4 font-medium">כותרת</th>
+                <th className="px-6 py-4 font-medium">מחבר</th>
+                <th className="px-6 py-4 font-medium">תאריך</th>
+                <th className="px-6 py-4 font-medium">סטטוס</th>
+                <th className="px-6 py-4 font-medium">פעולות</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/50">
               {isLoading ? (
                 <tr><td colSpan="5" className="py-8 text-center text-muted-foreground">טוען פוסטים...</td></tr>
               ) : posts.length === 0 ? (
                 <tr><td colSpan="5" className="py-8 text-center text-muted-foreground">לא נמצאו פוסטים בבלוג</td></tr>
               ) : (
                 posts.map(post => (
-                  <tr key={post.id} className="group hover:bg-muted/50 transition-colors">
-                    <td className="py-3 font-medium">{post.title}</td>
-                    <td className="py-3 text-sm">{post.author}</td>
-                    <td className="py-3 text-sm">{format(new Date(post.created_date), 'dd/MM/yyyy')}</td>
-                    <td className="py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs flex items-center gap-1 w-fit ${post.is_published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                        {post.is_published ? <><Globe className="w-3 h-3"/> פורסם</> : 'טיוטה'}
+                  <tr key={post.id} className="group hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4 font-medium text-foreground">{post.title}</td>
+                    <td className="px-6 py-4 text-sm text-muted-foreground">{post.author}</td>
+                    <td className="px-6 py-4 text-sm text-muted-foreground">{format(new Date(post.created_date), 'dd/MM/yyyy')}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 w-fit ${post.is_published ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400'}`}>
+                        {post.is_published ? <><Globe className="w-3.5 h-3.5"/> פורסם</> : 'טיוטה'}
                       </span>
                     </td>
-                    <td className="py-3">
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(post)}>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-primary/10 hover:text-primary" onClick={() => handleEdit(post)}>
                           <Pencil className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => {
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-destructive/70 hover:text-destructive hover:bg-destructive/10" onClick={() => {
                           if (window.confirm('למחוק את הפוסט?')) deleteMutation.mutate(post.id);
                         }}>
                           <Trash2 className="w-4 h-4" />

@@ -48,53 +48,56 @@ export default function AdminCoupons() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">קופונים ומבצעים</h1>
-        <Button onClick={() => setIsDialogOpen(true)}><Plus className="w-4 h-4 mr-2" /> צור קופון חדש</Button>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">קופונים ומבצעים</h1>
+          <p className="text-muted-foreground">נהל קודי הנחה, מבצעים וקופונים ללקוחות.</p>
+        </div>
+        <Button onClick={() => setIsDialogOpen(true)} className="rounded-full px-6 shadow-md hover:shadow-lg transition-all"><Plus className="w-4 h-4 mr-2" /> צור קופון חדש</Button>
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-4">
+      <div className="bg-background rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.04)] border border-border/50 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right">
             <thead>
-              <tr className="border-b border-border text-muted-foreground text-sm">
-                <th className="pb-3 font-medium">קוד קופון</th>
-                <th className="pb-3 font-medium">סוג</th>
-                <th className="pb-3 font-medium">ערך</th>
-                <th className="pb-3 font-medium">מינימום הזמנה</th>
-                <th className="pb-3 font-medium">שימושים</th>
-                <th className="pb-3 font-medium">סטטוס</th>
-                <th className="pb-3 font-medium">פעולות</th>
+              <tr className="border-b border-border/50 text-muted-foreground text-xs uppercase tracking-wider bg-muted/5">
+                <th className="px-6 py-4 font-medium">קוד קופון</th>
+                <th className="px-6 py-4 font-medium">סוג</th>
+                <th className="px-6 py-4 font-medium">ערך</th>
+                <th className="px-6 py-4 font-medium">מינימום הזמנה</th>
+                <th className="px-6 py-4 font-medium">שימושים</th>
+                <th className="px-6 py-4 font-medium">סטטוס</th>
+                <th className="px-6 py-4 font-medium">פעולות</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/50">
               {isLoading ? (
                 <tr><td colSpan="7" className="py-8 text-center text-muted-foreground">טוען קופונים...</td></tr>
               ) : coupons.length === 0 ? (
                 <tr><td colSpan="7" className="py-8 text-center text-muted-foreground">לא נמצאו קופונים</td></tr>
               ) : (
                 coupons.map(coupon => (
-                  <tr key={coupon.id} className="group hover:bg-muted/50 transition-colors">
-                    <td className="py-3 font-mono font-bold text-primary">{coupon.code}</td>
-                    <td className="py-3">
+                  <tr key={coupon.id} className="group hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4 font-mono font-bold text-primary bg-primary/5 rounded-r-xl my-2 inline-block">{coupon.code}</td>
+                    <td className="px-6 py-4 text-foreground">
                       {coupon.type === 'percentage' ? 'אחוזים (%)' : 
                        coupon.type === 'fixed_amount' ? 'סכום קבוע (₪)' : 
                        coupon.type === 'free_shipping' ? 'משלוח חינם' : coupon.type}
                     </td>
-                    <td className="py-3 font-medium">
+                    <td className="px-6 py-4 font-medium text-foreground">
                       {coupon.type === 'percentage' ? `${coupon.value}%` : 
                        coupon.type === 'fixed_amount' ? `₪${coupon.value}` : '-'}
                     </td>
-                    <td className="py-3">₪{coupon.min_order_amount || 0}</td>
-                    <td className="py-3">{coupon.used_count || 0}</td>
-                    <td className="py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${coupon.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    <td className="px-6 py-4 text-muted-foreground">₪{coupon.min_order_amount || 0}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{coupon.used_count || 0}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${coupon.is_active ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-red-500/10 text-red-600 dark:text-red-400'}`}>
                         {coupon.is_active ? 'פעיל' : 'לא פעיל'}
                       </span>
                     </td>
-                    <td className="py-3">
-                      <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => {
+                    <td className="px-6 py-4">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full text-destructive/70 hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => {
                         if (window.confirm('למחוק את הקופון?')) deleteMutation.mutate(coupon.id);
                       }}>
                         <Trash2 className="w-4 h-4" />
