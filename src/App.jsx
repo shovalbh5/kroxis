@@ -35,6 +35,7 @@ import FAQ from '@/pages/FAQ';
 import TermsOfService from '@/pages/TermsOfService';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ReturnPolicy from '@/pages/ReturnPolicy';
+import MyAccount from '@/pages/MyAccount';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
 const AuthenticatedApp = () => {
@@ -87,6 +88,7 @@ const AuthenticatedApp = () => {
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/returns" element={<ReturnPolicy />} />
+          <Route path="/account" element={<MyAccount />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

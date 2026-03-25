@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ShoppingBag, Menu, X, ChevronDown, HardHat, FlaskConical, TreePine, Shield, Globe } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, ChevronDown, HardHat, FlaskConical, TreePine, Shield, Globe, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -137,6 +137,9 @@ export default function Header() {
             >
               {locale === 'he' ? 'EN' : 'עב'}
             </button>
+            <Link to={`${prefix}/account`} className="text-secondary-foreground/80 hover:text-primary transition-all duration-300 hover:scale-110 p-2">
+              <User className="w-5 h-5" />
+            </Link>
             <button onClick={() => setSearchOpen(!searchOpen)} className="text-secondary-foreground/80 hover:text-primary transition-all duration-300 hover:scale-110 p-2">
               <Search className="w-5 h-5" />
             </button>
