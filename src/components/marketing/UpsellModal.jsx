@@ -74,33 +74,35 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
               אנשי מקצוע בתחום שלך גם קנו:
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {upsellProducts.map((upsell) => (
                 <motion.div
                   key={upsell.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 border border-border rounded-lg hover:border-primary/50 transition-all group"
+                  className="p-3 sm:p-4 border border-border rounded-lg hover:border-primary/50 transition-all group flex sm:block items-center gap-3 sm:gap-0"
                 >
-                  <div className="aspect-square bg-muted rounded-md mb-3 overflow-hidden">
+                  <div className="w-20 h-20 sm:w-full sm:h-auto sm:aspect-square bg-muted rounded-md mb-0 sm:mb-3 overflow-hidden shrink-0">
                     <img
                       src={upsell.image}
                       alt={upsell.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  <h4 className="font-medium text-sm mb-1">{upsell.title}</h4>
-                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{upsell.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-heading text-lg">₪{upsell.price}</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-8 text-xs"
-                      onClick={() => handleAddUpsell(upsell)}
-                    >
-                      <Plus className="w-3 h-3 mr-1" /> הוסף
-                    </Button>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-sm mb-0.5 sm:mb-1">{upsell.title}</h4>
+                    <p className="text-xs text-muted-foreground mb-2 sm:mb-3 line-clamp-1 sm:line-clamp-2">{upsell.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading text-base sm:text-lg">₪{upsell.price}</span>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="h-8 text-xs"
+                        onClick={() => handleAddUpsell(upsell)}
+                      >
+                        <Plus className="w-3 h-3 mr-1" /> הוסף
+                      </Button>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -108,11 +110,11 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 mt-6">
-            <Button variant="outline" onClick={onClose} className="flex-1">
+          <div className="flex flex-col sm:flex-row gap-3 mt-6">
+            <Button variant="outline" onClick={onClose} className="flex-1 w-full">
               המשך קנייה
             </Button>
-            <Button asChild className="flex-1" onClick={onClose}>
+            <Button asChild className="flex-1 w-full" onClick={onClose}>
               <Link to="/checkout">לתשלום</Link>
             </Button>
           </div>
