@@ -64,27 +64,13 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background" dir="rtl">
-        <div className="text-center p-8">
-          <h1 className="font-heading text-3xl font-bold mb-2">גישה חסומה</h1>
-          <p className="text-muted-foreground mb-6">דף זה זמין למנהלים בלבד.</p>
-          {!user && (
-            <Button onClick={() => base44.auth.redirectToLogin()}>
-              התחבר למערכת
-            </Button>
-          )}
-        </div>
-      </div>
-    );
-  }
+  // Access check is now handled by AdminLayout
 
   const isLoading = ordersLoading || productsLoading || trafficLoading;
 
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div className="w-full">
+      <div className="w-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">

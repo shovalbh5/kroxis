@@ -18,7 +18,13 @@ import Wholesale from '@/pages/Wholesale';
 import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
 import SalesPopup from '@/components/marketing/SalesPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
+import AdminLayout from '@/components/admin/AdminLayout';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
+import AdminProducts from '@/pages/admin/AdminProducts';
+import AdminOrders from '@/pages/admin/AdminOrders';
+import AdminCustomers from '@/pages/admin/AdminCustomers';
+import AdminCoupons from '@/pages/admin/AdminCoupons';
+import AdminBlog from '@/pages/admin/AdminBlog';
 import WhatsAppChat from '@/pages/admin/WhatsAppChat';
 import LiveChatAdmin from '@/pages/admin/LiveChatAdmin';
 import Warranty from '@/pages/Warranty';
@@ -81,9 +87,16 @@ const AuthenticatedApp = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/returns" element={<ReturnPolicy />} />
         </Route>
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/whatsapp" element={<WhatsAppChat />} />
-        <Route path="/admin/livechat" element={<LiveChatAdmin />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="coupons" element={<AdminCoupons />} />
+          <Route path="blog" element={<AdminBlog />} />
+          <Route path="whatsapp" element={<WhatsAppChat />} />
+          <Route path="livechat" element={<LiveChatAdmin />} />
+        </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
