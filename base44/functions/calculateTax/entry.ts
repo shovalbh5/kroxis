@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
       'SE': 25.0,  // Sweden
       'PL': 23.0,  // Poland
       'AT': 20.0,  // Austria
-      'IL': 17.0,  // Israel
+      'IL': 18.0,  // Israel
       'AU': 10.0,  // Australia (GST)
       'CA': 5.0,   // Canada (GST, provinces vary)
       'JP': 10.0,  // Japan
