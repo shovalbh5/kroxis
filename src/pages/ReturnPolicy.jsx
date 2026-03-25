@@ -11,51 +11,76 @@ export default function ReturnPolicy() {
           <h1 className="font-heading text-4xl sm:text-5xl uppercase tracking-tight font-bold">מדיניות החזרות</h1>
         </div>
 
-        <div className="prose prose-sm max-w-none space-y-6 text-muted-foreground">
-          <div className="bg-primary/10 border border-primary/20 rounded-xl p-6 mb-8">
-            <h3 className="font-heading text-lg uppercase text-foreground font-bold mb-3">ב-KROXIS, שביעות רצונך מובטחת.</h3>
-            <p className="text-base">אם אינך מרוצה מהמוצר – נחליף או נחזיר, ללא שאלות.</p>
-          </div>
+        <div className="prose prose-sm max-w-none space-y-8 text-muted-foreground">
+          <p className="text-base leading-relaxed">
+            מדיניות זו עוסקת באפשרויות ביטול עסקה ו/או החלפת מוצרים שלא בגין פגם במוצר ו/או אי התאמה לתנאי העסקה (להלן: "פגם במוצר/אי התאמה").<br/>
+            ביטול עסקה ו/או החלפה בגין פגם במוצר/אי התאמה, ייעשו בהתאם לתקנון אתר הסחר.
+          </p>
 
           <section>
-            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold">מדיניות 30 יום</h2>
-            <p>ניתן להחזיר כל מוצר תוך 30 יום מיום קבלתו, בתנאי שהוא במצב חדש ובאריזה המקורית.</p>
-            <ul className="space-y-2 mt-3">
-              {[
-                'המוצר חייב להיות במצב חדש, ללא סימני שימוש',
-                'באריזה המקורית עם כל האביזרים (נרתיק, מטלית, תעודת אחריות)',
-                'יש לצרף חשבונית או מספר הזמנה',
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">א. ביטול עסקה מכוח הדין (החזר כספי)</h2>
+            <ol className="list-decimal list-inside space-y-3 mr-2">
+              <li>ניתן לבטל עסקה ולהחזיר מוצר (משקפי שמש ואביזרים נלווים) תוך 14 ימים מיום קבלת המוצר, או מיום קבלת הודעה עם פרטי ההזמנה, לפי המאוחר. ביטול העסקה ייעשה כנגד הצגת חשבונית או מסמך דומה המכיל את פרטי העסקה.</li>
+              <li>השבת המוצר תעשה על ידי הלקוח, על חשבונו ובאחריותו הבלעדית. יחד עם זאת, ללקוח המעדיף לשלם בנפרד על שירות שליחויות, תאפשר החברה להחזיר את המוצר באמצעות שירות שליחויות מטעמה, בתעריף מוזל, בהתאם למדיניות המשלוחים באתר כפי שתהיה באותה העת.</li>
+              <li>אדם עם מוגבלות, אזרח ותיק או עולה חדש, רשאים לבטל עסקה בתוך 4 חודשים, מיום קבלת המוצר או קבלת מסמך המכיל את פרטי העסקה כנדרש בדין, לפי המאוחר, ובלבד שההתקשרות בעסקה כללה שיחה בין החברה ללקוח. החברה רשאית לבקש הצגת תעודה להוכחת הסטטוס של הלקוח בהתאם לקבוע בחוק.</li>
+              <li>החזר כספי יבוצע בתוך 14 ימים מיום קבלת הודעה על הביטול, בכפוף ובהתאם לקבוע בחוק הגנת הצרכן.</li>
+              <li>דמי ביטול: במקרה של החזר כספי בביטול עסקה שלא עקב פגם במוצר, אי התאמה, או אי אספקה במועד – החברה תהיה רשאית לנכות דמי ביטול בשיעור 5% ממחיר המוצר או 100 ₪ - הנמוך מבניהם. לתשומת הלב: בעסקה אשר בוצעה באמצעות כרטיס אשראי, תיתכן עמלת ביטול בגין עמלת סליקה של חברת האשראי, בנוסף לדמי הביטול לעיל.</li>
+              <li>לא ניתן לבטל עסקה ששולמה על ידי הלקוח באמצעות תווי קניה/כרטיס מתנה/כרטיס נטען.</li>
+            </ol>
           </section>
 
           <section>
-            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold">תהליך ההחזרה</h2>
-            <div className="space-y-3">
-              <p><strong className="text-foreground">שלב 1:</strong> צרו קשר בטלפון <a href="tel:054-717-2301" className="text-primary hover:underline">054-717-2301</a> או באימייל <a href="mailto:support@kroxis.com" className="text-primary hover:underline">support@kroxis.com</a>.</p>
-              <p><strong className="text-foreground">שלב 2:</strong> נשלח לכם תווית משלוח חינם להחזרה.</p>
-              <p><strong className="text-foreground">שלב 3:</strong> ההחזר יזוכה תוך 5-7 ימי עסקים מרגע קבלת המוצר.</p>
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">ב. החלפות וזיכויים</h2>
+            <ol className="list-decimal list-inside space-y-3 mr-2" start="7">
+              <li>אם אינך מעוניין בביטול העסקה, אלא בהחלפת המוצר במוצר אחר, או בקבלת שובר זיכוי בגובה סכום העסקה, ניתן יהיה להחזיר/להחליף מוצר שנרכש באתר כנגד הצגת חשבונית, וזאת עד 14 ימים מיום קבלת המוצר. החלפת מוצר תעשה בדרך של ביטול העסקה שנעשתה באתר וחיוב בעסקה חדשה.</li>
+              <li>כנגד החזרת מוצר תתאפשר החלפה במוצר אחר ששוויו כשווי המוצר המוחזר, ככל שהוא קיים במלאי, או קבלת שובר זיכוי. ככל ששווי המוצר החליפי נמוך יותר, יהא הלקוח זכאי לקבלת שובר זיכוי בגובה ההפרש, וככל שהוא גבוה יותר, יהא הלקוח מחויב לשלם את ההפרש.</li>
+              <li>בעת החלפת מוצר שנרכש במחיר מבצע שהסתיים טרם ההחלפה, לא ניתן יהיה לקבל את תנאי המבצע לגבי המוצר החלופי.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">ג. אחריות ותיקונים</h2>
+            <ol className="list-decimal list-inside space-y-3 mr-2" start="10">
+              <li>
+                לקוחות החברה ייהנו מאחריות לשנה בגין פגם בייצור על כל דגמי משקפי השמש, בכפוף להצגת חשבונית רכישה ובלבד שהמוצר הפגום הוחזר מיד עם גילוי הפגם. למען הסר ספק "פגם בייצור" אינו כולל:
+                <ul className="list-[lower-alpha] list-inside mt-2 mr-6 space-y-1">
+                  <li>שריטות ו/או סדקים ו/או שברים בעדשות.</li>
+                  <li>שבר ו/או סדק במסגרת המשקפיים ו/או התעקמות של המסגרת.</li>
+                  <li>כל נזק שהתהווה כתוצאה משימוש לא נכון ו/או רשלני במשקפיים, לרבות שימוש בניגוד להוראות השימוש המפורטות להלן.</li>
+                  <li>פגם באיזה מחלקי המשקפיים אשר נרכש מגורם אחר שאינו החברה.</li>
+                </ul>
+                <p className="mt-2 mr-6">האחריות לא תחול על משקפיים אשר תוקנו בעבר בידי גורם אחר שאינו החברה.</p>
+              </li>
+              <li>במקרה של פגם החוסה תחת האחריות, יוחלף המוצר או יתוקן, לשיקול דעת החברה. בהיעדר מוצר זהה במלאי, יינתן ללקוח שובר זיכוי או מוצר חליפי שערכו שווה לסכום בו נרכש המוצר המקורי, לבחירת הלקוח.</li>
+              <li>יובהר כי אחריות החברה תהיה מוגבלת לערך המוצר (קרי לסכום ששולם עבורו על ידי הלקוח בפועל) ולמשך תקופת האחריות בלבד.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">ד. הוראות שימוש במשקפיים</h2>
+            <ol className="list-decimal list-inside space-y-3 mr-2" start="13">
+              <li>כשהמשקפיים אינם בשימוש יש לשמרם בנרתיק ייעודי ובמקום יבש בטמפרטורה בין (-10C) ל- (+35C), ובכל מקרה יש להימנע מחשיפה לטמפרטורה של מעל 45 מעלות ואין להשאיר את המשקפיים ברכב החונה בשמש – מחשש להרס הציפויים של העדשות ו/או עיוות של המסגרת ו/או העדשות.</li>
+              <li>יש להרחיק את המשקפיים ממגע עם מי ים וחול ו/או חומרים כימיים לרבות חומרים ממיסים ו/או אלכוהול.</li>
+              <li>יש לנקות את המשקפיים עם מעט מים וסבון ומטלית ניקוי ייעודית ולייבשם היטב. יש להימנע מניקוי המשקפיים בכל אופן אחר, וזאת כדי למנוע את שריטת העדשות ו/או את הרס הציפויים.</li>
+              <li>על מנת שלא לפגוע בעדשות או בציפויים שלהן, אין להניח את המשקפיים על גבי העדשות.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">ה. כללי</h2>
+            <ol className="list-decimal list-inside space-y-3 mr-2" start="17">
+              <li>מוצרים במבצע כמותי: מוצר שנרכש בתנאי מכירה מסוימים, יוחזר ע"פ אותם התנאים. לדוגמא, כאשר ההנחה מותנית ברכישת כמה פריטים גם יחד (כמו 1+1), ביטול העסקה, הזיכוי או ההחזר הכספי יהיה מותנה בהחזרת כל המוצרים גם יחד.</li>
+              <li>במקרה שיתברר שהמוצר שהלקוח החזיר נפגם על ידו ו/או נעשה בו שימוש שגרם לירידת ערך המוצר ו/או חוסר אפשרות למכור אותו במצבו, החברה תהא רשאית להיפרע מכל נזק שיגרם לה.</li>
+              <li>להפעלת שירות החזרות באמצעות שליח יש ליצור קשר עם מוקד שירות הלקוחות של החברה.</li>
+            </ol>
+          </section>
+
+          <section className="bg-primary/5 border border-primary/10 rounded-xl p-6 mt-8">
+            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold mb-4">שירות לקוחות</h2>
+            <div className="space-y-2 text-foreground">
+              <p><strong>דוא"ל:</strong> <a href="mailto:support@kroxis.com" className="text-primary hover:underline">support@kroxis.com</a></p>
+              <p><strong>וואטסאפ:</strong> <a href="https://wa.me/972525568069" target="_blank" rel="noreferrer" className="text-primary hover:underline">052-5568069</a></p>
             </div>
-          </section>
-
-          <section>
-            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold">החלפת מוצר</h2>
-            <p>רוצים דגם אחר, צבע אחר או סוג עדשה שונה? נשלח לכם את ההחלפה ללא עלות נוספת. המוצר החלופי ישלח ביום שנקבל את המוצר המוחזר.</p>
-          </section>
-
-          <section>
-            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold">מקרים שלא ניתנים להחזרה</h2>
-            <p>עדשות מרשם שהותאמו אישית, מוצרים שנפגמו כתוצאה משימוש לא נכון, ומוצרים ללא אריזה מקורית.</p>
-          </section>
-
-          <section>
-            <h2 className="font-heading text-xl uppercase tracking-wide text-foreground font-bold">הזמנות B2B / סיטונאות</h2>
-            <p>להזמנות עסקיות מעל 10 יחידות – מדיניות ההחזרות נקבעת בהסכם הרכישה. צרו קשר עם מנהל החשבון שלכם.</p>
           </section>
 
           <p className="text-xs text-muted-foreground/60 pt-4 border-t border-border">עודכן לאחרונה: מרץ 2026</p>
