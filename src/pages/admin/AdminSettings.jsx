@@ -112,8 +112,8 @@ export default function AdminSettings() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">אחוז מס / מע"מ (%)</label>
-              <Input name="tax_rate" type="number" step="0.01" defaultValue={settings.tax_rate ?? 17} />
-              <p className="text-xs text-muted-foreground">הכנס 17 עבור 17% מע"מ</p>
+              <Input name="tax_rate" type="number" step="0.01" defaultValue={settings.tax_rate ?? 18} />
+              <p className="text-xs text-muted-foreground">הכנס 18 עבור 18% מע"מ</p>
             </div>
           </div>
         </div>
