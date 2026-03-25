@@ -33,58 +33,48 @@ export default function ExitIntentPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-lg p-0 overflow-hidden border-primary">
-        <button
-          onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-secondary/80 hover:bg-secondary transition-colors"
-        >
-          <X className="w-4 h-4 text-secondary-foreground" />
-        </button>
-
-        <div className="relative">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary to-primary/20" />
+      <DialogContent className="max-w-md p-0 overflow-hidden bg-zinc-950 border border-white/10 sm:rounded-2xl shadow-2xl" hideCloseButton>
+        <div className="relative p-8 sm:p-10 text-center" dir="rtl">
+          {/* Subtle glow effect */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-primary/20 blur-[100px] pointer-events-none" />
           
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-4 left-4 z-10 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white/70 hover:text-white"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative p-8 sm:p-10 text-center"
+            className="relative z-10"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring' }}
-              className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center"
-            >
-              <Tag className="w-10 h-10 text-primary" />
-            </motion.div>
-
-            <h2 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight text-white mb-3">
+            <h2 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight text-white mb-2 font-bold">
               רגע! לא ללכת
             </h2>
-            <p className="text-secondary-foreground/70 text-lg mb-2">
-              קבלו <span className="text-primary font-bold text-2xl">10% הנחה</span> על ההזמנה הראשונה
-            </p>
-            <p className="text-secondary-foreground/60 text-sm mb-6">
-              הצטרפו ל-50,000+ אנשי שטח ולוחמים שסומכים על KROXIS
+            <p className="text-white/80 text-lg mb-8">
+              קבלו <span className="text-primary font-bold">10% הנחה</span> על ההזמנה הראשונה
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <Input
-                type="email"
-                placeholder="הזן את האימייל שלך"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="h-12 bg-muted/20 border-border text-secondary-foreground text-center"
-              />
-              <Button type="submit" size="lg" className="w-full h-12 font-heading uppercase tracking-wider">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="relative">
+                <Input
+                  type="email"
+                  placeholder="הזן את האימייל שלך"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-12 bg-white/5 border-white/10 text-white placeholder:text-white/40 text-center focus-visible:ring-primary focus-visible:border-primary transition-all"
+                />
+              </div>
+              <Button type="submit" size="lg" className="w-full h-12 font-heading uppercase tracking-wider text-base font-bold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
                 לקבל 10% הנחה
               </Button>
             </form>
 
-            <p className="text-xs text-secondary-foreground/40 mt-4">
-              קוד: <span className="font-mono text-primary">KROXIS10</span> • בתוקף 48 שעות
+            <p className="text-xs text-white/40 mt-6">
+              הצטרפו ל-50,000+ אנשי שטח ולוחמים שסומכים על KROXIS
             </p>
           </motion.div>
         </div>
