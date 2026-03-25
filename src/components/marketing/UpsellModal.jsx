@@ -46,10 +46,10 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl p-0 overflow-hidden">
+      <DialogContent className="max-w-3xl p-0 overflow-hidden w-[95vw] sm:w-full rounded-xl">
 
 
-        <div className="p-6 sm:p-8">
+        <div className="p-4 sm:p-8 max-h-[85vh] overflow-y-auto">
           {/* Success message */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
