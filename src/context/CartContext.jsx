@@ -32,6 +32,16 @@ export function CartProvider({ children }) {
       }];
     });
     setIsCartOpen(true);
+
+    if (window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_name: product.title,
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.price + surcharge,
+        currency: 'ILS'
+      });
+    }
   }, []);
 
   const removeItem = useCallback((productId, lensOption, color) => {

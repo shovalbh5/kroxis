@@ -71,6 +71,15 @@ export default function Checkout() {
     setOrderPlaced(true);
     setIsSubmitting(false);
     toast({ title: 'ההזמנה אושרה!', description: 'תודה שבחרת ב-KROXIS.' });
+
+    if (window.fbq) {
+      window.fbq('track', 'Purchase', {
+        value: total,
+        currency: 'ILS',
+        content_ids: items.map(i => i.product_id),
+        content_type: 'product'
+      });
+    }
   };
 
   if (orderPlaced) {
