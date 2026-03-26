@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, X, Plus } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -32,6 +32,7 @@ const upsellProducts = [
 
 export default function UpsellModal({ isOpen, onClose, addedProduct }) {
   const { addItem } = useCart();
+  const [addedItems, setAddedItems] = useState({});
 
   const handleAddUpsell = (upsell) => {
     // Create mock product for upsell
@@ -42,6 +43,11 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
       images: [upsell.image],
     };
     addItem(mockProduct, 'standard', '', 1);
+    
+    setAddedItems(prev => ({ ...prev, [upsell.id]: true }));
+    setTimeout(() => {
+      setAddedItems(prev => ({ ...prev, [upsell.id]: false }));
+    }, 2000);
   };
 
   return (
@@ -96,11 +102,16 @@ export default function UpsellModal({ isOpen, onClose, addedProduct }) {
                       <span className="font-heading text-base sm:text-lg">₪{upsell.price}</span>
                       <Button
                         size="sm"
-                        variant="outline"
-                        className="h-8 text-xs"
+                        variant={addedItems[upsell.id] ? "default" : "outline"}
+                        className="h-8 text-xs transition-all"
                         onClick={() => handleAddUpsell(upsell)}
+                        disabled={addedItems[upsell.id]}
                       >
-                        <Plus className="w-3 h-3 mr-1" /> הוסף
+                        {addedItems[upsell.id] ? (
+                          <><CheckCircle className="w-3 h-3 mr-1" /> נוסף</>
+                        ) : (
+                          <><Plus className="w-3 h-3 mr-1" /> הוסף</>
+                        )}
                       </Button>
                     </div>
                   </div>
