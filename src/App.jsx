@@ -37,6 +37,7 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ReturnPolicy from '@/pages/ReturnPolicy';
 import MyAccount from '@/pages/MyAccount';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import FacebookPixel from '@/components/seo/FacebookPixel';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -106,6 +107,7 @@ const AuthenticatedApp = () => {
       <ExitIntentPopup />
       <SalesPopup />
       <WhatsAppButton />
+      <FacebookPixel />
     </>
   );
 };
