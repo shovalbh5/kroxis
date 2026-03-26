@@ -54,7 +54,7 @@ export default function ProductCard({ product }) {
                 </span>
               ))}
             </div>
-            <h3 className="font-heading text-xs sm:text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 truncate mb-1 sm:mb-2 font-bold">
+            <h3 className="font-heading text-xs sm:text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-1 sm:mb-2 font-bold min-h-[32px] sm:min-h-[48px]">
               {product.title}
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground/80 line-clamp-1 mb-2 sm:mb-3 font-medium hidden sm:block">{product.description}</p>
@@ -65,7 +65,7 @@ export default function ProductCard({ product }) {
               )}
             </div>
             {product.b2b_bulk_discount_threshold && (
-              <p className="text-[10px] sm:text-xs text-primary mt-1 font-bold hidden sm:block">
+              <p className="text-[10px] sm:text-xs text-primary mt-1 font-bold">
                 {product.b2b_bulk_discount_threshold}+ {t('product.bulkOrder')} {product.b2b_bulk_discount_percent}%
               </p>
             )}

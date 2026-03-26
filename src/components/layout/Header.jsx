@@ -193,12 +193,37 @@ export default function Header() {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden bg-secondary border-t border-border lg:hidden"
           >
-            <nav className="px-4 py-4 space-y-3">
-              <Link to={`${prefix}/`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">{t('nav.home')}</Link>
-              <Link to={`${prefix}/shop`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground py-2 text-sm uppercase tracking-wide">{t('nav.allProducts')}</Link>
-              {t('megaMenu.industry').map((item, idx) => (
-                <Link key={idx} to={`${prefix}${industryHrefs[idx]}`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground/70 py-2 text-sm ps-4">{item.label}</Link>
-              ))}
+            <nav className="px-4 py-6 space-y-6 max-h-[80vh] overflow-y-auto">
+              <div className="space-y-3">
+                <Link to={`${prefix}/`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground text-lg font-bold uppercase tracking-wide">{t('nav.home')}</Link>
+                <Link to={`${prefix}/shop`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground text-lg font-bold uppercase tracking-wide">{t('nav.allProducts')}</Link>
+                <Link to={`${prefix}/blog`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground text-lg font-bold uppercase tracking-wide">{t('nav.blog')}</Link>
+                <Link to={`${prefix}/wholesale`} onClick={() => setMobileOpen(false)} className="block text-secondary-foreground text-lg font-bold uppercase tracking-wide">{t('nav.wholesale')}</Link>
+              </div>
+              
+              <div className="pt-4 border-t border-border/50">
+                <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">{t('nav.byUse')}</h4>
+                <div className="space-y-2">
+                  {t('megaMenu.industry').map((item, idx) => (
+                    <Link key={idx} to={`${prefix}${industryHrefs[idx]}`} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 text-secondary-foreground/80 py-2 text-sm">
+                      {React.createElement(megaMenuIcons[idx], { className: 'w-4 h-4 text-primary' })}
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-border/50">
+                <h4 className="font-heading text-primary text-xs uppercase tracking-widest mb-3">{t('nav.byTech')}</h4>
+                <div className="space-y-2">
+                  {t('megaMenu.tech').map((item, idx) => (
+                    <Link key={idx} to={`${prefix}${techHrefs[idx]}`} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 text-secondary-foreground/80 py-2 text-sm">
+                      <Shield className="w-4 h-4 text-primary" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </nav>
           </motion.div>
         )}

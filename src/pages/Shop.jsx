@@ -75,8 +75,9 @@ export default function Shop() {
         {/* Main content */}
         <div className="flex-1">
           {/* Toolbar */}
-          <div className="flex items-center justify-between mb-4 sm:mb-8">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-8">
+            <div className="flex items-center justify-between w-full sm:w-auto order-2 sm:order-1">
+              <span className="text-sm text-muted-foreground font-medium">{filtered.length} מוצרים</span>
               <Button
                 variant="outline"
                 size="sm"
@@ -85,12 +86,12 @@ export default function Shop() {
               >
                 <SlidersHorizontal className="w-4 h-4 mr-2" /> סינון
               </Button>
-              <span className="text-sm text-muted-foreground">{filtered.length} מוצרים</span>
             </div>
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
+            <div className="w-full sm:w-auto order-1 sm:order-2">
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-full sm:w-48 bg-card">
+                  <SelectValue />
+                </SelectTrigger>
               <SelectContent>
                 <SelectItem value="newest">חדשים ביותר</SelectItem>
                 <SelectItem value="price_asc">מחיר: נמוך → גבוה</SelectItem>
@@ -98,6 +99,7 @@ export default function Shop() {
                 <SelectItem value="name">שם א-ת</SelectItem>
               </SelectContent>
             </Select>
+            </div>
           </div>
 
           {/* Mobile filters */}
