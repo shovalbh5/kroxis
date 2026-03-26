@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { ArrowLeft, ShieldCheck, Lock, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,8 +16,22 @@ import { motion } from 'framer-motion';
 export default function Checkout() {
   const { items, subtotal, freeShipping, clearCart } = useCart();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const isSuccess = searchParams.get('success') === 'true';
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(isSuccess);
+
+  useEffect(() => {
+    if (isSuccess) {
+      clearCart();
+      if (window.fbq) {
+        window.fbq('track', 'Purchase', {
+          currency: 'ILS',
+        });
+      }
+    }
+  }, [isSuccess, clearCart]);
 
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -41,44 +55,97 @@ export default function Checkout() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const orderItems = items.map(item => ({
-      product_id: item.product_id,
-      title: item.title,
-      price: item.price + item.lens_surcharge,
-      quantity: item.quantity,
-      lens_option: item.lens_option,
-      color: item.color,
-    }));
+    try {
+      const wixItems = items.map(item => ({
+        name: item.title + (item.lens_option !== 'standard' ? ` - ${item.lens_option}` : ''),
+        quantity: item.quantity,
+        price: String(item.price + item.lens_surcharge)
+      }));
 
-    // Update coupon usage
-    if (appliedCoupon) {
-      await base44.entities.Coupon.update(appliedCoupon.id, { used_count: (appliedCoupon.used_count || 0) + 1 });
-    }
+      if (shippingCost > 0) {
+        wixItems.push({
+          name: "דמי משלוח",
+          quantity: 1,
+          price: String(shippingCost)
+        });
+      }
 
-    await base44.entities.Order.create({
-      ...form,
-      items: orderItems,
-      subtotal,
-      shipping_cost: shippingCost,
-      discount_amount: couponDiscount,
-      total,
-      status: 'pending',
-      is_b2b: false,
-      notes: appliedCoupon ? `קופון: ${appliedCoupon.code}` : '',
-    });
+      let finalWixItems = wixItems;
+      if (couponDiscount > 0) {
+          const discountRatio = (subtotal - couponDiscount) / subtotal;
+          finalWixItems = items.map(item => ({
+            name: item.title + (item.lens_option !== 'standard' ? ` - ${item.lens_option}` : ''),
+            quantity: item.quantity,
+            price: String(((item.price + item.lens_surcharge) * discountRatio).toFixed(2))
+          }));
+          if (shippingCost > 0) {
+            finalWixItems.push({
+              name: "דמי משלוח",
+              quantity: 1,
+              price: String(shippingCost)
+            });
+          }
+      }
 
-    clearCart();
-    setOrderPlaced(true);
-    setIsSubmitting(false);
-    toast({ title: 'ההזמנה אושרה!', description: 'תודה שבחרת ב-KROXIS.' });
+      const [firstName, ...lastNameParts] = form.customer_name.split(' ');
+      const lastName = lastNameParts.join(' ');
 
-    if (window.fbq) {
-      window.fbq('track', 'Purchase', {
-        value: total,
-        currency: 'ILS',
-        content_ids: items.map(i => i.product_id),
-        content_type: 'product'
+      const res = await base44.functions.invoke('create-checkout', {
+        items: finalWixItems,
+        customerInfo: {
+          firstName: firstName || '',
+          lastName: lastName || '',
+          phone: form.customer_phone || ''
+        }
       });
+
+      if (res.data.error) {
+        throw new Error(res.data.error);
+      }
+
+      const { id: checkoutSessionId, redirectUrl } = res.data.checkoutSession;
+
+      const orderItems = items.map(item => ({
+        product_id: item.product_id,
+        title: item.title,
+        price: item.price + item.lens_surcharge,
+        quantity: item.quantity,
+        lens_option: item.lens_option,
+        color: item.color,
+      }));
+
+      if (appliedCoupon) {
+        await base44.entities.Coupon.update(appliedCoupon.id, { used_count: (appliedCoupon.used_count || 0) + 1 });
+      }
+
+      await base44.entities.Order.create({
+        ...form,
+        items: orderItems,
+        subtotal,
+        shipping_cost: shippingCost,
+        discount_amount: couponDiscount,
+        total,
+        status: 'pending',
+        payment_status: 'unpaid',
+        checkout_id: checkoutSessionId,
+        is_b2b: false,
+        notes: appliedCoupon ? `קופון: ${appliedCoupon.code}` : '',
+      });
+
+      if (window.fbq) {
+        window.fbq('track', 'InitiateCheckout', {
+          value: total,
+          currency: 'ILS',
+          content_ids: items.map(i => i.product_id),
+          content_type: 'product'
+        });
+      }
+
+      window.location.href = redirectUrl;
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast({ title: 'שגיאה', description: 'אירעה שגיאה ביצירת התשלום. אנא נסה שוב.', variant: 'destructive' });
+      setIsSubmitting(false);
     }
   };
 
