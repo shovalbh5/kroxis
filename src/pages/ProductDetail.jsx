@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
+import { getCertLogo } from '@/components/products/CertLogos';
 import { useToast } from '@/components/ui/use-toast';
 import { useCart } from '@/context/CartContext';
 import ProductGallery from '@/components/products/ProductGallery';
@@ -42,8 +43,10 @@ export default function ProductDetail() {
   });
 
   const featureTags = {
-    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
-    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.', id: 'ANSI_Z87', isCert: true },
+    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.', id: 'MIL_PRF', isCert: true },
+    CE_EN166: { label: 'CE EN166', desc: 'תקן אירופי להגנה על העיניים.', id: 'CE_EN166', isCert: true },
+    OSHA: { label: 'OSHA', desc: 'עומד בדרישות הבטיחות התעסוקתית האמריקאית.', id: 'OSHA', isCert: true },
     polycarbonate: { label: 'POLY', desc: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
     polarized: { label: 'POLAR', desc: 'הגנה מסנוור. מסנן החזרי אור ממשטחים ומשפר ניגודיות.' },
     anti_fog: { label: 'AF', desc: 'ציפוי נגד אדים. מונע הצטברות אדים במעברי טמפרטורה.' },
@@ -54,6 +57,8 @@ export default function ProductDetail() {
     const tags = [];
     if (product.safety_certs?.includes('ANSI_Z87')) tags.push(featureTags.ANSI_Z87);
     if (product.safety_certs?.includes('MIL_PRF')) tags.push(featureTags.MIL_PRF);
+    if (product.safety_certs?.includes('CE_EN166')) tags.push(featureTags.CE_EN166);
+    if (product.safety_certs?.includes('OSHA')) tags.push(featureTags.OSHA);
     if (product.lens_tech?.includes('polarized')) tags.push(featureTags.polarized);
     if (product.lens_tech?.includes('anti_fog')) tags.push(featureTags.anti_fog);
     tags.push(featureTags.polycarbonate);
@@ -138,9 +143,15 @@ export default function ProductDetail() {
               {tagsToShow.map((tag, idx) => (
                 <Tooltip key={idx}>
                   <TooltipTrigger asChild>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-md border border-border/50 cursor-help hover:bg-muted/80 transition-colors">
-                      <span className="text-xs font-bold text-primary tracking-wider">{tag.label}</span>
-                      <Info className="w-3 h-3 text-muted-foreground" />
+                    <div className="flex items-center justify-center gap-1.5 px-2.5 py-1 bg-muted rounded-md border border-border/50 cursor-help hover:bg-muted/80 transition-colors h-8">
+                      {tag.isCert ? (
+                        getCertLogo(tag.id, "h-4 sm:h-5 w-auto text-muted-foreground")
+                      ) : (
+                        <>
+                          <span className="text-xs font-bold text-primary tracking-wider">{tag.label}</span>
+                          <Info className="w-3 h-3 text-muted-foreground" />
+                        </>
+                      )}
                     </div>
                   </TooltipTrigger>
                   <TooltipContent side="top" className="max-w-[250px] text-right" dir="rtl">
@@ -208,6 +219,16 @@ export default function ProductDetail() {
               <ShoppingBag className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
               הוסף לעגלה — ₪{totalPrice.toFixed(2)}
             </Button>
+          </div>
+
+          {/* Meet Standards */}
+          <div className="flex items-center gap-4 py-4 border-y border-border opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" dir="ltr">
+            <span className="font-heading font-bold text-sm tracking-widest uppercase">Meet</span>
+            <div className="flex items-center gap-5">
+              {getCertLogo('ANSI_Z87', 'h-6 w-auto')}
+              {getCertLogo('CE_EN166', 'h-6 w-auto')}
+              {getCertLogo('MIL_PRF', 'h-6 w-auto')}
+            </div>
           </div>
 
           {/* Trust Badges */}

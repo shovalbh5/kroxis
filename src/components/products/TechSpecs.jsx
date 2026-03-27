@@ -1,6 +1,7 @@
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Shield, Zap, Scale, Layers } from 'lucide-react';
+import { getCertLogo } from '@/components/products/CertLogos';
 
 export default function TechSpecs({ product }) {
   const specs = [
@@ -18,8 +19,10 @@ export default function TechSpecs({ product }) {
   };
 
   const featureTags = {
-    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
-    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.', id: 'ANSI_Z87', isCert: true },
+    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.', id: 'MIL_PRF', isCert: true },
+    CE_EN166: { label: 'CE EN166', desc: 'תקן אירופי להגנה על העיניים.', id: 'CE_EN166', isCert: true },
+    OSHA: { label: 'OSHA', desc: 'עומד בדרישות הבטיחות התעסוקתית האמריקאית.', id: 'OSHA', isCert: true },
     polycarbonate: { label: 'POLY', desc: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
     polarized: { label: 'POLAR', desc: 'הגנה מסנוור. מסנן החזרי אור ממשטחים ומשפר ניגודיות.' },
     anti_fog: { label: 'AF', desc: 'ציפוי נגד אדים. מונע הצטברות אדים במעברי טמפרטורה.' },
@@ -30,6 +33,8 @@ export default function TechSpecs({ product }) {
     const tags = [];
     if (product.safety_certs?.includes('ANSI_Z87')) tags.push(featureTags.ANSI_Z87);
     if (product.safety_certs?.includes('MIL_PRF')) tags.push(featureTags.MIL_PRF);
+    if (product.safety_certs?.includes('CE_EN166')) tags.push(featureTags.CE_EN166);
+    if (product.safety_certs?.includes('OSHA')) tags.push(featureTags.OSHA);
     if (product.lens_tech?.includes('polarized')) tags.push(featureTags.polarized);
     if (product.lens_tech?.includes('anti_fog')) tags.push(featureTags.anti_fog);
     tags.push(featureTags.polycarbonate);
@@ -66,8 +71,12 @@ export default function TechSpecs({ product }) {
           <div className="space-y-4 py-2" dir="rtl">
             {tagsToShow.map((tag, idx) => (
               <div key={idx} className="flex items-start gap-3">
-                <div className="px-2 py-1 bg-muted rounded border border-border/50 shrink-0">
-                  <span className="text-xs font-bold text-primary tracking-wider">{tag.label}</span>
+                <div className="px-2 py-1 bg-muted rounded border border-border/50 shrink-0 flex items-center justify-center min-w-[60px] h-8">
+                  {tag.isCert ? (
+                    getCertLogo(tag.id, "h-5 w-auto text-muted-foreground")
+                  ) : (
+                    <span className="text-xs font-bold text-primary tracking-wider">{tag.label}</span>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground leading-relaxed">{tag.desc}</p>

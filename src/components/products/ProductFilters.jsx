@@ -3,6 +3,7 @@ import { Shield, X, Check, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { getCertLogo } from '@/components/products/CertLogos';
 
 const categories = [
   { value: 'construction', label: 'צבא ולוחמים' },
@@ -20,10 +21,10 @@ const techOptions = [
 ];
 
 const certOptions = [
-  { value: 'ANSI_Z87', label: 'ANSI Z87.1+', tooltip: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
-  { value: 'CE_EN166', label: 'CE EN166', tooltip: 'תקן אירופי להגנה על העיניים.' },
-  { value: 'OSHA', label: 'OSHA', tooltip: 'עומד בדרישות הבטיחות התעסוקתית האמריקאית.' },
-  { value: 'MIL_PRF', label: 'MIL-PRF', tooltip: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+  { value: 'ANSI_Z87', label: 'ANSI Z87.1+', tooltip: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.', id: 'ANSI_Z87', isCert: true },
+  { value: 'CE_EN166', label: 'CE EN166', tooltip: 'תקן אירופי להגנה על העיניים.', id: 'CE_EN166', isCert: true },
+  { value: 'OSHA', label: 'OSHA', tooltip: 'עומד בדרישות הבטיחות התעסוקתית האמריקאית.', id: 'OSHA', isCert: true },
+  { value: 'MIL_PRF', label: 'MIL-PRF', tooltip: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.', id: 'MIL_PRF', isCert: true },
   { value: 'polycarbonate', label: 'פוליקרבונט (POLY)', tooltip: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
 ];
 
@@ -41,7 +42,7 @@ export default function ProductFilters({ filters, setFilters }) {
   const clearAll = () => setFilters({ categories: [], techs: [], certs: [] });
   const hasFilters = (filters.categories?.length || 0) + (filters.techs?.length || 0) + (filters.certs?.length || 0) > 0;
 
-  const FilterChip = ({ active, label, onClick, tooltip }) => {
+  const FilterChip = ({ active, label, onClick, tooltip, isCert, certId }) => {
     const button = (
       <button
         onClick={onClick}
@@ -52,7 +53,14 @@ export default function ProductFilters({ filters, setFilters }) {
         }`}
       >
         {active && <Check className="w-3.5 h-3.5" />}
-        {label}
+        {isCert ? (
+          <div className="flex items-center gap-2">
+            {getCertLogo(certId, `h-4 w-auto ${active ? 'text-white' : 'text-muted-foreground'}`)}
+            <span className="sr-only">{label}</span>
+          </div>
+        ) : (
+          label
+        )}
         {tooltip && <Info className="w-3 h-3 opacity-50" />}
       </button>
     );
@@ -123,6 +131,8 @@ export default function ProductFilters({ filters, setFilters }) {
               active={filters.certs?.includes(cert.value)}
               label={cert.label}
               tooltip={cert.tooltip}
+              isCert={cert.isCert}
+              certId={cert.id}
               onClick={() => toggleFilter('certs', cert.value)}
             />
           ))}
