@@ -18,8 +18,8 @@ const translations = {
     search: 'Search sunglasses...',
     hero: {
       badge: 'Tactical Sunglasses',
-      title_1: 'Vision On',
-      title_2: 'Another Level',
+      title_1: 'SEE WITHOUT',
+      title_2: 'LIMITATION',
       description: 'Tactical sunglasses for field operators, military & fighters. Polarized lenses, impact-resistant, and comfortable for extended use in all field conditions.',
       shopBtn: 'Shop Now',
       videoBtn: 'Watch Product Video',
@@ -124,8 +124,8 @@ const translations = {
     search: 'חיפוש משקפי שמש...',
     hero: {
       badge: 'משקפי שמש טקטיות',
-      title_1: 'ראייה ברמה',
-      title_2: 'אחרת לגמרי',
+      title_1: 'SEE WITHOUT',
+      title_2: 'LIMITATION',
       description: 'משקפי שמש טקטיות לאנשי שטח, צבא ולוחמים. עדשות מקוטבות, עמידות בפגיעות ונוחות לשימוש ממושך בכל תנאי שטח.',
       shopBtn: 'לחנות',
       videoBtn: 'סרטון המוצר',
