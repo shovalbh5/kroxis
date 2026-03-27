@@ -38,7 +38,10 @@ export default function Shop() {
       result = result.filter(p => p.lens_tech?.some(t => filters.techs.includes(t)));
     }
     if (filters.certs.length) {
-      result = result.filter(p => p.safety_certs?.some(c => filters.certs.includes(c)));
+      result = result.filter(p => 
+        p.safety_certs?.some(c => filters.certs.includes(c)) ||
+        p.lens_tech?.some(c => filters.certs.includes(c))
+      );
     }
 
     switch (sortBy) {

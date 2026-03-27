@@ -23,6 +23,7 @@ const certOptions = [
   { value: 'CE_EN166', label: 'CE EN166' },
   { value: 'OSHA', label: 'OSHA' },
   { value: 'MIL_PRF', label: 'MIL-PRF' },
+  { value: 'polycarbonate', label: 'פוליקרבונט (POLY)' },
 ];
 
 export default function ProductFilters({ filters, setFilters }) {

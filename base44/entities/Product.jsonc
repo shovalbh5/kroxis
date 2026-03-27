@@ -1,0 +1,131 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short product description"
+    },
+    "long_description": {
+      "type": "string",
+      "description": "Detailed product description"
+    },
+    "price": {
+      "type": "number",
+      "description": "Base price in USD"
+    },
+    "compare_at_price": {
+      "type": "number",
+      "description": "Original price for showing discounts"
+    },
+    "images": {
+      "type": "array",
+      "description": "Product image URLs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "construction",
+        "lab",
+        "outdoor",
+        "general"
+      ],
+      "description": "Industry category"
+    },
+    "lens_tech": {
+      "type": "array",
+      "description": "Lens technologies available",
+      "items": {
+        "type": "string",
+        "enum": [
+          "anti_fog",
+          "polarized",
+          "blue_light",
+          "photochromic",
+          "prescription_ready",
+          "polycarbonate"
+        ]
+      }
+    },
+    "safety_certs": {
+      "type": "array",
+      "description": "Safety certifications",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ANSI_Z87",
+          "CE_EN166",
+          "OSHA",
+          "MIL_PRF",
+          "polycarbonate"
+        ]
+      }
+    },
+    "frame_material": {
+      "type": "string",
+      "description": "Frame material type"
+    },
+    "weight_grams": {
+      "type": "number",
+      "description": "Weight in grams"
+    },
+    "uv_protection": {
+      "type": "string",
+      "description": "UV protection level"
+    },
+    "impact_resistance": {
+      "type": "string",
+      "description": "Impact resistance rating"
+    },
+    "colors": {
+      "type": "array",
+      "description": "Available color options",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stock_level": {
+      "type": "number",
+      "description": "Current stock count"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "description": "Show in featured carousel"
+    },
+    "is_bestseller": {
+      "type": "boolean",
+      "description": "Mark as bestseller"
+    },
+    "b2b_bulk_discount_threshold": {
+      "type": "number",
+      "description": "Min quantity for bulk discount"
+    },
+    "b2b_bulk_discount_percent": {
+      "type": "number",
+      "description": "Bulk discount percentage"
+    },
+    "meta_title": {
+      "type": "string",
+      "description": "SEO title tag"
+    },
+    "meta_description": {
+      "type": "string",
+      "description": "SEO meta description"
+    }
+  },
+  "required": [
+    "title",
+    "price"
+  ]
+}
