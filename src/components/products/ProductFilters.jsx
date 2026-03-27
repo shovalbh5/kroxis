@@ -1,7 +1,8 @@
 import React from 'react';
-import { Shield, X, Check } from 'lucide-react';
+import { Shield, X, Check, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const categories = [
   { value: 'construction', label: 'צבא ולוחמים' },
@@ -11,19 +12,19 @@ const categories = [
 ];
 
 const techOptions = [
-  { value: 'polarized', label: 'מקוטבות' },
-  { value: 'photochromic', label: 'פוטוכרומטיות' },
-  { value: 'blue_light', label: 'סינון אור כחול' },
-  { value: 'anti_fog', label: 'נגד ערפול' },
-  { value: 'prescription_ready', label: 'מתאים למשקפי ראייה' },
+  { value: 'polarized', label: 'מקוטבות', tooltip: 'הגנה מסנוור. מסנן החזרי אור ממשטחים ומשפר ניגודיות.' },
+  { value: 'photochromic', label: 'פוטוכרומטיות', tooltip: 'עדשות המתכהות אוטומטית בשמש ומתבהרות בצל.' },
+  { value: 'blue_light', label: 'סינון אור כחול', tooltip: 'מפחית עייפות עיניים מול מסכים.' },
+  { value: 'anti_fog', label: 'נגד ערפול', tooltip: 'ציפוי המונע הצטברות אדים במעברי טמפרטורה.' },
+  { value: 'prescription_ready', label: 'מתאים למשקפי ראייה', tooltip: 'מסגרת המאפשרת התקנת עדשות אופטיות.' },
 ];
 
 const certOptions = [
-  { value: 'ANSI_Z87', label: 'ANSI Z87.1+' },
-  { value: 'CE_EN166', label: 'CE EN166' },
-  { value: 'OSHA', label: 'OSHA' },
-  { value: 'MIL_PRF', label: 'MIL-PRF' },
-  { value: 'polycarbonate', label: 'פוליקרבונט (POLY)' },
+  { value: 'ANSI_Z87', label: 'ANSI Z87.1+', tooltip: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
+  { value: 'CE_EN166', label: 'CE EN166', tooltip: 'תקן אירופי להגנה על העיניים.' },
+  { value: 'OSHA', label: 'OSHA', tooltip: 'עומד בדרישות הבטיחות התעסוקתית האמריקאית.' },
+  { value: 'MIL_PRF', label: 'MIL-PRF', tooltip: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+  { value: 'polycarbonate', label: 'פוליקרבונט (POLY)', tooltip: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
 ];
 
 export default function ProductFilters({ filters, setFilters }) {
@@ -40,19 +41,37 @@ export default function ProductFilters({ filters, setFilters }) {
   const clearAll = () => setFilters({ categories: [], techs: [], certs: [] });
   const hasFilters = (filters.categories?.length || 0) + (filters.techs?.length || 0) + (filters.certs?.length || 0) > 0;
 
-  const FilterChip = ({ active, label, onClick }) => (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
-        active
-          ? 'bg-primary text-white border-primary shadow-sm'
-          : 'bg-card text-foreground border-border hover:border-primary/50 hover:bg-muted/50'
-      }`}
-    >
-      {active && <Check className="w-3.5 h-3.5" />}
-      {label}
-    </button>
-  );
+  const FilterChip = ({ active, label, onClick, tooltip }) => {
+    const button = (
+      <button
+        onClick={onClick}
+        className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium border transition-all duration-200 ${
+          active
+            ? 'bg-primary text-white border-primary shadow-sm'
+            : 'bg-card text-foreground border-border hover:border-primary/50 hover:bg-muted/50'
+        }`}
+      >
+        {active && <Check className="w-3.5 h-3.5" />}
+        {label}
+        {tooltip && <Info className="w-3 h-3 opacity-50" />}
+      </button>
+    );
+
+    if (!tooltip) return button;
+
+    return (
+      <TooltipProvider delayDuration={100}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {button}
+          </TooltipTrigger>
+          <TooltipContent side="top" className="max-w-[200px] text-right" dir="rtl">
+            <p className="text-xs leading-relaxed">{tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  };
 
   return (
     <div className="space-y-5" dir="rtl">
@@ -70,6 +89,7 @@ export default function ProductFilters({ filters, setFilters }) {
               key={cat.value}
               active={filters.categories?.includes(cat.value)}
               label={cat.label}
+              tooltip={cat.tooltip}
               onClick={() => toggleFilter('categories', cat.value)}
             />
           ))}
@@ -84,6 +104,7 @@ export default function ProductFilters({ filters, setFilters }) {
               key={tech.value}
               active={filters.techs?.includes(tech.value)}
               label={tech.label}
+              tooltip={tech.tooltip}
               onClick={() => toggleFilter('techs', tech.value)}
             />
           ))}
@@ -101,6 +122,7 @@ export default function ProductFilters({ filters, setFilters }) {
               key={cert.value}
               active={filters.certs?.includes(cert.value)}
               label={cert.label}
+              tooltip={cert.tooltip}
               onClick={() => toggleFilter('certs', cert.value)}
             />
           ))}
