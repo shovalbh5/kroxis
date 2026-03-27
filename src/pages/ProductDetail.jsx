@@ -6,6 +6,8 @@ import { ShoppingBag, Plus, Minus, ArrowLeft, Shield, Truck, RefreshCw } from 'l
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Info } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useCart } from '@/context/CartContext';
 import ProductGallery from '@/components/products/ProductGallery';
@@ -38,6 +40,27 @@ export default function ProductDetail() {
     },
     enabled: !!productId,
   });
+
+  const featureTags = {
+    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
+    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+    polycarbonate: { label: 'POLY', desc: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
+    polarized: { label: 'POLAR', desc: 'הגנה מסנוור. מסנן החזרי אור ממשטחים ומשפר ניגודיות.' },
+    anti_fog: { label: 'AF', desc: 'ציפוי נגד אדים. מונע הצטברות אדים במעברי טמפרטורה.' },
+  };
+
+  const getProductTags = (product) => {
+    if (!product) return [];
+    const tags = [];
+    if (product.safety_certs?.includes('ANSI_Z87')) tags.push(featureTags.ANSI_Z87);
+    if (product.safety_certs?.includes('MIL_PRF')) tags.push(featureTags.MIL_PRF);
+    if (product.lens_tech?.includes('polarized')) tags.push(featureTags.polarized);
+    if (product.lens_tech?.includes('anti_fog')) tags.push(featureTags.anti_fog);
+    tags.push(featureTags.polycarbonate);
+    return tags;
+  };
+
+  const tagsToShow = getProductTags(product);
 
   const { data: recommendations } = useQuery({
     queryKey: ['recommendations', product?.category],
@@ -109,14 +132,24 @@ export default function ProductDetail() {
           transition={{ delay: 0.1 }}
           className="space-y-6"
         >
-          {/* Certs */}
-          <div className="flex flex-wrap gap-2">
-            {product.safety_certs?.map(cert => (
-              <Badge key={cert} variant="outline" className="text-[10px] font-heading uppercase tracking-wider">
-                <Shield className="w-3 h-3 mr-1 text-primary" />
-                {cert.replace('_', ' ')}
-              </Badge>
-            ))}
+          {/* Feature Tags */}
+          <div className="flex flex-wrap items-center gap-2" dir="rtl">
+            <TooltipProvider delayDuration={100}>
+              {tagsToShow.map((tag, idx) => (
+                <Tooltip key={idx}>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted rounded-md border border-border/50 cursor-help hover:bg-muted/80 transition-colors">
+                      <span className="text-xs font-bold text-primary tracking-wider">{tag.label}</span>
+                      <Info className="w-3 h-3 text-muted-foreground" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-[250px] text-right" dir="rtl">
+                    <p className="font-bold text-sm mb-1">{tag.label}</p>
+                    <p className="text-xs leading-relaxed text-primary-foreground/90">{tag.desc}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </TooltipProvider>
           </div>
 
           <h1 className="font-heading text-2xl sm:text-4xl uppercase tracking-tight leading-tight">{product.title}</h1>

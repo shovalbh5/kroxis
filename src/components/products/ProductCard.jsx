@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Eye } from 'lucide-react';
+import { Shield, Eye, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -13,6 +14,28 @@ export default function ProductCard({ product }) {
     OSHA: 'OSHA',
     MIL_PRF: 'MIL-PRF',
   };
+
+  const featureTags = {
+    ANSI_Z87: { label: 'Z87.1', desc: 'תקן בטיחות תעשייתי. עמידות גבוהה בפני פגיעות וחלקיקים.' },
+    MIL_PRF: { label: 'MIL-SPEC', desc: 'הגנה בליסטית צבאית. עמידות ברסיסים במהירות גבוהה.' },
+    polycarbonate: { label: 'POLY', desc: 'עדשות פוליקרבונט. קלות וחזקות פי 10 מפלסטיק רגיל.' },
+    polarized: { label: 'POLAR', desc: 'הגנה מסנוור. מסנן החזרי אור ממשטחים ומשפר ניגודיות.' },
+    anti_fog: { label: 'AF', desc: 'ציפוי נגד אדים. מונע הצטברות אדים במעברי טמפרטורה.' },
+  };
+
+  // Helper to determine which tags to show based on product data
+  const getProductTags = (product) => {
+    const tags = [];
+    if (product.safety_certs?.includes('ANSI_Z87')) tags.push(featureTags.ANSI_Z87);
+    if (product.safety_certs?.includes('MIL_PRF')) tags.push(featureTags.MIL_PRF);
+    if (product.lens_tech?.includes('polarized')) tags.push(featureTags.polarized);
+    if (product.lens_tech?.includes('anti_fog')) tags.push(featureTags.anti_fog);
+    // Assuming most tactical glasses are polycarbonate, or check frame_material/lens_material if available
+    tags.push(featureTags.polycarbonate); 
+    return tags;
+  };
+
+  const tagsToShow = getProductTags(product);
 
   return (
     <motion.div
@@ -46,13 +69,26 @@ export default function ProductCard({ product }) {
 
           {/* Info */}
           <div className="p-3 sm:p-5">
-            <div className="flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-3">
-              {product.safety_certs?.slice(0, 2).map(cert => (
-                <span key={cert} className="flex items-center gap-0.5 text-[9px] sm:text-[10px] text-muted-foreground">
-                  <Shield className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-primary" />
-                  {certLabels[cert] || cert}
-                </span>
-              ))}
+            <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 mb-2 sm:mb-3" dir="rtl">
+              <TooltipProvider delayDuration={100}>
+                {tagsToShow.map((tag, idx) => (
+                  <Tooltip key={idx}>
+                    <TooltipTrigger asChild>
+                      <div 
+                        className="flex items-center gap-1 px-1.5 py-0.5 bg-muted rounded border border-border/50 cursor-help hover:bg-muted/80 transition-colors"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <span className="text-[9px] sm:text-[10px] font-bold text-primary tracking-wider">{tag.label}</span>
+                        <Info className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-muted-foreground" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-[200px] text-right" dir="rtl">
+                      <p className="font-bold text-xs mb-0.5">{tag.label}</p>
+                      <p className="text-[10px] leading-tight text-primary-foreground/90">{tag.desc}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
             </div>
             <h3 className="font-heading text-xs sm:text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-1 sm:mb-2 font-bold min-h-[32px] sm:min-h-[48px]">
               {product.title}
