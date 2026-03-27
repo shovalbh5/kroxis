@@ -26,15 +26,15 @@ export default function Footer() {
               <h3 className="font-heading text-2xl uppercase tracking-wider mb-2 font-bold">{t('footer.newsletter')}</h3>
               <p className="text-secondary-foreground/70 text-base font-medium">{t('footer.newsletterDesc')}</p>
             </div>
-            <div className="flex gap-2 w-full max-w-md">
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
               <Input
                 type="email"
                 placeholder={t('footer.enterEmail')}
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="bg-muted/20 border-border text-secondary-foreground placeholder:text-secondary-foreground/40"
+                className="bg-muted/20 border-border text-secondary-foreground placeholder:text-secondary-foreground/40 h-12 sm:h-10"
               />
-              <Button className="shrink-0 font-heading uppercase tracking-wider bg-primary text-white hover:bg-primary/90 font-bold">
+              <Button className="w-full sm:w-auto h-12 sm:h-10 shrink-0 font-heading uppercase tracking-wider bg-primary text-white hover:bg-primary/90 font-bold">
                 <Mail className="w-4 h-4 me-2" />
                 {t('footer.subscribe')}
               </Button>
@@ -107,9 +107,9 @@ export default function Footer() {
               href="https://waze.com/ul?q=א.ת נוף הארץ, ראש העין, כפר קאסם, 4810001&navigate=yes"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-[#33ccff] hover:bg-[#2eb8e6] text-white rounded-lg font-medium text-sm transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-3 sm:px-4 sm:py-2 w-full sm:w-auto bg-[#33ccff] hover:bg-[#2eb8e6] text-white rounded-lg font-medium text-base sm:text-sm transition-colors"
             >
-              <Navigation className="w-4 h-4" />
+              <Navigation className="w-5 h-5 sm:w-4 sm:h-4" />
               {t('footer.navigateWaze')}
             </a>
           </div>

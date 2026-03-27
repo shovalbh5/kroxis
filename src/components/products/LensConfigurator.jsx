@@ -16,7 +16,7 @@ export default function LensConfigurator({ selected, onChange }) {
           <button
             key={opt.value}
             onClick={() => onChange(opt.value)}
-            className={`w-full flex items-center justify-between p-3 rounded-lg border-2 transition-all text-left ${
+            className={`w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border-2 transition-all text-start ${
               selected === opt.value
                 ? 'border-primary bg-primary/5'
                 : 'border-border hover:border-primary/30'

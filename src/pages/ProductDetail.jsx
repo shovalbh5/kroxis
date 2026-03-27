@@ -119,7 +119,7 @@ export default function ProductDetail() {
             ))}
           </div>
 
-          <h1 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight">{product.title}</h1>
+          <h1 className="font-heading text-2xl sm:text-4xl uppercase tracking-tight leading-tight">{product.title}</h1>
 
           {/* Share */}
           <div className="flex items-center gap-3">
@@ -128,7 +128,7 @@ export default function ProductDetail() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="font-heading text-3xl">₪{product.price?.toFixed(2)}</span>
+            <span className="font-heading text-2xl sm:text-3xl">₪{product.price?.toFixed(2)}</span>
             {product.compare_at_price && product.compare_at_price > product.price && (
               <span className="text-lg text-muted-foreground line-through">₪{product.compare_at_price.toFixed(2)}</span>
             )}
@@ -161,18 +161,18 @@ export default function ProductDetail() {
           )}
 
           {/* Quantity + Add to Cart */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-muted rounded-lg px-3 py-2">
-              <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="p-1 hover:text-primary transition-colors">
-                <Minus className="w-4 h-4" />
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            <div className="flex items-center justify-between sm:justify-center gap-4 sm:gap-2 bg-muted rounded-lg px-4 sm:px-3 py-3 sm:py-2">
+              <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="p-2 sm:p-1 hover:text-primary transition-colors">
+                <Minus className="w-5 h-5 sm:w-4 sm:h-4" />
               </button>
-              <span className="w-8 text-center font-medium">{quantity}</span>
-              <button onClick={() => setQuantity(q => q + 1)} className="p-1 hover:text-primary transition-colors">
-                <Plus className="w-4 h-4" />
+              <span className="w-8 text-center font-medium text-lg sm:text-base">{quantity}</span>
+              <button onClick={() => setQuantity(q => q + 1)} className="p-2 sm:p-1 hover:text-primary transition-colors">
+                <Plus className="w-5 h-5 sm:w-4 sm:h-4" />
               </button>
             </div>
-            <Button onClick={handleAddToCart} size="lg" className="flex-1 h-12 font-heading uppercase tracking-wider text-sm">
-              <ShoppingBag className="w-4 h-4 mr-2" />
+            <Button onClick={handleAddToCart} size="lg" className="flex-1 h-14 sm:h-12 font-heading uppercase tracking-wider text-sm sm:text-base">
+              <ShoppingBag className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
               הוסף לעגלה — ₪{totalPrice.toFixed(2)}
             </Button>
           </div>
