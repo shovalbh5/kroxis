@@ -99,7 +99,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         </div>
         <iframe
           srcDoc={htmlContent}
-          allow="camera; microphone; autoplay; fullscreen; display-capture"
+          allow="camera *; microphone *; autoplay *; fullscreen *; display-capture *"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           className="w-full h-full border-0"
           title="Virtual Try On"
         />
