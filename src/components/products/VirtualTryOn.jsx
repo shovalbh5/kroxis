@@ -1,9 +1,12 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { X, AlertCircle, RotateCcw, Loader2 } from 'lucide-react';
+import { X, AlertCircle, RotateCcw, Loader2, PanelLeftOpen, PanelLeftClose } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import TryOnProductPanel from './TryOnProductPanel';
+import TryOnBottomBar from './TryOnBottomBar';
+import TryOnCaptureButton from './TryOnCaptureButton';
 
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 const MEDIAPIPE_WASM = `${MEDIAPIPE_CDN}/wasm`;
@@ -97,7 +100,9 @@ function loadMediaPipe() {
   return mediaPipePromise;
 }
 
-export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
+export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [], currentProduct, onAddToCart }) {
+  const [selectedProduct, setSelectedProduct] = useState(currentProduct);
+  const [showPanel, setShowPanel] = useState(true);
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -347,7 +352,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       const { scene, camera, renderer } = initThree(vw, vh);
 
       // 3. Load GLB model
-      const glbUrl = modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/main/uploads_files_2246107_gafasobj%20(5).glb';
+      const activeModelUrl = selectedProduct?.model_url || modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/main/uploads_files_2246107_gafasobj%20(5).glb';
+      const glbUrl = activeModelUrl;
       console.log('[VirtualTryOn] Using GLB URL:', glbUrl);
       setStatus('model');
       
@@ -501,6 +507,23 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     };
   }, [isOpen, startDetection, stopAll]);
 
+  // Switch model when selectedProduct changes
+  const handleSelectProduct = useCallback(async (product) => {
+    setSelectedProduct(product);
+    if (!threeRef.current || !product?.model_url) return;
+    // Remove old model
+    if (glassesModelRef.current) {
+      threeRef.current.scene.remove(glassesModelRef.current.group);
+      glassesModelRef.current = null;
+    }
+    // Load new model
+    try {
+      await loadGLBModel(threeRef.current.scene, product.model_url);
+    } catch (err) {
+      console.error('[VirtualTryOn] Failed to switch model:', err);
+    }
+  }, [loadGLBModel]);
+
   const handleClose = () => {
     stopAll();
     onClose();
@@ -517,8 +540,17 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
         ref={containerRef}
       >
-        {/* Close */}
-        <div className="absolute top-4 right-4 z-20">
+        {/* Top bar */}
+        <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+          <TryOnCaptureButton videoCanvasRef={canvasRef} threeCanvasRef={threeCanvasRef} />
+          {products.length > 0 && (
+            <button
+              onClick={() => setShowPanel(p => !p)}
+              className="bg-black/50 backdrop-blur-md p-3 rounded-full text-white hover:bg-black/80 transition-colors border border-white/20 lg:hidden"
+            >
+              {showPanel ? <PanelLeftClose className="w-5 h-5" /> : <PanelLeftOpen className="w-5 h-5" />}
+            </button>
+          )}
           <button onClick={handleClose} className="bg-black/50 backdrop-blur-md p-3 rounded-full text-white hover:bg-black/80 transition-colors border border-white/20">
             <X className="w-6 h-6" />
           </button>
@@ -559,26 +591,43 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         {/* Hidden video */}
         <video ref={videoRef} playsInline muted className="absolute opacity-0 pointer-events-none w-0 h-0" />
 
+        {/* Left product panel */}
+        {products.length > 0 && showPanel && (
+          <div className="absolute top-0 left-0 bottom-0 z-30 w-64 lg:w-72">
+            <TryOnProductPanel
+              products={products}
+              selectedId={selectedProduct?.id}
+              onSelect={handleSelectProduct}
+            />
+          </div>
+        )}
+
         {/* Video canvas (background) */}
         <canvas ref={canvasRef} style={canvasStyle} />
 
         {/* Three.js canvas (glasses overlay) */}
         <canvas ref={threeCanvasRef} style={canvasStyle} className="pointer-events-none" />
 
-        {/* Bottom UI */}
+        {/* Bottom bar with product info + add to cart */}
+        {status === 'running' && selectedProduct && onAddToCart && (
+          <TryOnBottomBar product={selectedProduct} onAddToCart={onAddToCart} />
+        )}
+
+        {/* Status text */}
+        {status === 'running' && !selectedProduct && (
+          <div className="absolute bottom-8 left-0 right-0 z-10 text-center pointer-events-none">
+            <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium" dir="rtl">
+              {faceDetected
+                ? 'הזז את הראש כדי לראות את המשקפיים מכל הכיוונים'
+                : 'מחפש פנים... כוון את הפנים למצלמה'}
+            </p>
+          </div>
+        )}
+
         {status === 'running' && (
-          <>
-            <div className="absolute bottom-8 left-0 right-0 z-10 text-center pointer-events-none">
-              <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium" dir="rtl">
-                {faceDetected
-                  ? 'הזז את הראש כדי לראות את המשקפיים מכל הכיוונים'
-                  : 'מחפש פנים... כוון את הפנים למצלמה'}
-              </p>
-            </div>
-            <div className="absolute top-4 left-4 z-10">
-              <span className="text-white/60 font-heading text-sm tracking-widest">KROXIS TRY-ON</span>
-            </div>
-          </>
+          <div className="absolute top-4 left-4 z-10">
+            <span className="text-white/60 font-heading text-sm tracking-widest">KROXIS TRY-ON</span>
+          </div>
         )}
       </motion.div>
     </AnimatePresence>

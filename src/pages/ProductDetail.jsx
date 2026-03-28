@@ -35,6 +35,12 @@ export default function ProductDetail() {
   const [showUpsell, setShowUpsell] = useState(false);
   const [isTryOnOpen, setIsTryOnOpen] = useState(false);
 
+  // Load all products for the try-on panel
+  const { data: allProducts } = useQuery({
+    queryKey: ['allProducts'],
+    queryFn: () => base44.entities.Product.list(),
+  });
+
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', productId],
     queryFn: async () => {
@@ -277,6 +283,12 @@ export default function ProductDetail() {
         isOpen={isTryOnOpen}
         onClose={() => setIsTryOnOpen(false)}
         modelUrl={product.model_url}
+        products={allProducts || []}
+        currentProduct={product}
+        onAddToCart={(p) => {
+          addItem(p, 'standard', '', 1);
+          toast({ title: '✓ נוסף לעגלה', description: p.title });
+        }}
       />
     </div>
   );
