@@ -113,6 +113,13 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const threeRef = useRef(null);
   const glassesModelRef = useRef(null);
   const occlusionMeshRef = useRef(null);
+  // Smoothing state for lerp interpolation
+  const smoothRef = useRef({
+    pos: new THREE.Vector3(),
+    rot: new THREE.Euler(),
+    scale: 1,
+    initialized: false,
+  });
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [faceDetected, setFaceDetected] = useState(false);
@@ -134,6 +141,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     }
     glassesModelRef.current = null;
     occlusionMeshRef.current = null;
+    smoothRef.current.initialized = false;
   }, []);
 
   const initThree = useCallback((width, height) => {
@@ -269,44 +277,50 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
 
-    // Scale: make the model's width match ~1.5x the eye distance
+    // Compute raw target values
     const targetWidth = eyeDist * 1.5;
-    const scaleF = targetWidth / size.x;
-    group.scale.set(scaleF, scaleF, scaleF);
+    const rawScale = targetWidth / size.x;
 
-    // Position: center between eyes horizontally, blend vertically
     const eyeMidX = (lx + rx) / 2;
     const eyeMidY = (ly + ry) / 2;
+    const rawX = eyeMidX;
+    const rawY = eyeMidY * 0.6 + ny * 0.4;
+    const avgZ = ((loZ + roZ) / 2) * vw;
+    const rawZ = avgZ * 0.5;
 
-    // Blend: 60% eye level + 40% nose bridge for natural glasses position
-    const cx = eyeMidX;
-    const cy = eyeMidY * 0.6 + ny * 0.4;
-
-    // Z position: use average Z of eye landmarks to push glasses into the face depth
-    // MediaPipe Z is relative to face, negative = closer to camera
-    const avgZ = ((loZ + roZ) / 2) * vw; // scale Z by viewport width
-    const zPos = avgZ * 0.5; // modulate so glasses sit slightly in front
-
-    group.position.set(cx, cy, zPos);
-
-    // Rotation: roll (tilt head left/right)
-    const roll = Math.atan2(ly - ry, lx - rx);
-
-    // Yaw: use face width ratio (left cheek to nose vs right cheek to nose)
-    // This gives a much more accurate yaw than nose offset alone
+    const rawRoll = Math.atan2(ly - ry, lx - rx);
     const lcx = (1 - lc.x) * vw;
     const rcx = (1 - rc.x) * vw;
-    const leftDist = Math.abs(cx - lcx);
-    const rightDist = Math.abs(cx - rcx);
+    const leftDist = Math.abs(rawX - lcx);
+    const rightDist = Math.abs(rawX - rcx);
     const faceWidthRatio = (leftDist - rightDist) / (leftDist + rightDist);
-    const yaw = faceWidthRatio * 1.8; // strong yaw response
-
-    // Pitch: based on nose position relative to forehead-chin span
+    const rawYaw = faceWidthRatio * 1.8;
     const faceHeight = chy - fhy;
     const noseRatio = (ny - fhy) / faceHeight;
-    const pitch = (noseRatio - 0.35) * 1.5;
+    const rawPitch = (noseRatio - 0.35) * 1.5;
 
-    group.rotation.set(pitch, yaw, roll);
+    // Smoothing via lerp — eliminates jitter
+    const LERP_FACTOR = 0.35; // 0 = frozen, 1 = no smoothing
+    const s = smoothRef.current;
+
+    if (!s.initialized) {
+      s.pos.set(rawX, rawY, rawZ);
+      s.rot.set(rawPitch, rawYaw, rawRoll);
+      s.scale = rawScale;
+      s.initialized = true;
+    } else {
+      s.pos.x += (rawX - s.pos.x) * LERP_FACTOR;
+      s.pos.y += (rawY - s.pos.y) * LERP_FACTOR;
+      s.pos.z += (rawZ - s.pos.z) * LERP_FACTOR;
+      s.rot.x += (rawPitch - s.rot.x) * LERP_FACTOR;
+      s.rot.y += (rawYaw - s.rot.y) * LERP_FACTOR;
+      s.rot.z += (rawRoll - s.rot.z) * LERP_FACTOR;
+      s.scale += (rawScale - s.scale) * LERP_FACTOR;
+    }
+
+    group.scale.set(s.scale, s.scale, s.scale);
+    group.position.set(s.pos.x, s.pos.y, s.pos.z);
+    group.rotation.set(s.rot.x, s.rot.y, s.rot.z);
     group.visible = true;
 
     // Update face occlusion mesh from all 468 landmarks
