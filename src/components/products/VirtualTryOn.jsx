@@ -169,41 +169,42 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     const fh = landmarks[FOREHEAD];
     const ch = landmarks[CHIN];
 
-    // Mirror X (video is mirrored)
+    // Mirror X (video is mirrored via CSS/canvas transform)
     const lx = (1 - lo.x) * vw, ly = lo.y * vh;
     const rx = (1 - ro.x) * vw, ry = ro.y * vh;
     const nx = (1 - nb.x) * vw, ny = nb.y * vh;
-    const fhx = (1 - fh.x) * vw, fhy = fh.y * vh;
-    const chx = (1 - ch.x) * vw, chy = ch.y * vh;
+    const fhy = fh.y * vh;
+    const chy = ch.y * vh;
 
     // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
 
-    // Scale: make the model's width match ~1.35x the eye distance
-    const targetWidth = eyeDist * 1.35;
+    // Scale: make the model's width match ~1.4x the eye distance
+    const targetWidth = eyeDist * 1.4;
     const scaleF = targetWidth / size.x;
     group.scale.set(scaleF, scaleF, scaleF);
 
-    // Position at midpoint between outer eye corners
-    const cx = (lx + rx) / 2;
-    const cy = (ly + ry) / 2;
+    // Position: use nose bridge landmark (index 6) as the center anchor
+    // This is more stable than averaging eye corners
+    const cx = nx;
+    const cy = ny;
 
-    // Slight vertical offset upward to sit on nose bridge
-    const verticalOffset = eyeDist * 0.05;
+    // Small vertical offset upward so glasses sit on the bridge, not the tip
+    const verticalOffset = eyeDist * 0.08;
 
     group.position.set(cx, cy - verticalOffset, 0);
 
     // Rotation: roll (tilt head left/right)
     const roll = Math.atan2(ly - ry, lx - rx);
-    
-    // Yaw: based on nose bridge offset from eye center
-    const eyeCenterX = (lo.x + ro.x) / 2;
-    const noseOffsetX = nb.x - eyeCenterX;
+
+    // Yaw: based on nose bridge offset from eye midpoint
+    const eyeMidX = (lo.x + ro.x) / 2;
+    const noseOffsetX = nb.x - eyeMidX;
     const yaw = noseOffsetX * 4;
 
-    // Pitch: based on vertical relationship between forehead and chin vs nose
-    const faceHeight = Math.hypot(chx - fhx, chy - fhy);
-    const noseRatio = (ny - fhy) / (chy - fhy);
+    // Pitch: based on nose position relative to forehead-chin span
+    const faceHeight = chy - fhy;
+    const noseRatio = (ny - fhy) / faceHeight;
     const pitch = (noseRatio - 0.35) * 1.5;
 
     group.rotation.set(pitch, yaw, roll);
