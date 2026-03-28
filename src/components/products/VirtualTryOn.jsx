@@ -193,22 +193,23 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     const scaleF = targetWidth / size.x;
     group.scale.set(scaleF, scaleF, scaleF);
 
-    // Position: use nose bridge landmark (index 6) as the center anchor
-    // This is more stable than averaging eye corners
-    const cx = nx;
-    const cy = ny;
+    // Position: use midpoint between outer eye corners for horizontal,
+    // and blend nose bridge with eye level for vertical
+    const eyeMidX = (lx + rx) / 2;
+    const eyeMidY = (ly + ry) / 2;
 
-    // Small vertical offset upward so glasses sit on the bridge, not the tip
-    const verticalOffset = eyeDist * 0.08;
+    // Blend: 70% eye level + 30% nose bridge for natural glasses position
+    const cx = eyeMidX;
+    const cy = eyeMidY * 0.7 + ny * 0.3;
 
-    group.position.set(cx, cy - verticalOffset, 0);
+    group.position.set(cx, cy, 0);
 
     // Rotation: roll (tilt head left/right)
     const roll = Math.atan2(ly - ry, lx - rx);
 
     // Yaw: based on nose bridge offset from eye midpoint
-    const eyeMidX = (lo.x + ro.x) / 2;
-    const noseOffsetX = nb.x - eyeMidX;
+    const eyeMidNormX = (lo.x + ro.x) / 2;
+    const noseOffsetX = nb.x - eyeMidNormX;
     const yaw = noseOffsetX * 4;
 
     // Pitch: based on nose position relative to forehead-chin span
