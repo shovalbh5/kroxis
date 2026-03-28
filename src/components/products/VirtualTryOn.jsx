@@ -293,11 +293,12 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const rc = landmarks[RIGHT_CHEEK];
 
     // Mirror X (video is mirrored via canvas transform)
-    const lx = (1 - lo.x) * vw, ly = lo.y * vh;
-    const rx = (1 - ro.x) * vw, ry = ro.y * vh;
-    const nx = (1 - nb.x) * vw, ny = nb.y * vh;
-    const fhy = fh.y * vh;
-    const chy = ch.y * vh;
+    // Flip Y: MediaPipe Y goes top→bottom, Three.js Y goes bottom→top
+    const lx = (1 - lo.x) * vw, ly = (1 - lo.y) * vh;
+    const rx = (1 - ro.x) * vw, ry = (1 - ro.y) * vh;
+    const nx = (1 - nb.x) * vw, ny = (1 - nb.y) * vh;
+    const fhy = (1 - fh.y) * vh;
+    const chy = (1 - ch.y) * vh;
 
     // Use Z depth from landmarks for 3D positioning
     const loZ = lo.z || 0;
@@ -321,7 +322,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const eyeMidX = (lx + rx) / 2;
     const eyeMidY = (ly + ry) / 2;
     const rawX = eyeMidX;
-    const rawY = eyeMidY * 0.6 + ny * 0.4;
+    // Position at eye level — mostly eyes, slight nose bridge influence
+    const rawY = eyeMidY * 0.88 + ny * 0.12;
     const avgZ = ((loZ + roZ) / 2) * vw;
     const rawZ = avgZ * 0.5;
 
@@ -332,9 +334,10 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const rightDist = Math.abs(rawX - rcx);
     const faceWidthRatio = (leftDist - rightDist) / (leftDist + rightDist);
     const rawYaw = faceWidthRatio * 1.8;
-    const faceHeight = chy - fhy;
-    const noseRatio = (ny - fhy) / faceHeight;
-    const rawPitch = (noseRatio - 0.35) * 1.5;
+    // With flipped Y: forehead Y > chin Y
+    const faceHeight = Math.abs(fhy - chy);
+    const noseRatio = faceHeight > 0 ? Math.abs(fhy - ny) / faceHeight : 0.35;
+    const rawPitch = -(noseRatio - 0.35) * 1.2;
 
     // Ear/temple anchoring: adjust roll based on ear-to-temple depth difference
     // This makes glasses arms follow ear position naturally when turning
@@ -375,8 +378,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
       const shadowWidth = eyeDist * 1.1;
       const shadowHeight = eyeDist * 0.25;
       shadow.scale.set(shadowWidth, shadowHeight, 1);
-      // Place shadow below nose bridge, slightly behind
-      shadow.position.set(s.pos.x, s.pos.y + eyeDist * 0.18, s.pos.z - 2);
+      // Place shadow below glasses (lower Y in flipped coords = subtract)
+      shadow.position.set(s.pos.x, s.pos.y - eyeDist * 0.18, s.pos.z - 2);
       shadow.rotation.set(s.rot.x, s.rot.y, s.rot.z);
       shadow.visible = true;
     }
@@ -388,8 +391,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
       for (let i = 0; i < landmarks.length && i < 468; i++) {
         const lm = landmarks[i];
         const px = (1 - lm.x) * vw; // mirror X
-        const py = lm.y * vh;
-        const pz = (lm.z || 0) * vw * 0.5; // scale Z similar to glasses
+        const py = (1 - lm.y) * vh; // flip Y to match Three.js
+        const pz = (lm.z || 0) * vw * 0.5;
         posAttr.setXYZ(i, px, py, pz);
       }
       posAttr.needsUpdate = true;
