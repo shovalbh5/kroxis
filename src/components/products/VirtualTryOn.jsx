@@ -5,9 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   if (!isOpen) return null;
 
-  // We use the MindAR glasses model as a fallback if modelUrl is not provided
-  // Google Drive often blocks direct 3D model loading due to CORS. Reverting to a known working model for testing.
-  const finalModelUrl = modelUrl || 'https://raw.githubusercontent.com/hiukim/mind-ar-js/master/examples/face-tracking/assets/glasses/scene.gltf';
+  // Using a CORS proxy to bypass Google Drive's restrictions for the provided model
+  const driveId = '1-PaaP1rqAh1nV8TmANLklPb4rmDKtaoh';
+  const directDriveUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+  const corsProxyUrl = `https://corsproxy.io/?${encodeURIComponent(directDriveUrl)}`;
+  
+  const finalModelUrl = modelUrl || corsProxyUrl;
 
   const htmlContent = `
 <!DOCTYPE html>
