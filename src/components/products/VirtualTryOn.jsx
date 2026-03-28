@@ -19,6 +19,38 @@ const CHIN = 152;
 const LEFT_CHEEK = 234;
 const RIGHT_CHEEK = 454;
 
+// Face mesh triangulation indices for occlusion
+// Subset of MediaPipe's FACEMESH_TESSELATION covering the key occlusion areas:
+// nose, cheeks, forehead — areas that should hide glasses behind them
+const FACE_TRIANGLES = [
+  // Nose bridge & sides
+  6, 122, 168, 6, 168, 351, 168, 122, 196, 168, 351, 419,
+  122, 196, 197, 351, 419, 420,
+  196, 197, 3, 419, 420, 248,
+  197, 3, 51, 420, 248, 281,
+  3, 51, 196, 248, 281, 419,
+  // Left cheek / temple area  
+  234, 127, 162, 234, 162, 21, 234, 21, 54,
+  127, 162, 34, 162, 21, 54, 21, 54, 103,
+  234, 127, 93, 93, 127, 132, 132, 127, 34,
+  234, 93, 137, 137, 93, 177, 177, 93, 132,
+  // Right cheek / temple area
+  454, 356, 389, 454, 389, 251, 454, 251, 284,
+  356, 389, 264, 389, 251, 284, 251, 284, 332,
+  454, 356, 323, 323, 356, 361, 361, 356, 264,
+  454, 323, 366, 366, 323, 401, 401, 323, 361,
+  // Forehead
+  10, 67, 109, 10, 109, 338, 10, 338, 297,
+  67, 109, 108, 338, 297, 337,
+  109, 108, 151, 338, 337, 151,
+  10, 67, 21, 10, 297, 251,
+  // Under-eye to cheek (critical for side occlusion)
+  33, 133, 173, 33, 173, 157,
+  263, 362, 398, 263, 398, 384,
+  133, 173, 155, 362, 398, 382,
+  173, 155, 154, 398, 382, 381,
+];
+
 // Load MediaPipe via dynamic ESM import (works in sandboxed iframes)
 let mediaPipePromise = null;
 function loadMediaPipe() {
@@ -75,6 +107,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   const animFrameRef = useRef(null);
   const threeRef = useRef(null);
   const glassesModelRef = useRef(null);
+  const occlusionMeshRef = useRef(null);
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [faceDetected, setFaceDetected] = useState(false);
@@ -95,6 +128,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       threeRef.current = null;
     }
     glassesModelRef.current = null;
+    occlusionMeshRef.current = null;
   }, []);
 
   const initThree = useCallback((width, height) => {
@@ -129,6 +163,23 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     backLight.position.set(0, -1, -1);
     scene.add(backLight);
 
+    // Create face occlusion mesh — invisible mesh that writes to depth buffer only
+    // This hides parts of the glasses that should be behind the face
+    const occGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(468 * 3); // 468 MediaPipe landmarks
+    occGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    occGeo.setIndex(FACE_TRIANGLES);
+    const occMat = new THREE.MeshBasicMaterial({
+      colorWrite: false,   // Don't draw any color
+      depthWrite: true,     // But DO write to depth buffer
+      side: THREE.DoubleSide,
+    });
+    const occMesh = new THREE.Mesh(occGeo, occMat);
+    occMesh.renderOrder = 0; // Render before glasses
+    occMesh.visible = false;
+    scene.add(occMesh);
+    occlusionMeshRef.current = occMesh;
+
     threeRef.current = { scene, camera, renderer, camDist };
     return { scene, camera, renderer };
   }, []);
@@ -162,6 +213,15 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
           const group = new THREE.Group();
           group.add(model);
           group.visible = false;
+          group.renderOrder = 1; // Render AFTER occlusion mesh
+          // Ensure glasses materials respect depth test
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.material.depthTest = true;
+              child.material.depthWrite = true;
+              child.renderOrder = 1;
+            }
+          });
           scene.add(group);
           glassesModelRef.current = { group, size };
           console.log('[VirtualTryOn] GLB model loaded! Size:', size);
@@ -243,6 +303,22 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
 
     group.rotation.set(pitch, yaw, roll);
     group.visible = true;
+
+    // Update face occlusion mesh from all 468 landmarks
+    if (occlusionMeshRef.current) {
+      const occ = occlusionMeshRef.current;
+      const posAttr = occ.geometry.getAttribute('position');
+      for (let i = 0; i < landmarks.length && i < 468; i++) {
+        const lm = landmarks[i];
+        const px = (1 - lm.x) * vw; // mirror X
+        const py = lm.y * vh;
+        const pz = (lm.z || 0) * vw * 0.5; // scale Z similar to glasses
+        posAttr.setXYZ(i, px, py, pz);
+      }
+      posAttr.needsUpdate = true;
+      occ.geometry.computeVertexNormals();
+      occ.visible = true;
+    }
   }, []);
 
   const startDetection = useCallback(async () => {
@@ -384,6 +460,9 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
               setFaceDetected(false);
               if (glassesModelRef.current) {
                 glassesModelRef.current.group.visible = false;
+              }
+              if (occlusionMeshRef.current) {
+                occlusionMeshRef.current.visible = false;
               }
             }
           }
