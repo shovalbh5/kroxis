@@ -1,83 +1,74 @@
-import React from 'react';
-import { X } from 'lucide-react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { X, Camera, AlertCircle, RotateCcw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
-  if (!isOpen) return null;
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+  const [status, setStatus] = useState('idle'); // idle, requesting, streaming, error
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // Using the uploaded GLB model from GitHub
-  const defaultModelUrl = 'https://raw.githubusercontent.com/shovalbh5/kroxis/3904b15677c9423d73cb7fe2abf0edb621881fe0/uploads_files_2246107_gafasobj.glb';
-  
-  const finalModelUrl = modelUrl || defaultModelUrl;
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+  }, []);
 
-  const htmlContent = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-three.prod.js"></script>
-    <style>
-      body { margin: 0; overflow: hidden; background: #000; font-family: system-ui, -apple-system, sans-serif; }
-      #container { width: 100vw; height: 100vh; }
-      #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; z-index: 10; }
-      .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px auto; }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-  </head>
-  <body>
-    <div id="loading">
-      <div class="spinner"></div>
-      <div style="font-weight: 600; letter-spacing: 0.5px; font-size: 16px;">טוען מצלמה ומודל תלת-ממד...</div>
-      <div style="font-size: 13px; margin-top: 8px; opacity: 0.7;">נא לאשר גישה למצלמה בדפדפן</div>
-    </div>
-    <div id="container"></div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const start = async () => {
-          try {
-            const {MindARThree} = window.MINDAR.FACE;
-            const mindarThree = new MindARThree({
-              container: document.querySelector("#container"),
-            });
-            const {renderer, scene, camera} = mindarThree;
-            
-            const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
-            scene.add(light);
-            const dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-            dirLight.position.set( 0, 10, 10 );
-            scene.add(dirLight);
+  const startCamera = useCallback(async () => {
+    setStatus('requesting');
+    setErrorMsg('');
 
-            const anchor = mindarThree.addAnchor(168); // Nose bridge
+    // Check if getUserMedia is available
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('error');
+      setErrorMsg('הדפדפן לא תומך בגישה למצלמה. נסה לפתוח את האתר בטאב חדש (לא בתצוגה מקדימה).');
+      return;
+    }
 
-            const loader = new THREE.GLTFLoader();
-            loader.load('${finalModelUrl}', (gltf) => {
-              const model = gltf.scene;
-              // Adjust scale and position. For the demo model, scale is 0.01.
-              // For custom GLB, you might need to change these values.
-              model.scale.set(0.01, 0.01, 0.01); 
-              model.position.set(0, 0, 0); 
-              anchor.group.add(model);
-            });
-
-            await mindarThree.start();
-            document.getElementById('loading').style.display = 'none';
-
-            renderer.setAnimationLoop(() => {
-              renderer.render(scene, camera);
-            });
-          } catch (err) {
-            console.error("MindAR Error:", err);
-            document.getElementById('loading').innerHTML = '<div style="color: #ff4444; font-weight: bold; padding: 20px;">שגיאה: ' + (err.message || err.toString()) + '<br><br>ודא שאישרת גישה למצלמה בדפדפן.</div>';
-          }
-        };
-        start();
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }
       });
-    </script>
-  </body>
-</html>
-  `;
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play();
+      }
+      setStatus('streaming');
+    } catch (err) {
+      console.error('Camera error:', err);
+      setStatus('error');
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        setErrorMsg('גישה למצלמה נדחתה. נא לאשר גישה למצלמה בהגדרות הדפדפן ולנסות שוב.');
+      } else if (err.name === 'NotFoundError') {
+        setErrorMsg('לא נמצאה מצלמה במכשיר.');
+      } else if (err.name === 'NotReadableError') {
+        setErrorMsg('המצלמה בשימוש על ידי אפליקציה אחרת.');
+      } else {
+        setErrorMsg(`שגיאה בהפעלת המצלמה: ${err.message}`);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      startCamera();
+    }
+    return () => {
+      stopCamera();
+      setStatus('idle');
+    };
+  }, [isOpen, startCamera, stopCamera]);
+
+  const handleClose = () => {
+    stopCamera();
+    onClose();
+  };
+
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
@@ -85,25 +76,87 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-black flex flex-col"
+        className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center"
       >
-        <div className="absolute top-4 right-4 z-10 flex gap-4">
-          <button onClick={onClose} className="bg-black/50 backdrop-blur-md p-3 rounded-full text-white hover:bg-black/80 transition-colors border border-white/20">
+        {/* Close button */}
+        <div className="absolute top-4 right-4 z-20">
+          <button 
+            onClick={handleClose} 
+            className="bg-black/50 backdrop-blur-md p-3 rounded-full text-white hover:bg-black/80 transition-colors border border-white/20"
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
-        <div className="absolute bottom-8 left-0 right-0 z-10 text-center pointer-events-none">
-          <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium tracking-wide" dir="rtl">
-            הזז את הראש כדי לראות את המשקפיים מכל הכיוונים
-          </p>
-        </div>
-        <iframe
-          srcDoc={htmlContent}
-          allow="camera *; microphone *; autoplay *; fullscreen *; display-capture *"
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-          className="w-full h-full border-0"
-          title="Virtual Try On"
+
+        {/* Camera requesting state */}
+        {status === 'requesting' && (
+          <div className="text-center text-white z-10">
+            <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4" />
+            <p className="font-heading text-lg font-semibold tracking-wide">מפעיל מצלמה...</p>
+            <p className="text-white/70 text-sm mt-2">נא לאשר גישה למצלמה כשהדפדפן מבקש</p>
+          </div>
+        )}
+
+        {/* Error state */}
+        {status === 'error' && (
+          <div className="text-center text-white z-10 px-6 max-w-md">
+            <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+            <p className="font-heading text-lg font-semibold mb-3">לא ניתן להפעיל את המצלמה</p>
+            <p className="text-white/80 text-sm leading-relaxed mb-6" dir="rtl">{errorMsg}</p>
+            <div className="flex gap-3 justify-center">
+              <Button onClick={startCamera} variant="outline" className="text-white border-white/30 hover:bg-white/10">
+                <RotateCcw className="w-4 h-4 mr-2" />
+                נסה שוב
+              </Button>
+              <Button onClick={handleClose} variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10">
+                סגור
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Camera feed */}
+        <video
+          ref={videoRef}
+          playsInline
+          muted
+          className={`w-full h-full object-cover ${status === 'streaming' ? 'block' : 'hidden'}`}
+          style={{ transform: 'scaleX(-1)' }}
         />
+
+        {/* Glasses overlay guide */}
+        {status === 'streaming' && (
+          <>
+            {/* Face guide overlay */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <div className="w-64 h-80 sm:w-72 sm:h-96 border-2 border-white/20 rounded-[50%] relative">
+                {/* Glasses position indicator */}
+                <div className="absolute top-[35%] left-1/2 -translate-x-1/2 w-[85%]">
+                  <svg viewBox="0 0 200 60" className="w-full opacity-40">
+                    {/* Left lens */}
+                    <ellipse cx="55" cy="30" rx="42" ry="24" fill="none" stroke="white" strokeWidth="2.5" />
+                    {/* Right lens */}
+                    <ellipse cx="145" cy="30" rx="42" ry="24" fill="none" stroke="white" strokeWidth="2.5" />
+                    {/* Bridge */}
+                    <path d="M 97 30 Q 100 22 103 30" fill="none" stroke="white" strokeWidth="2.5" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom instructions */}
+            <div className="absolute bottom-8 left-0 right-0 z-10 text-center pointer-events-none">
+              <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium tracking-wide" dir="rtl">
+                מרכז את הפנים בתוך המסגרת
+              </p>
+            </div>
+
+            {/* KROXIS branding */}
+            <div className="absolute top-4 left-4 z-10">
+              <span className="text-white/60 font-heading text-sm tracking-widest">KROXIS TRY-ON</span>
+            </div>
+          </>
+        )}
       </motion.div>
     </AnimatePresence>
   );
