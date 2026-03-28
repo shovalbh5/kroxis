@@ -294,6 +294,18 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
           canvas.width = w;
           canvas.height = h;
 
+          // Keep Three.js canvas in sync with video dimensions
+          if (threeRef.current) {
+            const r = threeRef.current.renderer;
+            const c = threeRef.current.camera;
+            if (r.domElement.width !== w || r.domElement.height !== h) {
+              r.setSize(w, h);
+              c.right = w;
+              c.bottom = h;
+              c.updateProjectionMatrix();
+            }
+          }
+
           // Draw mirrored video on 2D canvas
           ctx.save();
           ctx.translate(w, 0);
