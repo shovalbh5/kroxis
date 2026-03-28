@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { ShoppingBag, Plus, Minus, ArrowLeft, Shield, Truck, RefreshCw } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ArrowLeft, Shield, Truck, RefreshCw, ScanFace } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -19,6 +19,7 @@ import FrequentlyBoughtTogether from '@/components/products/FrequentlyBoughtToge
 import UpsellModal from '@/components/marketing/UpsellModal';
 import ProductSchema from '@/components/seo/ProductSchema';
 import ShareButtons from '@/components/sharing/ShareButtons';
+import VirtualTryOn from '@/components/products/VirtualTryOn';
 import TrustBadges from '@/components/products/TrustBadges';
 import { generateProductSEO, applySEO } from '@/utils/seo';
 import { motion } from 'framer-motion';
@@ -32,6 +33,7 @@ export default function ProductDetail() {
   const [lensOption, setLensOption] = useState('standard');
   const [quantity, setQuantity] = useState(1);
   const [showUpsell, setShowUpsell] = useState(false);
+  const [isTryOnOpen, setIsTryOnOpen] = useState(false);
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', productId],
@@ -126,8 +128,19 @@ export default function ProductDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Gallery */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
           <ProductGallery images={product.images} />
+          
+          {/* Virtual Try-On Button */}
+          <div className="absolute top-4 left-4 z-10">
+            <Button 
+              onClick={() => setIsTryOnOpen(true)}
+              className="bg-primary/90 hover:bg-primary text-white shadow-lg backdrop-blur-sm flex items-center gap-2"
+            >
+              <ScanFace className="w-5 h-5" />
+              <span className="font-heading tracking-wider font-bold">מדידה וירטואלית</span>
+            </Button>
+          </div>
         </motion.div>
 
         {/* Product info */}
@@ -257,6 +270,13 @@ export default function ProductDetail() {
         isOpen={showUpsell}
         onClose={() => setShowUpsell(false)}
         addedProduct={product}
+      />
+
+      {/* Virtual Try-On */}
+      <VirtualTryOn
+        isOpen={isTryOnOpen}
+        onClose={() => setIsTryOnOpen(false)}
+        modelUrl={product.model_url}
       />
     </div>
   );

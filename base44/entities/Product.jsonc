@@ -33,6 +33,10 @@
         "type": "string"
       }
     },
+    "model_url": {
+      "type": "string",
+      "description": "URL to the 3D GLB model for Virtual Try-On"
+    },
     "category": {
       "type": "string",
       "enum": [
