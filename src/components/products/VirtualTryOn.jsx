@@ -21,6 +21,10 @@ const FOREHEAD = 10;
 const CHIN = 152;
 const LEFT_CHEEK = 234;
 const RIGHT_CHEEK = 454;
+const LEFT_EAR = 234;
+const RIGHT_EAR = 454;
+const LEFT_TEMPLE = 127;
+const RIGHT_TEMPLE = 356;
 
 // Face mesh triangulation indices for occlusion
 // Subset of MediaPipe's FACEMESH_TESSELATION covering the key occlusion areas:
@@ -120,6 +124,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     rot: new THREE.Euler(),
     scale: 1,
     initialized: false,
+    baselineEyeDist: 0, // calibrated on first detection for depth scaling
   });
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -144,6 +149,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     occlusionMeshRef.current = null;
     shadowPlaneRef.current = null;
     smoothRef.current.initialized = false;
+    smoothRef.current.baselineEyeDist = 0;
   }, []);
 
   const initThree = useCallback((width, height) => {
@@ -301,7 +307,14 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
 
-    // Compute raw target values
+    // Dynamic depth scaling: calibrate on first frame, then scale relative to baseline
+    const s = smoothRef.current;
+    if (!s.baselineEyeDist) {
+      s.baselineEyeDist = eyeDist; // first-frame calibration
+    }
+    const depthRatio = eyeDist / s.baselineEyeDist; // >1 = closer, <1 = farther
+
+    // Compute raw target values with depth-aware scale
     const targetWidth = eyeDist * 1.5;
     const rawScale = targetWidth / size.x;
 
@@ -323,20 +336,29 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const noseRatio = (ny - fhy) / faceHeight;
     const rawPitch = (noseRatio - 0.35) * 1.5;
 
-    // Smoothing via lerp — eliminates jitter
+    // Ear/temple anchoring: adjust roll based on ear-to-temple depth difference
+    // This makes glasses arms follow ear position naturally when turning
+    const lt = landmarks[LEFT_TEMPLE];
+    const rt = landmarks[RIGHT_TEMPLE];
+    const leftTempleZ = (lt.z || 0) * vw;
+    const rightTempleZ = (rt.z || 0) * vw;
+    const earZDiff = leftTempleZ - rightTempleZ;
+    // Subtle perspective tilt based on ear depth difference
+    const perspectiveTilt = earZDiff * 0.002;
+
+    // Smoothing via lerp
     const LERP_FACTOR = 0.35; // 0 = frozen, 1 = no smoothing
-    const s = smoothRef.current;
 
     if (!s.initialized) {
       s.pos.set(rawX, rawY, rawZ);
-      s.rot.set(rawPitch, rawYaw, rawRoll);
+      s.rot.set(rawPitch + perspectiveTilt, rawYaw, rawRoll);
       s.scale = rawScale;
       s.initialized = true;
     } else {
       s.pos.x += (rawX - s.pos.x) * LERP_FACTOR;
       s.pos.y += (rawY - s.pos.y) * LERP_FACTOR;
       s.pos.z += (rawZ - s.pos.z) * LERP_FACTOR;
-      s.rot.x += (rawPitch - s.rot.x) * LERP_FACTOR;
+      s.rot.x += ((rawPitch + perspectiveTilt) - s.rot.x) * LERP_FACTOR;
       s.rot.y += (rawYaw - s.rot.y) * LERP_FACTOR;
       s.rot.z += (rawRoll - s.rot.z) * LERP_FACTOR;
       s.scale += (rawScale - s.scale) * LERP_FACTOR;
