@@ -68,8 +68,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
               renderer.render(scene, camera);
             });
           } catch (err) {
-            console.error(err);
-            document.getElementById('loading').innerHTML = '<div style="color: #ff4444; font-weight: bold;">שגיאה בטעינת המצלמה. ודא שאישרת גישה.</div>';
+            console.error("MindAR Error:", err);
+            document.getElementById('loading').innerHTML = '<div style="color: #ff4444; font-weight: bold; padding: 20px;">שגיאה: ' + (err.message || err.toString()) + '<br><br>ודא שאישרת גישה למצלמה בדפדפן.</div>';
           }
         };
         start();
@@ -99,7 +99,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         </div>
         <iframe
           srcDoc={htmlContent}
-          allow="camera *; autoplay *; encrypted-media *; fullscreen *"
+          allow="camera; microphone; autoplay; fullscreen; display-capture"
           className="w-full h-full border-0"
           title="Virtual Try On"
         />
