@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
+const MEDIAPIPE_WASM = `${MEDIAPIPE_CDN}/wasm`;
 
 // Face landmark indices
 const NOSE_BRIDGE = 6;
@@ -14,30 +15,49 @@ const RIGHT_EYE_OUTER = 33;
 const FOREHEAD = 10;
 const CHIN = 152;
 
-// Load MediaPipe script via <script> tag
+// Load MediaPipe via dynamic ESM import (works in sandboxed iframes)
 let mediaPipePromise = null;
-function loadMediaPipeScript() {
+function loadMediaPipe() {
   if (mediaPipePromise) return mediaPipePromise;
-  mediaPipePromise = new Promise((resolve, reject) => {
-    if (window.FilesetResolver && window.FaceLandmarker) {
-      resolve({ FilesetResolver: window.FilesetResolver, FaceLandmarker: window.FaceLandmarker });
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = `${MEDIAPIPE_CDN}/vision_bundle.js`;
-    script.crossOrigin = 'anonymous';
-    script.onload = () => {
-      const check = setInterval(() => {
+  mediaPipePromise = (async () => {
+    try {
+      console.log('[VirtualTryOn] Loading MediaPipe via dynamic import...');
+      const vision = await import(
+        /* @vite-ignore */
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/vision_bundle.mjs'
+      );
+      console.log('[VirtualTryOn] MediaPipe module keys:', Object.keys(vision));
+      const FilesetResolver = vision.FilesetResolver;
+      const FaceLandmarker = vision.FaceLandmarker;
+      if (!FilesetResolver || !FaceLandmarker) {
+        throw new Error('FilesetResolver or FaceLandmarker not found in module');
+      }
+      return { FilesetResolver, FaceLandmarker };
+    } catch (e1) {
+      console.warn('[VirtualTryOn] ESM import failed, trying script tag fallback...', e1.message);
+      return new Promise((resolve, reject) => {
         if (window.FilesetResolver && window.FaceLandmarker) {
-          clearInterval(check);
           resolve({ FilesetResolver: window.FilesetResolver, FaceLandmarker: window.FaceLandmarker });
+          return;
         }
-      }, 100);
-      setTimeout(() => { clearInterval(check); reject(new Error('MediaPipe timeout')); }, 15000);
-    };
-    script.onerror = () => { mediaPipePromise = null; reject(new Error('Failed to load MediaPipe')); };
-    document.head.appendChild(script);
-  });
+        const script = document.createElement('script');
+        script.src = `${MEDIAPIPE_CDN}/vision_bundle.js`;
+        script.crossOrigin = 'anonymous';
+        script.onload = () => {
+          const check = setInterval(() => {
+            if (window.FilesetResolver && window.FaceLandmarker) {
+              clearInterval(check);
+              resolve({ FilesetResolver: window.FilesetResolver, FaceLandmarker: window.FaceLandmarker });
+            }
+          }, 100);
+          setTimeout(() => { clearInterval(check); reject(new Error('MediaPipe globals timeout')); }, 15000);
+        };
+        script.onerror = () => reject(new Error('Both ESM import and script tag failed to load MediaPipe'));
+        document.head.appendChild(script);
+      });
+    }
+  })();
+  mediaPipePromise.catch(() => { mediaPipePromise = null; });
   return mediaPipePromise;
 }
 
@@ -220,7 +240,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       
       // Load MediaPipe and GLB in parallel
       const [mp] = await Promise.all([
-        loadMediaPipeScript(),
+        loadMediaPipe(),
         loadGLBModel(scene, glbUrl).catch(err => {
           console.error('[VirtualTryOn] GLB LOAD FAILED:', err);
         })
@@ -233,7 +253,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       const { FilesetResolver, FaceLandmarker } = mp;
       console.log('[VirtualTryOn] Creating FaceLandmarker...');
 
-      const filesetResolver = await FilesetResolver.forVisionTasks(`${MEDIAPIPE_CDN}/wasm`);
+      const filesetResolver = await FilesetResolver.forVisionTasks(MEDIAPIPE_WASM);
       const fl = await FaceLandmarker.createFromOptions(filesetResolver, {
         baseOptions: {
           modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
