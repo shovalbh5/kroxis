@@ -6,7 +6,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   if (!isOpen) return null;
 
   // We use the MindAR glasses model as a fallback if modelUrl is not provided
-  const finalModelUrl = modelUrl || 'https://raw.githubusercontent.com/hiukim/mind-ar-js/master/examples/face-tracking/assets/glasses/scene.gltf';
+  const finalModelUrl = modelUrl || 'https://drive.google.com/uc?export=download&id=1-PaaP1rqAh1nV8TmANLklPb4rmDKtaoh';
 
   const htmlContent = `
 <!DOCTYPE html>
