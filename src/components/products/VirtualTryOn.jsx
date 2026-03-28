@@ -75,9 +75,10 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   const initThree = useCallback((width, height) => {
     const scene = new THREE.Scene();
 
-    // Orthographic camera matching video pixel coords
-    const camera = new THREE.OrthographicCamera(0, width, 0, height, 0.1, 2000);
-    camera.position.set(0, 0, 1000);
+    // Orthographic camera: left=0, right=width, top=0, bottom=height
+    // Y is inverted: 0 at top, height at bottom (like canvas)
+    const camera = new THREE.OrthographicCamera(0, width, 0, height, -2000, 2000);
+    camera.position.set(0, 0, 500);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -214,15 +215,20 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
 
       // 3. Load GLB model
       const glbUrl = modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/3904b15677c9423d73cb7fe2abf0edb621881fe0/uploads_files_2246107_gafasobj.glb';
+      console.log('[VirtualTryOn] Using GLB URL:', glbUrl);
       setStatus('model');
       
       // Load MediaPipe and GLB in parallel
       const [mp] = await Promise.all([
         loadMediaPipeScript(),
         loadGLBModel(scene, glbUrl).catch(err => {
-          console.warn('[VirtualTryOn] GLB failed, will use fallback:', err);
+          console.error('[VirtualTryOn] GLB LOAD FAILED:', err);
         })
       ]);
+      console.log('[VirtualTryOn] GLB model loaded?', !!glassesModelRef.current);
+      if (glassesModelRef.current) {
+        console.log('[VirtualTryOn] Model size:', glassesModelRef.current.size);
+      }
 
       const { FilesetResolver, FaceLandmarker } = mp;
       console.log('[VirtualTryOn] Creating FaceLandmarker...');
@@ -270,6 +276,9 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
             if (result.faceLandmarks?.length > 0) {
               setFaceDetected(true);
               updateGlassesPosition(result.faceLandmarks[0], w, h);
+              if (!glassesModelRef.current) {
+                console.warn('[VirtualTryOn] Face found but no GLB model loaded!');
+              }
             } else {
               setFaceDetected(false);
               if (glassesModelRef.current) {
