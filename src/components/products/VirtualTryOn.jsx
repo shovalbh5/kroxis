@@ -179,17 +179,19 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
 
-    // Scale: make the model's width match ~1.6x the eye distance
-    const targetWidth = eyeDist * 1.6;
+    // Scale: make the model's width match ~1.35x the eye distance
+    const targetWidth = eyeDist * 1.35;
     const scaleF = targetWidth / size.x;
     group.scale.set(scaleF, scaleF, scaleF);
 
-    // Position at center between eyes, slightly above (nose bridge area)
+    // Position at midpoint between outer eye corners
     const cx = (lx + rx) / 2;
     const cy = (ly + ry) / 2;
 
-    // In orthographic cam: x goes right, y goes DOWN (we flip)
-    group.position.set(cx, cy, 0);
+    // Slight vertical offset upward to sit on nose bridge
+    const verticalOffset = eyeDist * 0.05;
+
+    group.position.set(cx, cy - verticalOffset, 0);
 
     // Rotation: roll (tilt head left/right)
     const roll = Math.atan2(ly - ry, lx - rx);
@@ -197,12 +199,12 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     // Yaw: based on nose bridge offset from eye center
     const eyeCenterX = (lo.x + ro.x) / 2;
     const noseOffsetX = nb.x - eyeCenterX;
-    const yaw = noseOffsetX * 5; // amplify for visible rotation
+    const yaw = noseOffsetX * 4;
 
     // Pitch: based on vertical relationship between forehead and chin vs nose
     const faceHeight = Math.hypot(chx - fhx, chy - fhy);
     const noseRatio = (ny - fhy) / (chy - fhy);
-    const pitch = (noseRatio - 0.35) * 2; // center around expected ratio
+    const pitch = (noseRatio - 0.35) * 1.5;
 
     group.rotation.set(pitch, yaw, roll);
     group.visible = true;
