@@ -12,8 +12,12 @@ const MEDIAPIPE_WASM = `${MEDIAPIPE_CDN}/wasm`;
 const NOSE_BRIDGE = 6;
 const LEFT_EYE_OUTER = 263;
 const RIGHT_EYE_OUTER = 33;
+const LEFT_EYE_INNER = 362;
+const RIGHT_EYE_INNER = 263;
 const FOREHEAD = 10;
 const CHIN = 152;
+const LEFT_CHEEK = 234;
+const RIGHT_CHEEK = 454;
 
 // Load MediaPipe via dynamic ESM import (works in sandboxed iframes)
 let mediaPipePromise = null;
@@ -96,11 +100,15 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   const initThree = useCallback((width, height) => {
     const scene = new THREE.Scene();
 
-    // Orthographic camera: left=0, right=width, top=0, bottom=height
-    // Y is inverted: 0 at top, height at bottom (like canvas)
-    const camera = new THREE.OrthographicCamera(0, width, 0, height, -2000, 2000);
-    camera.position.set(0, 0, 500);
-    camera.lookAt(0, 0, 0);
+    // Use PerspectiveCamera for realistic 3D depth
+    // We position camera so that at z=0, the visible area matches the video pixel dimensions
+    const fov = 50;
+    const aspect = width / height;
+    const camera = new THREE.PerspectiveCamera(fov, aspect, 1, 5000);
+    // Calculate camera distance so that visible height at z=0 = video height
+    const camDist = (height / 2) / Math.tan(THREE.MathUtils.degToRad(fov / 2));
+    camera.position.set(width / 2, height / 2, camDist);
+    camera.lookAt(width / 2, height / 2, 0);
 
     const renderer = new THREE.WebGLRenderer({
       canvas: threeCanvasRef.current,
@@ -121,7 +129,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     backLight.position.set(0, -1, -1);
     scene.add(backLight);
 
-    threeRef.current = { scene, camera, renderer };
+    threeRef.current = { scene, camera, renderer, camDist };
     return { scene, camera, renderer };
   }, []);
 
@@ -178,40 +186,55 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     const nb = landmarks[NOSE_BRIDGE];
     const fh = landmarks[FOREHEAD];
     const ch = landmarks[CHIN];
+    const lc = landmarks[LEFT_CHEEK];
+    const rc = landmarks[RIGHT_CHEEK];
 
-    // Mirror X (video is mirrored via CSS/canvas transform)
+    // Mirror X (video is mirrored via canvas transform)
     const lx = (1 - lo.x) * vw, ly = lo.y * vh;
     const rx = (1 - ro.x) * vw, ry = ro.y * vh;
     const nx = (1 - nb.x) * vw, ny = nb.y * vh;
     const fhy = fh.y * vh;
     const chy = ch.y * vh;
 
+    // Use Z depth from landmarks for 3D positioning
+    const loZ = lo.z || 0;
+    const roZ = ro.z || 0;
+    const nbZ = nb.z || 0;
+
     // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
 
-    // Scale: make the model's width match ~1.4x the eye distance
-    const targetWidth = eyeDist * 1.4;
+    // Scale: make the model's width match ~1.5x the eye distance
+    const targetWidth = eyeDist * 1.5;
     const scaleF = targetWidth / size.x;
     group.scale.set(scaleF, scaleF, scaleF);
 
-    // Position: use midpoint between outer eye corners for horizontal,
-    // and blend nose bridge with eye level for vertical
+    // Position: center between eyes horizontally, blend vertically
     const eyeMidX = (lx + rx) / 2;
     const eyeMidY = (ly + ry) / 2;
 
-    // Blend: 70% eye level + 30% nose bridge for natural glasses position
+    // Blend: 60% eye level + 40% nose bridge for natural glasses position
     const cx = eyeMidX;
-    const cy = eyeMidY * 0.7 + ny * 0.3;
+    const cy = eyeMidY * 0.6 + ny * 0.4;
 
-    group.position.set(cx, cy, 0);
+    // Z position: use average Z of eye landmarks to push glasses into the face depth
+    // MediaPipe Z is relative to face, negative = closer to camera
+    const avgZ = ((loZ + roZ) / 2) * vw; // scale Z by viewport width
+    const zPos = avgZ * 0.5; // modulate so glasses sit slightly in front
+
+    group.position.set(cx, cy, zPos);
 
     // Rotation: roll (tilt head left/right)
     const roll = Math.atan2(ly - ry, lx - rx);
 
-    // Yaw: estimate from nose bridge horizontal offset
-    const eyeMidNormX = (lo.x + ro.x) / 2;
-    const noseOffsetX = nb.x - eyeMidNormX;
-    const yaw = noseOffsetX * 4;
+    // Yaw: use face width ratio (left cheek to nose vs right cheek to nose)
+    // This gives a much more accurate yaw than nose offset alone
+    const lcx = (1 - lc.x) * vw;
+    const rcx = (1 - rc.x) * vw;
+    const leftDist = Math.abs(cx - lcx);
+    const rightDist = Math.abs(cx - rcx);
+    const faceWidthRatio = (leftDist - rightDist) / (leftDist + rightDist);
+    const yaw = faceWidthRatio * 1.8; // strong yaw response
 
     // Pitch: based on nose position relative to forehead-chin span
     const faceHeight = chy - fhy;
@@ -330,9 +353,13 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
             const c = threeRef.current.camera;
             if (r.domElement.width !== w || r.domElement.height !== h) {
               r.setSize(w, h);
-              c.right = w;
-              c.bottom = h;
+              c.aspect = w / h;
+              const fov = 50;
+              const camDist = (h / 2) / Math.tan(THREE.MathUtils.degToRad(fov / 2));
+              c.position.set(w / 2, h / 2, camDist);
+              c.lookAt(w / 2, h / 2, 0);
               c.updateProjectionMatrix();
+              threeRef.current.camDist = camDist;
             }
           }
 
