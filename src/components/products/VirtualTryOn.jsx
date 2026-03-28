@@ -138,8 +138,17 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
           box.getSize(size);
           const center = new THREE.Vector3();
           box.getCenter(center);
+          const min = new THREE.Vector3();
+          const max = new THREE.Vector3();
+          box.min.clone();
+          box.max.clone();
+          console.log('[VirtualTryOn] GLB bounding box CENTER:', center.x, center.y, center.z);
+          console.log('[VirtualTryOn] GLB bounding box MIN:', box.min.x, box.min.y, box.min.z);
+          console.log('[VirtualTryOn] GLB bounding box MAX:', box.max.x, box.max.y, box.max.z);
+          console.log('[VirtualTryOn] GLB bounding box SIZE:', size.x, size.y, size.z);
           // Center the model at origin
           model.position.sub(center);
+          console.log('[VirtualTryOn] Model re-centered. New position after sub(center):', model.position.x, model.position.y, model.position.z);
           // Wrap in a group for positioning
           const group = new THREE.Group();
           group.add(model);
