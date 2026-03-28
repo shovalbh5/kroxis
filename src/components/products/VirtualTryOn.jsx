@@ -5,12 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   if (!isOpen) return null;
 
-  // Using a CORS proxy to bypass Google Drive's restrictions for the provided model
-  const driveId = '1-PaaP1rqAh1nV8TmANLklPb4rmDKtaoh';
-  const directDriveUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
-  const corsProxyUrl = `https://corsproxy.io/?${encodeURIComponent(directDriveUrl)}`;
+  // Using the uploaded GLB model from GitHub
+  const defaultModelUrl = 'https://raw.githubusercontent.com/shovalbh5/kroxis/3904b15677c9423d73cb7fe2abf0edb621881fe0/uploads_files_2246107_gafasobj.glb';
   
-  const finalModelUrl = modelUrl || corsProxyUrl;
+  const finalModelUrl = modelUrl || defaultModelUrl;
 
   const htmlContent = `
 <!DOCTYPE html>
