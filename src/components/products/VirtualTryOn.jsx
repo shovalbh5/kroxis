@@ -155,14 +155,17 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const initThree = useCallback((width, height) => {
     const scene = new THREE.Scene();
 
-    // Camera setup matching proven Benson Ruan approach:
-    // Y is negated, Z is negative, camera looks at negative-Y center
+    // Camera setup matching Benson Ruan's exact approach:
+    // He uses Math.tan(45/2) with degrees directly (not radians).
+    // This is intentional — it places the camera very close to z=0,
+    // which makes pixel-scale coordinates map 1:1 to screen.
     const fov = 45;
     const aspect = width / height;
     const camera = new THREE.PerspectiveCamera(fov, aspect, 0.1, 2000);
     camera.position.x = width / 2;
     camera.position.y = -height / 2;
-    camera.position.z = -(height / 2) / Math.tan(THREE.MathUtils.degToRad(fov / 2));
+    // Use degrees directly in tan (matching Benson Ruan's proven code)
+    camera.position.z = -(height / 2) / Math.tan(fov / 2);
     camera.lookAt(width / 2, -height / 2, 0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -296,27 +299,22 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     // Mirror X because video is mirrored
     const midX = (1 - midEye.x) * vw;
     const midY = midEye.y * vh;
-    // MediaPipe Z is relative depth — reduce its influence on positioning
-    // so it doesn't fight the natural scale increase when user gets closer
-    const midZ = (midEye.z || 0) * vw * 0.3;
+    const midZ = (midEye.z || 0) * vw;
 
     const lx = (1 - leftEye.x) * vw, ly = leftEye.y * vh, lz = (leftEye.z || 0) * vw;
     const rx = (1 - rightEye.x) * vw, ry = rightEye.y * vh, rz = (rightEye.z || 0) * vw;
     const nbx = (1 - noseBottom.x) * vw, nby = noseBottom.y * vh, nbz = (noseBottom.z || 0) * vw;
 
-    // Position: following Benson Ruan's proven approach — negate Y, offset Z from camera
+    // Position: negate Y for Three.js, offset Z from camera
     const rawX = midX;
-    const rawY = -midY;  // negate Y for Three.js
+    const rawY = -midY;
     const rawZ = -cam.position.z + midZ;
 
-    // Scale based on 2D eye distance (ignore Z for scale — it's unreliable at close range)
-    // This way, when user gets closer, eyeDist in pixels grows proportionally
-    const eyeDist2D = Math.sqrt((lx - rx) ** 2 + (ly - ry) ** 2);
+    // Scale based on eye distance in pixels — naturally grows when user gets closer
     const eyeDist = Math.sqrt(
       (lx - rx) ** 2 + (ly - ry) ** 2 + (lz - rz) ** 2
     );
-    // Use 2D eye distance for scale — more stable and naturally grows with proximity
-    const rawScale = (eyeDist2D / size.x) * 1.6;
+    const rawScale = (eyeDist / size.x) * 1.8;
 
     // Up vector: midEye to noseBottom (for head tilt)
     let upX = midX - nbx;
@@ -373,7 +371,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
         const lm = landmarks[i];
         const px = (1 - lm.x) * vw;
         const py = -(lm.y * vh);
-        const pz = -cam.position.z + (lm.z || 0) * vw * 0.3;
+        const pz = -cam.position.z + (lm.z || 0) * vw;
         posAttr.setXYZ(i, px, py, pz);
       }
       posAttr.needsUpdate = true;
@@ -495,7 +493,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
               const fov = 45;
               c.position.x = w / 2;
               c.position.y = -h / 2;
-              c.position.z = -(h / 2) / Math.tan(THREE.MathUtils.degToRad(fov / 2));
+              c.position.z = -(h / 2) / Math.tan(fov / 2);
               c.lookAt(w / 2, -h / 2, 0);
               c.updateProjectionMatrix();
             }
