@@ -207,7 +207,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
     // Rotation: roll (tilt head left/right)
     const roll = Math.atan2(ly - ry, lx - rx);
 
-    // Yaw: based on nose bridge offset from eye midpoint
+    // Yaw: estimate from nose bridge horizontal offset
     const eyeMidNormX = (lo.x + ro.x) / 2;
     const noseOffsetX = nb.x - eyeMidNormX;
     const yaw = noseOffsetX * 4;
