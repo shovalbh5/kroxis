@@ -248,7 +248,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       const { scene, camera, renderer } = initThree(vw, vh);
 
       // 3. Load GLB model
-      const glbUrl = modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/main/uploads_files_2246107_gafasobj%20(2).glb';
+      const glbUrl = modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/main/uploads_files_2246107_gafasobj%20(5).glb';
       console.log('[VirtualTryOn] Using GLB URL:', glbUrl);
       setStatus('model');
       
