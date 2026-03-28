@@ -113,6 +113,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const threeRef = useRef(null);
   const glassesModelRef = useRef(null);
   const occlusionMeshRef = useRef(null);
+  const shadowPlaneRef = useRef(null);
   // Smoothing state for lerp interpolation
   const smoothRef = useRef({
     pos: new THREE.Vector3(),
@@ -141,6 +142,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     }
     glassesModelRef.current = null;
     occlusionMeshRef.current = null;
+    shadowPlaneRef.current = null;
     smoothRef.current.initialized = false;
   }, []);
 
@@ -193,6 +195,21 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     scene.add(occMesh);
     occlusionMeshRef.current = occMesh;
 
+    // Shadow plane — soft oval shadow that follows the glasses
+    const shadowGeo = new THREE.PlaneGeometry(1, 1);
+    const shadowMat = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.18,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    const shadowPlane = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowPlane.renderOrder = 2;
+    shadowPlane.visible = false;
+    scene.add(shadowPlane);
+    shadowPlaneRef.current = shadowPlane;
+
     threeRef.current = { scene, camera, renderer, camDist };
     return { scene, camera, renderer };
   }, []);
@@ -233,6 +250,13 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
               child.material.depthTest = true;
               child.material.depthWrite = true;
               child.renderOrder = 1;
+              // Add subtle environment reflection to lens-like materials
+              if (child.material.transparent || child.material.opacity < 1 ||
+                  (child.material.name && child.material.name.toLowerCase().includes('lens'))) {
+                child.material.envMapIntensity = 0.4;
+                child.material.roughness = Math.min(child.material.roughness || 0.5, 0.3);
+                child.material.metalness = Math.max(child.material.metalness || 0, 0.15);
+              }
             }
           });
           scene.add(group);
@@ -322,6 +346,18 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     group.position.set(s.pos.x, s.pos.y, s.pos.z);
     group.rotation.set(s.rot.x, s.rot.y, s.rot.z);
     group.visible = true;
+
+    // Shadow plane — positioned slightly below and behind glasses on the nose
+    if (shadowPlaneRef.current) {
+      const shadow = shadowPlaneRef.current;
+      const shadowWidth = eyeDist * 1.1;
+      const shadowHeight = eyeDist * 0.25;
+      shadow.scale.set(shadowWidth, shadowHeight, 1);
+      // Place shadow below nose bridge, slightly behind
+      shadow.position.set(s.pos.x, s.pos.y + eyeDist * 0.18, s.pos.z - 2);
+      shadow.rotation.set(s.rot.x, s.rot.y, s.rot.z);
+      shadow.visible = true;
+    }
 
     // Update face occlusion mesh from all 468 landmarks
     if (occlusionMeshRef.current) {
@@ -483,6 +519,9 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
               }
               if (occlusionMeshRef.current) {
                 occlusionMeshRef.current.visible = false;
+              }
+              if (shadowPlaneRef.current) {
+                shadowPlaneRef.current.visible = false;
               }
             }
           }
