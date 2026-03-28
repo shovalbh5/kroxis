@@ -74,6 +74,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [faceDetected, setFaceDetected] = useState(false);
+  const [canvasStyle, setCanvasStyle] = useState({});
 
   const stopAll = useCallback(() => {
     if (animFrameRef.current) {
@@ -295,6 +296,34 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
           canvas.width = w;
           canvas.height = h;
 
+          // Compute letterbox rect to position canvases exactly over the video
+          const container = containerRef.current;
+          if (container) {
+            const cw = container.clientWidth;
+            const ch = container.clientHeight;
+            const videoAspect = w / h;
+            const containerAspect = cw / ch;
+            let displayW, displayH, offsetX, offsetY;
+            if (videoAspect > containerAspect) {
+              displayW = cw;
+              displayH = cw / videoAspect;
+              offsetX = 0;
+              offsetY = (ch - displayH) / 2;
+            } else {
+              displayH = ch;
+              displayW = ch * videoAspect;
+              offsetX = (cw - displayW) / 2;
+              offsetY = 0;
+            }
+            setCanvasStyle({
+              position: 'absolute',
+              left: `${offsetX}px`,
+              top: `${offsetY}px`,
+              width: `${displayW}px`,
+              height: `${displayH}px`,
+            });
+          }
+
           // Keep Three.js canvas in sync with video dimensions
           if (threeRef.current) {
             const r = threeRef.current.renderer;
@@ -425,10 +454,10 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         <video ref={videoRef} playsInline muted className="absolute opacity-0 pointer-events-none w-0 h-0" />
 
         {/* Video canvas (background) */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-contain" />
+        <canvas ref={canvasRef} style={canvasStyle} />
 
         {/* Three.js canvas (glasses overlay) */}
-        <canvas ref={threeCanvasRef} className="absolute inset-0 w-full h-full object-contain pointer-events-none" />
+        <canvas ref={threeCanvasRef} style={canvasStyle} className="pointer-events-none" />
 
         {/* Bottom UI */}
         {status === 'running' && (
