@@ -296,7 +296,9 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     // Mirror X because video is mirrored
     const midX = (1 - midEye.x) * vw;
     const midY = midEye.y * vh;
-    const midZ = (midEye.z || 0) * vw;
+    // MediaPipe Z is relative depth — reduce its influence on positioning
+    // so it doesn't fight the natural scale increase when user gets closer
+    const midZ = (midEye.z || 0) * vw * 0.3;
 
     const lx = (1 - leftEye.x) * vw, ly = leftEye.y * vh, lz = (leftEye.z || 0) * vw;
     const rx = (1 - rightEye.x) * vw, ry = rightEye.y * vh, rz = (rightEye.z || 0) * vw;
@@ -307,11 +309,14 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const rawY = -midY;  // negate Y for Three.js
     const rawZ = -cam.position.z + midZ;
 
-    // Scale based on eye distance in 3D
+    // Scale based on 2D eye distance (ignore Z for scale — it's unreliable at close range)
+    // This way, when user gets closer, eyeDist in pixels grows proportionally
+    const eyeDist2D = Math.sqrt((lx - rx) ** 2 + (ly - ry) ** 2);
     const eyeDist = Math.sqrt(
       (lx - rx) ** 2 + (ly - ry) ** 2 + (lz - rz) ** 2
     );
-    const rawScale = (eyeDist / size.x) * 1.45;
+    // Use 2D eye distance for scale — more stable and naturally grows with proximity
+    const rawScale = (eyeDist2D / size.x) * 1.6;
 
     // Up vector: midEye to noseBottom (for head tilt)
     let upX = midX - nbx;
@@ -368,7 +373,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
         const lm = landmarks[i];
         const px = (1 - lm.x) * vw;
         const py = -(lm.y * vh);
-        const pz = -cam.position.z + (lm.z || 0) * vw;
+        const pz = -cam.position.z + (lm.z || 0) * vw * 0.3;
         posAttr.setXYZ(i, px, py, pz);
       }
       posAttr.needsUpdate = true;
