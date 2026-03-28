@@ -315,8 +315,8 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     }
     const depthRatio = eyeDist / s.baselineEyeDist; // >1 = closer, <1 = farther
 
-    // Compute raw target values with depth-aware scale
-    const targetWidth = eyeDist * 1.5;
+    // Scale glasses to match face width — eyeDist naturally tracks face size
+    const targetWidth = eyeDist * 1.45;
     const rawScale = targetWidth / size.x;
 
     const eyeMidX = (lx + rx) / 2;
@@ -324,8 +324,9 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const rawX = eyeMidX;
     // Position at eye level — mostly eyes, slight nose bridge influence
     const rawY = eyeMidY * 0.88 + ny * 0.12;
+    // Z position: use landmark depth but keep it subtle to avoid perspective magnification
     const avgZ = ((loZ + roZ) / 2) * vw;
-    const rawZ = avgZ * 0.5;
+    const rawZ = avgZ * 0.15;
 
     const rawRoll = Math.atan2(ly - ry, lx - rx);
     const lcx = (1 - lc.x) * vw;
