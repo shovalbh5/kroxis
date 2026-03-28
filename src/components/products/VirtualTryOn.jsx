@@ -2,21 +2,23 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { X, AlertCircle, RotateCcw, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 
 // Face landmark indices
+const NOSE_BRIDGE = 6;
 const LEFT_EYE_OUTER = 263;
 const RIGHT_EYE_OUTER = 33;
-const LEFT_EAR = 234;
-const RIGHT_EAR = 454;
+const FOREHEAD = 10;
+const CHIN = 152;
 
-// Load MediaPipe script via <script> tag (more reliable than dynamic import)
+// Load MediaPipe script via <script> tag
 let mediaPipePromise = null;
 function loadMediaPipeScript() {
   if (mediaPipePromise) return mediaPipePromise;
   mediaPipePromise = new Promise((resolve, reject) => {
-    // Check if already loaded
     if (window.FilesetResolver && window.FaceLandmarker) {
       resolve({ FilesetResolver: window.FilesetResolver, FaceLandmarker: window.FaceLandmarker });
       return;
@@ -25,34 +27,30 @@ function loadMediaPipeScript() {
     script.src = `${MEDIAPIPE_CDN}/vision_bundle.js`;
     script.crossOrigin = 'anonymous';
     script.onload = () => {
-      // The script exposes globals through the vision module
-      const checkInterval = setInterval(() => {
+      const check = setInterval(() => {
         if (window.FilesetResolver && window.FaceLandmarker) {
-          clearInterval(checkInterval);
+          clearInterval(check);
           resolve({ FilesetResolver: window.FilesetResolver, FaceLandmarker: window.FaceLandmarker });
         }
       }, 100);
-      // Timeout after 10s
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        reject(new Error('MediaPipe globals not found after script load'));
-      }, 10000);
+      setTimeout(() => { clearInterval(check); reject(new Error('MediaPipe timeout')); }, 15000);
     };
-    script.onerror = () => {
-      mediaPipePromise = null;
-      reject(new Error('Failed to load MediaPipe script'));
-    };
+    script.onerror = () => { mediaPipePromise = null; reject(new Error('Failed to load MediaPipe')); };
     document.head.appendChild(script);
   });
   return mediaPipePromise;
 }
 
 export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const threeCanvasRef = useRef(null);
   const streamRef = useRef(null);
   const faceLandmarkerRef = useRef(null);
   const animFrameRef = useRef(null);
+  const threeRef = useRef(null);
+  const glassesModelRef = useRef(null);
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [faceDetected, setFaceDetected] = useState(false);
@@ -66,115 +64,127 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       streamRef.current.getTracks().forEach(t => t.stop());
       streamRef.current = null;
     }
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
+    if (videoRef.current) videoRef.current.srcObject = null;
+    if (threeRef.current) {
+      threeRef.current.renderer.dispose();
+      threeRef.current = null;
     }
+    glassesModelRef.current = null;
   }, []);
 
-  const drawGlasses = useCallback((ctx, landmarks, w, h) => {
+  const initThree = useCallback((width, height) => {
+    const scene = new THREE.Scene();
+
+    // Orthographic camera matching video pixel coords
+    const camera = new THREE.OrthographicCamera(0, width, 0, height, 0.1, 2000);
+    camera.position.set(0, 0, 1000);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: threeCanvasRef.current,
+      alpha: true,
+      antialias: true,
+    });
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    // Lighting
+    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(0, 1, 2);
+    scene.add(dirLight);
+    const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
+    backLight.position.set(0, -1, -1);
+    scene.add(backLight);
+
+    threeRef.current = { scene, camera, renderer };
+    return { scene, camera, renderer };
+  }, []);
+
+  const loadGLBModel = useCallback(async (scene, url) => {
+    console.log('[VirtualTryOn] Loading GLB model from:', url);
+    const loader = new GLTFLoader();
+    return new Promise((resolve, reject) => {
+      loader.load(
+        url,
+        (gltf) => {
+          const model = gltf.scene;
+          // Compute bounding box to normalize scale later
+          const box = new THREE.Box3().setFromObject(model);
+          const size = new THREE.Vector3();
+          box.getSize(size);
+          const center = new THREE.Vector3();
+          box.getCenter(center);
+          // Center the model at origin
+          model.position.sub(center);
+          // Wrap in a group for positioning
+          const group = new THREE.Group();
+          group.add(model);
+          group.visible = false;
+          scene.add(group);
+          glassesModelRef.current = { group, size };
+          console.log('[VirtualTryOn] GLB model loaded! Size:', size);
+          resolve(group);
+        },
+        undefined,
+        (err) => {
+          console.error('[VirtualTryOn] GLB load error:', err);
+          reject(err);
+        }
+      );
+    });
+  }, []);
+
+  const updateGlassesPosition = useCallback((landmarks, vw, vh) => {
+    if (!glassesModelRef.current || !threeRef.current) return;
+
+    const { group, size } = glassesModelRef.current;
+
     const lo = landmarks[LEFT_EYE_OUTER];
     const ro = landmarks[RIGHT_EYE_OUTER];
-    const le = landmarks[LEFT_EAR];
-    const re = landmarks[RIGHT_EAR];
+    const nb = landmarks[NOSE_BRIDGE];
+    const fh = landmarks[FOREHEAD];
+    const ch = landmarks[CHIN];
 
-    // Pixel coords (already mirrored)
-    const lx = lo.x * w, ly = lo.y * h;
-    const rx = ro.x * w, ry = ro.y * h;
-    const lex = le.x * w, ley = le.y * h;
-    const rex = re.x * w, rey = re.y * h;
+    // Mirror X (video is mirrored)
+    const lx = (1 - lo.x) * vw, ly = lo.y * vh;
+    const rx = (1 - ro.x) * vw, ry = ro.y * vh;
+    const nx = (1 - nb.x) * vw, ny = nb.y * vh;
+    const fhx = (1 - fh.x) * vw, fhy = fh.y * vh;
+    const chx = (1 - ch.x) * vw, chy = ch.y * vh;
 
+    // Eye distance in pixels
     const eyeDist = Math.hypot(lx - rx, ly - ry);
-    const angle = Math.atan2(ly - ry, lx - rx);
+
+    // Scale: make the model's width match ~1.6x the eye distance
+    const targetWidth = eyeDist * 1.6;
+    const scaleF = targetWidth / size.x;
+    group.scale.set(scaleF, scaleF, scaleF);
+
+    // Position at center between eyes, slightly above (nose bridge area)
     const cx = (lx + rx) / 2;
     const cy = (ly + ry) / 2;
 
-    const gW = eyeDist * 1.7;
-    const gH = gW * 0.42;
-    const lensW = gW * 0.38;
-    const lensH = gH * 0.78;
-    const lensY = -lensH * 0.38;
-    const gap = gW * 0.04;
-    const frameW = gW * 0.028;
+    // In orthographic cam: x goes right, y goes DOWN (we flip)
+    group.position.set(cx, cy, 0);
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(angle);
+    // Rotation: roll (tilt head left/right)
+    const roll = Math.atan2(ly - ry, lx - rx);
+    
+    // Yaw: based on nose bridge offset from eye center
+    const eyeCenterX = (lo.x + ro.x) / 2;
+    const noseOffsetX = nb.x - eyeCenterX;
+    const yaw = noseOffsetX * 5; // amplify for visible rotation
 
-    // Shadow
-    ctx.shadowColor = 'rgba(0,0,0,0.35)';
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetY = 4;
+    // Pitch: based on vertical relationship between forehead and chin vs nose
+    const faceHeight = Math.hypot(chx - fhx, chy - fhy);
+    const noseRatio = (ny - fhy) / (chy - fhy);
+    const pitch = (noseRatio - 0.35) * 2; // center around expected ratio
 
-    // Top bar (tactical thick bar across top)
-    ctx.beginPath();
-    ctx.moveTo(-gW * 0.52, lensY - frameW * 0.5);
-    ctx.lineTo(gW * 0.52, lensY - frameW * 0.5);
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = frameW * 1.3;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-
-    // Left lens
-    const llx = -gap / 2 - lensW;
-    ctx.beginPath();
-    roundedRect(ctx, llx, lensY, lensW, lensH, lensH * 0.18);
-    ctx.fillStyle = 'rgba(20, 20, 20, 0.5)';
-    ctx.fill();
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = frameW;
-    ctx.stroke();
-
-    // Right lens
-    const rlx = gap / 2;
-    ctx.beginPath();
-    roundedRect(ctx, rlx, lensY, lensW, lensH, lensH * 0.18);
-    ctx.fillStyle = 'rgba(20, 20, 20, 0.5)';
-    ctx.fill();
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = frameW;
-    ctx.stroke();
-
-    // Remove shadow for details
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetY = 0;
-
-    // Bridge
-    ctx.beginPath();
-    ctx.moveTo(-gap / 2, lensY + lensH * 0.4);
-    ctx.quadraticCurveTo(0, lensY + lensH * 0.15, gap / 2, lensY + lensH * 0.4);
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = frameW * 0.8;
-    ctx.stroke();
-
-    // Lens reflections
-    ctx.globalAlpha = 0.12;
-    ctx.beginPath();
-    ctx.ellipse(llx + lensW * 0.32, lensY + lensH * 0.28, lensW * 0.18, lensH * 0.12, -0.3, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(rlx + lensW * 0.32, lensY + lensH * 0.28, lensW * 0.18, lensH * 0.12, -0.3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    // Temple arms
-    const armY = lensY + lensH * 0.32;
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = frameW * 0.75;
-    ctx.lineCap = 'round';
-    // Left arm
-    ctx.beginPath();
-    ctx.moveTo(llx, armY);
-    ctx.lineTo(llx - gW * 0.24, armY + gH * 0.2);
-    ctx.stroke();
-    // Right arm
-    ctx.beginPath();
-    ctx.moveTo(rlx + lensW, armY);
-    ctx.lineTo(rlx + lensW + gW * 0.24, armY + gH * 0.2);
-    ctx.stroke();
-
-    ctx.restore();
+    group.rotation.set(pitch, yaw, roll);
+    group.visible = true;
   }, []);
 
   const startDetection = useCallback(async () => {
@@ -194,18 +204,30 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       if (!video) throw new Error('Video element not found');
       video.srcObject = stream;
       await video.play();
-      console.log('[VirtualTryOn] Camera started:', video.videoWidth, 'x', video.videoHeight);
 
-      // 2. Load MediaPipe via script tag
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+      console.log('[VirtualTryOn] Camera:', vw, 'x', vh);
+
+      // 2. Init Three.js
+      const { scene, camera, renderer } = initThree(vw, vh);
+
+      // 3. Load GLB model
+      const glbUrl = modelUrl || 'https://raw.githubusercontent.com/shovalbh5/kroxis/3904b15677c9423d73cb7fe2abf0edb621881fe0/uploads_files_2246107_gafasobj.glb';
       setStatus('model');
-      console.log('[VirtualTryOn] Loading MediaPipe...');
-      const { FilesetResolver, FaceLandmarker } = await loadMediaPipeScript();
-      console.log('[VirtualTryOn] MediaPipe loaded, creating FaceLandmarker...');
+      
+      // Load MediaPipe and GLB in parallel
+      const [mp] = await Promise.all([
+        loadMediaPipeScript(),
+        loadGLBModel(scene, glbUrl).catch(err => {
+          console.warn('[VirtualTryOn] GLB failed, will use fallback:', err);
+        })
+      ]);
 
-      const filesetResolver = await FilesetResolver.forVisionTasks(
-        `${MEDIAPIPE_CDN}/wasm`
-      );
+      const { FilesetResolver, FaceLandmarker } = mp;
+      console.log('[VirtualTryOn] Creating FaceLandmarker...');
 
+      const filesetResolver = await FilesetResolver.forVisionTasks(`${MEDIAPIPE_CDN}/wasm`);
       const fl = await FaceLandmarker.createFromOptions(filesetResolver, {
         baseOptions: {
           modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
@@ -214,53 +236,56 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         runningMode: 'VIDEO',
         numFaces: 1,
       });
-
       faceLandmarkerRef.current = fl;
-      console.log('[VirtualTryOn] FaceLandmarker ready!');
+      console.log('[VirtualTryOn] Ready!');
       setStatus('running');
 
-      // 3. Detection loop
+      // 4. Render loop
       let lastTime = -1;
       const detect = () => {
         const vid = videoRef.current;
         const canvas = canvasRef.current;
         const landmarker = faceLandmarkerRef.current;
-        if (!vid || !canvas || !landmarker || vid.paused || vid.ended) return;
+        if (!vid || !canvas || !landmarker || vid.paused) return;
 
         const ctx = canvas.getContext('2d');
-        const vw = vid.videoWidth;
-        const vh = vid.videoHeight;
+        const w = vid.videoWidth;
+        const h = vid.videoHeight;
 
-        if (vw > 0 && vh > 0) {
-          canvas.width = vw;
-          canvas.height = vh;
+        if (w > 0 && h > 0) {
+          canvas.width = w;
+          canvas.height = h;
 
-          // Draw mirrored video
+          // Draw mirrored video on 2D canvas
           ctx.save();
-          ctx.translate(vw, 0);
+          ctx.translate(w, 0);
           ctx.scale(-1, 1);
-          ctx.drawImage(vid, 0, 0, vw, vh);
+          ctx.drawImage(vid, 0, 0, w, h);
           ctx.restore();
 
           const now = performance.now();
           if (now > lastTime) {
             lastTime = now;
             const result = landmarker.detectForVideo(vid, now);
-            if (result.faceLandmarks && result.faceLandmarks.length > 0) {
+            if (result.faceLandmarks?.length > 0) {
               setFaceDetected(true);
-              const lm = result.faceLandmarks[0];
-              // Mirror X to match the mirrored canvas
-              const mirrored = lm.map(p => ({ x: 1 - p.x, y: p.y, z: p.z }));
-              drawGlasses(ctx, mirrored, vw, vh);
+              updateGlassesPosition(result.faceLandmarks[0], w, h);
             } else {
               setFaceDetected(false);
+              if (glassesModelRef.current) {
+                glassesModelRef.current.group.visible = false;
+              }
             }
+          }
+
+          // Render Three.js overlay
+          if (threeRef.current) {
+            threeRef.current.renderer.render(threeRef.current.scene, threeRef.current.camera);
           }
         }
 
         animFrameRef.current = requestAnimationFrame(detect);
       };
-
       detect();
 
     } catch (err) {
@@ -274,7 +299,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         setErrorMsg(err.message || 'שגיאה לא ידועה');
       }
     }
-  }, [drawGlasses]);
+  }, [initThree, loadGLBModel, updateGlassesPosition, modelUrl]);
 
   useEffect(() => {
     if (isOpen) {
@@ -300,24 +325,25 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center"
+        className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+        ref={containerRef}
       >
-        {/* Close button */}
+        {/* Close */}
         <div className="absolute top-4 right-4 z-20">
           <button onClick={handleClose} className="bg-black/50 backdrop-blur-md p-3 rounded-full text-white hover:bg-black/80 transition-colors border border-white/20">
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Loading overlay */}
+        {/* Loading */}
         {(status === 'loading' || status === 'camera' || status === 'model') && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/80">
+          <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/80">
             <div className="text-center text-white px-6">
               <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-primary" />
               <p className="font-heading text-lg font-semibold">
-                {status === 'loading' && 'מאתחל...'}
                 {status === 'camera' && 'מפעיל מצלמה — אנא אשר גישה'}
-                {status === 'model' && 'טוען מודל זיהוי פנים...'}
+                {status === 'model' && 'טוען מודל משקפיים וזיהוי פנים...'}
+                {status === 'loading' && 'מאתחל...'}
               </p>
               <p className="text-white/50 text-sm mt-2">עלול לקחת מספר שניות בפעם הראשונה</p>
             </div>
@@ -326,7 +352,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
 
         {/* Error */}
         {status === 'error' && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/90">
+          <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/90">
             <div className="text-center text-white px-6 max-w-md">
               <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
               <p className="font-heading text-lg font-semibold mb-3">שגיאה</p>
@@ -341,14 +367,14 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
           </div>
         )}
 
-        {/* Hidden video for MediaPipe */}
+        {/* Hidden video */}
         <video ref={videoRef} playsInline muted className="absolute opacity-0 pointer-events-none w-0 h-0" />
 
-        {/* Canvas */}
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full object-contain"
-        />
+        {/* Video canvas (background) */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-contain" />
+
+        {/* Three.js canvas (glasses overlay) */}
+        <canvas ref={threeCanvasRef} className="absolute inset-0 w-full h-full object-contain pointer-events-none" />
 
         {/* Bottom UI */}
         {status === 'running' && (
@@ -357,8 +383,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
               <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium" dir="rtl">
                 {faceDetected
                   ? 'הזז את הראש כדי לראות את המשקפיים מכל הכיוונים'
-                  : 'מחפש פנים... כוון את הפנים למצלמה'
-                }
+                  : 'מחפש פנים... כוון את הפנים למצלמה'}
               </p>
             </div>
             <div className="absolute top-4 left-4 z-10">
@@ -369,17 +394,4 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl }) {
       </motion.div>
     </AnimatePresence>
   );
-}
-
-function roundedRect(ctx, x, y, w, h, r) {
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
 }
