@@ -117,7 +117,6 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const threeRef = useRef(null);
   const glassesModelRef = useRef(null);
   const occlusionMeshRef = useRef(null);
-  const shadowPlaneRef = useRef(null);
   // Smoothing state for lerp interpolation
   const smoothRef = useRef({
     pos: new THREE.Vector3(),
@@ -147,7 +146,6 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     }
     glassesModelRef.current = null;
     occlusionMeshRef.current = null;
-    shadowPlaneRef.current = null;
     smoothRef.current.initialized = false;
     smoothRef.current.baselineEyeDist = 0;
   }, []);
@@ -155,16 +153,13 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const initThree = useCallback((width, height) => {
     const scene = new THREE.Scene();
 
-    // Orthographic camera approach:
-    // Maps pixel coordinates 1:1 to screen — no perspective distortion.
-    // Left=0, Right=width, Top=0, Bottom=-height (Y negated for Three.js)
-    const camera = new THREE.OrthographicCamera(
-      0, width,     // left, right
-      0, -height,   // top, bottom
-      0.1, 2000     // near, far
-    );
-    camera.position.set(0, 0, 1000);
-    camera.lookAt(0, 0, 0);
+    // Benson Ruan's exact camera setup (proven working):
+    // PerspectiveCamera with FOV=45, using Math.tan(45/2) directly
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
+    camera.position.x = width / 2;
+    camera.position.y = -height / 2;
+    camera.position.z = -(height / 2) / Math.tan(45 / 2);
+    camera.lookAt(new THREE.Vector3(width / 2, -height / 2, 0));
 
     const renderer = new THREE.WebGLRenderer({
       canvas: threeCanvasRef.current,
@@ -175,12 +170,31 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // Lighting
-    const ambient = new THREE.AmbientLight(0xffffff, 1.5);
-    scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    dirLight.position.set(0, 0, 1000);
-    scene.add(dirLight);
+    // Lighting — matching Benson Ruan
+    const frontLight = new THREE.SpotLight(0xffffff, 0.3);
+    frontLight.position.set(10, 10, 10);
+    scene.add(frontLight);
+    const backLight = new THREE.SpotLight(0xffffff, 0.3);
+    backLight.position.set(10, 10, -10);
+    scene.add(backLight);
+    camera.add(new THREE.PointLight(0xffffff, 0.8));
+    scene.add(camera);
+
+    // Face occlusion mesh — writes to depth buffer only (hides glasses behind nose/face)
+    const occGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(468 * 3);
+    occGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    occGeo.setIndex(FACE_TRIANGLES);
+    const occMat = new THREE.MeshBasicMaterial({
+      colorWrite: false,
+      depthWrite: true,
+      side: THREE.DoubleSide,
+    });
+    const occMesh = new THREE.Mesh(occGeo, occMat);
+    occMesh.renderOrder = 0;
+    occMesh.visible = false;
+    scene.add(occMesh);
+    occlusionMeshRef.current = occMesh;
 
     threeRef.current = { scene, camera, renderer };
     return { scene, camera, renderer };
@@ -249,55 +263,96 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     if (!glassesModelRef.current || !threeRef.current) return;
 
     const { group, size } = glassesModelRef.current;
+    const cam = threeRef.current.camera;
 
-    // Key landmarks (MediaPipe FaceLandmarker returns normalized 0-1 coords)
-    const midEye = landmarks[168];  // between eyes
-    const leftEye = landmarks[33];  // left eye outer corner (right side of screen when mirrored)
-    const rightEye = landmarks[263]; // right eye outer corner
-    const noseBottom = landmarks[2]; // bottom of nose bridge
-    const noseBridge = landmarks[6]; // top of nose bridge
+    // Benson Ruan's exact landmark indices
+    const midEye = landmarks[168];   // between eyes
+    const leftEye = landmarks[143];  // left eye
+    const rightEye = landmarks[372]; // right eye
+    const noseBottom = landmarks[2]; // bottom of nose
 
-    // Convert to pixel coords — mirror X for selfie camera
-    const midX = (1 - midEye.x) * vw;
-    const midY = midEye.y * vh;
+    // Convert normalized 0-1 coords to pixel coords
+    // Mirror X because selfie camera is mirrored
+    const mx = (1 - midEye.x) * vw;
+    const my = midEye.y * vh;
+    const mz = (midEye.z || 0) * vw;
 
-    const lx = (1 - leftEye.x) * vw, ly = leftEye.y * vh;
-    const rx = (1 - rightEye.x) * vw, ry = rightEye.y * vh;
-    const nbx = (1 - noseBottom.x) * vw, nby = noseBottom.y * vh;
+    const lx = (1 - leftEye.x) * vw;
+    const ly = leftEye.y * vh;
+    const lz = (leftEye.z || 0) * vw;
 
-    // In our orthographic setup: x goes 0→width (left to right), y goes 0→-height (top to bottom)
-    const posX = midX;
-    const posY = -midY;  // negate for Three.js
-    const posZ = 0;      // on the "screen" plane
+    const rx = (1 - rightEye.x) * vw;
+    const ry = rightEye.y * vh;
+    const rz = (rightEye.z || 0) * vw;
 
-    // Scale: glasses width should span the distance between eyes (with some padding)
-    const eyeDist = Math.sqrt((lx - rx) ** 2 + (ly - ry) ** 2);
-    const desiredWidth = eyeDist * 1.8;  // glasses are wider than eye distance
-    const rawScale = desiredWidth / size.x;
+    const nbx = (1 - noseBottom.x) * vw;
+    const nby = noseBottom.y * vh;
+    const nbz = (noseBottom.z || 0) * vw;
 
-    // Head tilt (roll) from eye positions
-    const rawRoll = -Math.atan2(ry - ly, rx - lx);  // negative because Y is flipped
+    // === Benson Ruan's exact positioning logic ===
+    // Position
+    const rawX = mx;
+    const rawY = -my;
+    const rawZ = -cam.position.z + mz;
+
+    // Up vector (midEye to noseBottom) for roll calculation
+    let upX = mx - nbx;
+    let upY = -(my - nby);
+    let upZ = mz - nbz;
+    const upLen = Math.sqrt(upX ** 2 + upY ** 2 + upZ ** 2);
+    if (upLen > 0) { upX /= upLen; upY /= upLen; upZ /= upLen; }
+
+    // Eye distance for scale
+    const eyeDist = Math.sqrt(
+      (lx - rx) ** 2 + (ly - ry) ** 2 + (lz - rz) ** 2
+    );
+
+    // Scale: eyeDist * factor. Benson uses a per-model data-3d-scale attribute.
+    // We compute it from bounding box: we want eyeDist to roughly equal the model width
+    const scaleMultiplier = eyeDist / size.x * 1.6;
+
+    // Rotation (Benson's exact formula)
+    const rawRotY = Math.PI;  // face camera
+    const rawRotZ = Math.PI / 2 - Math.acos(Math.max(-1, Math.min(1, upX)));
 
     // Smoothing
     const s = smoothRef.current;
-    const LERP = 0.45;
+    const LERP = 0.4;
 
     if (!s.initialized) {
-      s.pos.set(posX, posY, posZ);
-      s.rot.set(0, 0, rawRoll);
-      s.scale = rawScale;
+      s.pos.set(rawX, rawY, rawZ);
+      s.rot.set(0, rawRotY, rawRotZ);
+      s.scale = scaleMultiplier;
       s.initialized = true;
     } else {
-      s.pos.x += (posX - s.pos.x) * LERP;
-      s.pos.y += (posY - s.pos.y) * LERP;
-      s.rot.z += (rawRoll - s.rot.z) * LERP;
-      s.scale += (rawScale - s.scale) * LERP;
+      s.pos.x += (rawX - s.pos.x) * LERP;
+      s.pos.y += (rawY - s.pos.y) * LERP;
+      s.pos.z += (rawZ - s.pos.z) * LERP;
+      s.rot.z += (rawRotZ - s.rot.z) * LERP;
+      s.scale += (scaleMultiplier - s.scale) * LERP;
     }
 
     group.position.set(s.pos.x, s.pos.y, s.pos.z);
     group.scale.set(s.scale, s.scale, s.scale);
-    group.rotation.set(0, 0, s.rot.z);
+    group.rotation.y = s.rot.y;
+    group.rotation.z = s.rot.z;
     group.visible = true;
+
+    // Face occlusion mesh
+    if (occlusionMeshRef.current) {
+      const occ = occlusionMeshRef.current;
+      const posAttr = occ.geometry.getAttribute('position');
+      for (let i = 0; i < landmarks.length && i < 468; i++) {
+        const lm = landmarks[i];
+        const px = (1 - lm.x) * vw;
+        const py = -(lm.y * vh);
+        const pz = -cam.position.z + (lm.z || 0) * vw;
+        posAttr.setXYZ(i, px, py, pz);
+      }
+      posAttr.needsUpdate = true;
+      occ.geometry.computeVertexNormals();
+      occ.visible = true;
+    }
   }, []);
 
   const startDetection = useCallback(async () => {
@@ -409,8 +464,10 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
             const c = threeRef.current.camera;
             if (r.domElement.width !== w || r.domElement.height !== h) {
               r.setSize(w, h);
-              c.right = w;
-              c.bottom = -h;
+              c.position.x = w / 2;
+              c.position.y = -h / 2;
+              c.position.z = -(h / 2) / Math.tan(45 / 2);
+              c.lookAt(new THREE.Vector3(w / 2, -h / 2, 0));
               c.updateProjectionMatrix();
             }
           }
@@ -439,9 +496,6 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
               }
               if (occlusionMeshRef.current) {
                 occlusionMeshRef.current.visible = false;
-              }
-              if (shadowPlaneRef.current) {
-                shadowPlaneRef.current.visible = false;
               }
             }
           }
