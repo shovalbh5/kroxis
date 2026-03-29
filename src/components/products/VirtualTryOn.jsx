@@ -11,6 +11,14 @@ import TryOnCaptureButton from './TryOnCaptureButton';
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3';
 const MEDIAPIPE_WASM = `${MEDIAPIPE_CDN}/wasm`;
 
+// Face tesselation subset for occlusion (nose, cheeks, temples)
+const FACE_TESSELATION = [
+  6, 122, 168, 6, 168, 351, 168, 122, 196, 168, 351, 419, 122, 196, 197, 351, 419, 420,
+  196, 197, 3, 419, 420, 248, 197, 3, 51, 420, 248, 281, 3, 51, 196, 248, 281, 419,
+  234, 127, 162, 234, 162, 21, 234, 21, 54, 127, 162, 34, 162, 21, 54, 21, 54, 103,
+  454, 356, 389, 454, 389, 251, 454, 251, 284, 356, 389, 264, 389, 251, 284, 251, 284, 332
+];
+
 let mediaPipePromise = null;
 function loadMediaPipe() {
   if (mediaPipePromise) return mediaPipePromise;
@@ -49,6 +57,11 @@ function loadMediaPipe() {
   return mediaPipePromise;
 }
 
+// Temp vectors for matrix decomposition (avoid alloc per frame)
+const _tempPos = new THREE.Vector3();
+const _tempQuat = new THREE.Quaternion();
+const _tempScale = new THREE.Vector3();
+
 export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [], currentProduct, onAddToCart }) {
   const [selectedProduct, setSelectedProduct] = useState(currentProduct);
   const [showPanel, setShowPanel] = useState(true);
@@ -64,11 +77,12 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const animFrameRef = useRef(null);
   const threeRef = useRef(null);
   const glassesModelRef = useRef(null);
+  const occluderMeshRef = useRef(null);
 
   const smoothRef = useRef({
     pos: new THREE.Vector3(),
+    matrix: new THREE.Matrix4(),
     scale: 1,
-    roll: 0,
     initialized: false,
   });
 
@@ -87,16 +101,15 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
       threeRef.current = null;
     }
     glassesModelRef.current = null;
+    occluderMeshRef.current = null;
     smoothRef.current.initialized = false;
   }, []);
 
   const initThree = (width, height) => {
     const scene = new THREE.Scene();
-
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
-    camera.position.set(width / 2, -height / 2, 0);
     const zDist = (height / 2) / Math.tan((45 * Math.PI) / 360);
-    camera.position.z = zDist;
+    camera.position.set(width / 2, -height / 2, zDist);
     camera.lookAt(width / 2, -height / 2, 0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -108,11 +121,24 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // PBR lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     scene.add(ambientLight);
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
     dirLight.position.set(0, 5, 10);
     scene.add(dirLight);
+
+    // Occluder mesh (invisible head that writes depth only)
+    const geo = new THREE.BufferGeometry();
+    const vertices = new Float32Array(468 * 3);
+    geo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    geo.setIndex(FACE_TESSELATION);
+    const mat = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: true, side: THREE.DoubleSide });
+    const occluder = new THREE.Mesh(geo, mat);
+    occluder.renderOrder = 0;
+    occluder.visible = false;
+    scene.add(occluder);
+    occluderMeshRef.current = occluder;
 
     threeRef.current = { scene, camera, renderer };
     return { scene, camera, renderer };
@@ -126,18 +152,25 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
         (gltf) => {
           const model = gltf.scene;
           const box = new THREE.Box3().setFromObject(model);
-          const size = new THREE.Vector3();
-          box.getSize(size);
           const center = new THREE.Vector3();
           box.getCenter(center);
 
+          // Center model so pivot is at origin
           model.position.sub(center);
+
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.material.depthTest = true;
+              child.material.depthWrite = true;
+              child.renderOrder = 1;
+            }
+          });
 
           const group = new THREE.Group();
           group.add(model);
           group.visible = false;
           scene.add(group);
-          glassesModelRef.current = { group, size };
+          glassesModelRef.current = { group };
           resolve(group);
         },
         undefined,
@@ -152,47 +185,74 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
   const updatePosition = (landmarks, vw, vh) => {
     if (!glassesModelRef.current || !threeRef.current) return;
 
-    const { group, size } = glassesModelRef.current;
+    const { group } = glassesModelRef.current;
+    const cam = threeRef.current.camera;
 
+    // Key landmarks
     const nose = landmarks[168];
-    const leftEye = landmarks[33];
-    const rightEye = landmarks[263];
+    const leftEyeInner = landmarks[133];
+    const rightEyeInner = landmarks[362];
 
-    const targetX = (1 - nose.x) * vw;
-    const targetY = -nose.y * vh;
-    const targetZ = nose.z * vw;
+    // 1. Base position (nose bridge)
+    const rawX = nose.x * vw;
+    const rawY = -nose.y * vh;
+    const rawZ = -cam.position.z + nose.z * vw;
 
-    const eyeDist = Math.sqrt(
-      Math.pow((rightEye.x - leftEye.x) * vw, 2) +
-      Math.pow((rightEye.y - leftEye.y) * vh, 2)
+    // 2. Full 3D pose (Pitch, Yaw, Roll) via orthogonal basis
+    const up = new THREE.Vector3(0, 1, 0);
+    const right = new THREE.Vector3().subVectors(
+      new THREE.Vector3(rightEyeInner.x * vw, -rightEyeInner.y * vh, rightEyeInner.z * vw),
+      new THREE.Vector3(leftEyeInner.x * vw, -leftEyeInner.y * vh, leftEyeInner.z * vw)
+    ).normalize();
+    const forward = new THREE.Vector3().crossVectors(right, up).normalize();
+
+    // 3. Transformation matrix
+    const basis = new THREE.Matrix4().makeBasis(right, up, forward);
+    basis.setPosition(rawX, rawY, rawZ);
+
+    // 4. Scale from eye distance
+    const detectedEyeDist = Math.sqrt(
+      Math.pow((landmarks[33].x - landmarks[263].x) * vw, 2) +
+      Math.pow((landmarks[33].y - landmarks[263].y) * vh, 2)
     );
-    const targetScale = (eyeDist / size.x) * 2.15;
+    const targetScale = detectedEyeDist / 140 * 2.3;
 
-    const targetRoll = Math.atan2(
-      (rightEye.y - leftEye.y) * vh,
-      (rightEye.x - leftEye.x) * vw
-    );
-
+    // 5. Smoothing
     const s = smoothRef.current;
-    const LERP = 0.22;
+    const LERP = 0.25;
 
     if (!s.initialized) {
-      s.pos.set(targetX, targetY, targetZ);
+      s.pos.set(rawX, rawY, rawZ);
+      s.matrix.copy(basis);
       s.scale = targetScale;
-      s.roll = targetRoll;
       s.initialized = true;
     } else {
-      s.pos.x += (targetX - s.pos.x) * LERP;
-      s.pos.y += (targetY - s.pos.y) * LERP;
-      s.pos.z += (targetZ - s.pos.z) * LERP;
+      s.pos.lerp(new THREE.Vector3(rawX, rawY, rawZ), LERP);
+      for (let i = 0; i < 16; i++) {
+        s.matrix.elements[i] += (basis.elements[i] - s.matrix.elements[i]) * LERP;
+      }
       s.scale += (targetScale - s.scale) * LERP;
-      s.roll += (targetRoll - s.roll) * LERP;
     }
 
-    group.position.set(s.pos.x, s.pos.y, s.pos.z);
+    // 6. Apply to model — decompose matrix for quaternion, then set pos/scale separately
+    s.matrix.decompose(_tempPos, _tempQuat, _tempScale);
+    group.quaternion.copy(_tempQuat);
+    group.position.copy(s.pos);
     group.scale.set(s.scale, s.scale, s.scale);
-    group.rotation.set(0, Math.PI, s.roll);
     group.visible = true;
+
+    // 7. Update occluder mesh
+    if (occluderMeshRef.current) {
+      const occluder = occluderMeshRef.current;
+      const attr = occluder.geometry.getAttribute('position');
+      for (let i = 0; i < 468 && i < landmarks.length; i++) {
+        const lm = landmarks[i];
+        attr.setXYZ(i, lm.x * vw, -(lm.y * vh), -cam.position.z + lm.z * vw);
+      }
+      attr.needsUpdate = true;
+      occluder.geometry.computeVertexNormals();
+      occluder.visible = true;
+    }
   };
 
   const start = useCallback(async () => {
@@ -244,15 +304,14 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
 
         const now = performance.now();
         const result = landmarker.detectForVideo(vid, now);
-        
+
         if (result.faceLandmarks?.[0]) {
           setFaceDetected(true);
           updatePosition(result.faceLandmarks[0], vw, vh);
         } else {
           setFaceDetected(false);
-          if (glassesModelRef.current) {
-            glassesModelRef.current.group.visible = false;
-          }
+          if (glassesModelRef.current) glassesModelRef.current.group.visible = false;
+          if (occluderMeshRef.current) occluderMeshRef.current.visible = false;
         }
 
         if (threeRef.current) {
@@ -355,7 +414,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
           <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/80">
             <div className="text-center text-white px-6">
               <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-primary" />
-              <p className="font-heading text-lg font-semibold">מכין את חדר המדידה...</p>
+              <p className="font-heading text-lg font-semibold">מכין את חדר המדידה של Kroxis...</p>
               <p className="text-white/50 text-sm mt-2">עלול לקחת מספר שניות בפעם הראשונה</p>
             </div>
           </div>
@@ -395,7 +454,7 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
         )}
 
         {/* Status text */}
-        {status === 'running' && !selectedProduct && (
+        {status === 'running' && (
           <div className="absolute bottom-8 left-0 right-0 z-10 text-center pointer-events-none">
             <p className="text-white/90 text-sm bg-black/60 inline-block px-6 py-3 rounded-full backdrop-blur-md border border-white/10 font-medium" dir="rtl">
               {faceDetected
