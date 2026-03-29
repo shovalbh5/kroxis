@@ -603,10 +603,10 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
         )}
 
         {/* Video canvas (background) */}
-        <canvas ref={canvasRef} style={canvasStyle} />
+        <canvas ref={canvasRef} style={{ ...canvasStyle, transform: 'scaleX(-1)' }} />
 
         {/* Three.js canvas (glasses overlay) */}
-        <canvas ref={threeCanvasRef} style={canvasStyle} className="pointer-events-none" />
+        <canvas ref={threeCanvasRef} style={{ ...canvasStyle, transform: 'scaleX(-1)', pointerEvents: 'none' }} />
 
         {/* Bottom bar with product info + add to cart */}
         {status === 'running' && selectedProduct && onAddToCart && (
