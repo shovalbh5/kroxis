@@ -38,6 +38,7 @@ import ReturnPolicy from '@/pages/ReturnPolicy';
 import MyAccount from '@/pages/MyAccount';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import FacebookPixel from '@/components/seo/FacebookPixel';
+import FaceMeshDebugger from '@/pages/FaceMeshDebugger';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -102,6 +103,7 @@ const AuthenticatedApp = () => {
           <Route path="whatsapp" element={<WhatsAppChat />} />
           <Route path="livechat" element={<LiveChatAdmin />} />
         </Route>
+        <Route path="/face-debug" element={<FaceMeshDebugger />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ExitIntentPopup />
