@@ -265,77 +265,50 @@ export default function VirtualTryOn({ isOpen, onClose, modelUrl, products = [],
     const { group, size } = glassesModelRef.current;
     const cam = threeRef.current.camera;
 
-    // Benson Ruan's exact landmark indices
-    const midEye = landmarks[168];   // between eyes
-    const leftEye = landmarks[143];  // left eye
-    const rightEye = landmarks[372]; // right eye
-    const noseBottom = landmarks[2]; // bottom of nose
+    // 1. Key landmarks
+    const midEye = landmarks[168];   // nose bridge
+    const leftEye = landmarks[33];    // left eye outer
+    const rightEye = landmarks[263];  // right eye outer
 
-    // Convert normalized 0-1 coords to pixel coords
-    // Mirror X because selfie camera is mirrored
-    const mx = (1 - midEye.x) * vw;
-    const my = midEye.y * vh;
-    const mz = (midEye.z || 0) * vw;
+    // 2. Position (mirror X for selfie)
+    const rawX = (1 - midEye.x) * vw;
+    const rawY = -midEye.y * vh;
+    const rawZ = midEye.z * vw;
 
-    const lx = (1 - leftEye.x) * vw;
-    const ly = leftEye.y * vh;
-    const lz = (leftEye.z || 0) * vw;
-
-    const rx = (1 - rightEye.x) * vw;
-    const ry = rightEye.y * vh;
-    const rz = (rightEye.z || 0) * vw;
-
-    const nbx = (1 - noseBottom.x) * vw;
-    const nby = noseBottom.y * vh;
-    const nbz = (noseBottom.z || 0) * vw;
-
-    // === Benson Ruan's exact positioning logic ===
-    // Position
-    const rawX = mx;
-    const rawY = -my;
-    const rawZ = -cam.position.z + mz;
-
-    // Up vector (midEye to noseBottom) for roll calculation
-    let upX = mx - nbx;
-    let upY = -(my - nby);
-    let upZ = mz - nbz;
-    const upLen = Math.sqrt(upX ** 2 + upY ** 2 + upZ ** 2);
-    if (upLen > 0) { upX /= upLen; upY /= upLen; upZ /= upLen; }
-
-    // Eye distance for scale
+    // 3. Eye distance in pixels
     const eyeDist = Math.sqrt(
-      (lx - rx) ** 2 + (ly - ry) ** 2 + (lz - rz) ** 2
+      Math.pow((leftEye.x - rightEye.x) * vw, 2) +
+      Math.pow((leftEye.y - rightEye.y) * vh, 2)
     );
 
-    // Scale: eyeDist * factor. Benson uses a per-model data-3d-scale attribute.
-    // We compute it from bounding box: we want eyeDist to roughly equal the model width
-    const scaleMultiplier = eyeDist / size.x * 1.6;
+    // 4. Scale
+    const targetScale = (eyeDist / size.x) * 2.1;
 
-    // Rotation (Benson's exact formula)
-    const rawRotY = Math.PI;  // face camera
-    const rawRotZ = Math.PI / 2 - Math.acos(Math.max(-1, Math.min(1, upX)));
+    // 5. Head tilt (roll)
+    const roll = Math.atan2(
+      (rightEye.y - leftEye.y) * vh,
+      (rightEye.x - leftEye.x) * vw
+    );
 
-    // Smoothing
+    // 6. Smoothing
     const s = smoothRef.current;
-    const LERP = 0.4;
+    const LERP = 0.25;
 
     if (!s.initialized) {
       s.pos.set(rawX, rawY, rawZ);
-      s.rot.set(0, rawRotY, rawRotZ);
-      s.scale = scaleMultiplier;
+      s.scale = targetScale;
       s.initialized = true;
     } else {
       s.pos.x += (rawX - s.pos.x) * LERP;
       s.pos.y += (rawY - s.pos.y) * LERP;
       s.pos.z += (rawZ - s.pos.z) * LERP;
-      s.rot.z += (rawRotZ - s.rot.z) * LERP;
-      s.scale += (scaleMultiplier - s.scale) * LERP;
+      s.scale += (targetScale - s.scale) * LERP;
     }
 
+    // 7. Apply to model
     group.position.set(s.pos.x, s.pos.y, s.pos.z);
     group.scale.set(s.scale, s.scale, s.scale);
-    group.rotation.y = s.rot.y;
-    group.rotation.z = s.rot.z;
+    group.rotation.set(0, Math.PI, roll);
     group.visible = true;
 
     // Face occlusion mesh
