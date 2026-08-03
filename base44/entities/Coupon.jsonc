@@ -1,0 +1,72 @@
+{
+  "name": "Coupon",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Coupon code (uppercase)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "percentage",
+        "fixed_amount",
+        "bogo",
+        "free_shipping"
+      ],
+      "description": "Discount type"
+    },
+    "value": {
+      "type": "number",
+      "description": "Discount value (percentage or fixed amount)"
+    },
+    "min_order_amount": {
+      "type": "number",
+      "description": "Minimum order total to apply coupon"
+    },
+    "max_uses": {
+      "type": "number",
+      "description": "Maximum total uses allowed"
+    },
+    "used_count": {
+      "type": "number",
+      "default": 0,
+      "description": "How many times this coupon has been used"
+    },
+    "applies_to_categories": {
+      "type": "array",
+      "description": "Limit to specific categories (empty = all)",
+      "items": {
+        "type": "string",
+        "enum": [
+          "construction",
+          "lab",
+          "outdoor",
+          "general"
+        ]
+      }
+    },
+    "bogo_buy_quantity": {
+      "type": "number",
+      "description": "For BOGO: buy this many"
+    },
+    "bogo_get_quantity": {
+      "type": "number",
+      "description": "For BOGO: get this many free"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Expiration date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "code",
+    "type",
+    "value"
+  ]
+}

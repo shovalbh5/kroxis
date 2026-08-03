@@ -1,0 +1,66 @@
+{
+  "name": "WholesaleRequest",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string",
+      "enum": [
+        "construction",
+        "lab",
+        "outdoor",
+        "general",
+        "other"
+      ]
+    },
+    "estimated_annual_volume": {
+      "type": "number",
+      "description": "Estimated units per year"
+    },
+    "products_interested": {
+      "type": "array",
+      "description": "Product IDs of interest",
+      "items": {
+        "type": "string"
+      }
+    },
+    "message": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "discount_tier": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum"
+      ],
+      "description": "Assigned wholesale tier"
+    }
+  },
+  "required": [
+    "company_name",
+    "contact_name",
+    "email"
+  ]
+}

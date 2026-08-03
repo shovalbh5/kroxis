@@ -1,0 +1,43 @@
+{
+  "name": "ProductVariant",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Link to Product"
+    },
+    "lens_type": {
+      "type": "string",
+      "enum": [
+        "polarized",
+        "clear",
+        "anti_blue_light",
+        "rx",
+        "photochromic"
+      ],
+      "description": "Lens type"
+    },
+    "frame_color": {
+      "type": "string",
+      "description": "Frame color name"
+    },
+    "price_adjustment": {
+      "type": "number",
+      "default": 0,
+      "description": "Price adjustment from base"
+    },
+    "sku": {
+      "type": "string",
+      "description": "Unique SKU"
+    },
+    "stock_quantity": {
+      "type": "number",
+      "default": 0,
+      "description": "Stock for this variant"
+    }
+  },
+  "required": [
+    "product_id",
+    "lens_type"
+  ]
+}

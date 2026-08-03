@@ -1,0 +1,48 @@
+{
+  "name": "CartItem",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "lens_option": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "polarized",
+        "blue_light"
+      ],
+      "default": "standard"
+    },
+    "lens_surcharge": {
+      "type": "number",
+      "default": 0
+    },
+    "color": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Anonymous session identifier"
+    }
+  },
+  "required": [
+    "product_id",
+    "title",
+    "price",
+    "quantity"
+  ]
+}

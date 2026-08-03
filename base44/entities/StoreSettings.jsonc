@@ -1,0 +1,34 @@
+{
+  "name": "StoreSettings",
+  "type": "object",
+  "properties": {
+    "store_name": {
+      "type": "string",
+      "default": "KROXIS"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "shipping_fee": {
+      "type": "number",
+      "default": 35
+    },
+    "free_shipping_threshold": {
+      "type": "number",
+      "default": 300
+    },
+    "tax_rate": {
+      "type": "number",
+      "default": 18,
+      "description": "Tax percentage (e.g., 18 for 18% VAT)"
+    },
+    "currency": {
+      "type": "string",
+      "default": "ILS"
+    }
+  },
+  "required": []
+}

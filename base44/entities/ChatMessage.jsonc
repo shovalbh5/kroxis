@@ -1,0 +1,36 @@
+{
+  "name": "ChatMessage",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Visitor session identifier"
+    },
+    "visitor_name": {
+      "type": "string",
+      "description": "Visitor display name"
+    },
+    "sender": {
+      "type": "string",
+      "enum": [
+        "visitor",
+        "admin"
+      ],
+      "description": "Who sent this message"
+    },
+    "text": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether admin has read this message"
+    }
+  },
+  "required": [
+    "session_id",
+    "sender",
+    "text"
+  ]
+}

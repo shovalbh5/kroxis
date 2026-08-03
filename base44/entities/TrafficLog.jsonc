@@ -1,0 +1,40 @@
+{
+  "name": "TrafficLog",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique browser session"
+    },
+    "entry_page": {
+      "type": "string",
+      "description": "First page visited"
+    },
+    "referrer": {
+      "type": "string",
+      "enum": [
+        "google",
+        "facebook",
+        "instagram",
+        "direct",
+        "whatsapp",
+        "other"
+      ],
+      "description": "Traffic source"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "mobile",
+        "desktop",
+        "tablet"
+      ]
+    },
+    "country": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "OrderItem",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string",
+      "description": "Link to Order"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Link to Product"
+    },
+    "variant_id": {
+      "type": "string",
+      "description": "Link to ProductVariant"
+    },
+    "title": {
+      "type": "string",
+      "description": "Product title snapshot"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "Price per unit at time of purchase"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "quantity * unit_price"
+    }
+  },
+  "required": [
+    "order_id",
+    "product_id",
+    "quantity",
+    "unit_price"
+  ]
+}

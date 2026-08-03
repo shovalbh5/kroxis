@@ -1,0 +1,46 @@
+{
+  "name": "WhatsAppMessage",
+  "type": "object",
+  "properties": {
+    "from_number": {
+      "type": "string",
+      "description": "Sender phone number"
+    },
+    "from_name": {
+      "type": "string",
+      "description": "Sender profile name"
+    },
+    "message_text": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "incoming",
+        "outgoing"
+      ],
+      "description": "Message direction"
+    },
+    "wa_message_id": {
+      "type": "string",
+      "description": "WhatsApp message ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "received",
+        "sent",
+        "delivered",
+        "read",
+        "failed"
+      ],
+      "default": "received"
+    }
+  },
+  "required": [
+    "from_number",
+    "message_text",
+    "direction"
+  ]
+}

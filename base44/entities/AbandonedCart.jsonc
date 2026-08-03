@@ -1,0 +1,61 @@
+{
+  "name": "AbandonedCart",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Anonymous or user session"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "description": "Cart snapshot",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "total_value": {
+      "type": "number"
+    },
+    "checkout_url": {
+      "type": "string",
+      "description": "Recovery link"
+    },
+    "abandoned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recovered": {
+      "type": "boolean",
+      "default": false
+    },
+    "recovery_email_sent": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "session_id",
+    "items",
+    "total_value"
+  ]
+}

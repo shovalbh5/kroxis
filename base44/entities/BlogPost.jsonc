@@ -1,0 +1,65 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Blog post title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "excerpt": {
+      "type": "string",
+      "description": "Short summary for listings"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full article content (markdown)"
+    },
+    "featured_image": {
+      "type": "string",
+      "description": "Hero image URL"
+    },
+    "author": {
+      "type": "string",
+      "description": "Author name"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Content tags for filtering",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_products": {
+      "type": "array",
+      "description": "Product IDs to cross-promote",
+      "items": {
+        "type": "string"
+      }
+    },
+    "meta_title": {
+      "type": "string",
+      "description": "SEO title tag"
+    },
+    "meta_description": {
+      "type": "string",
+      "description": "SEO meta description"
+    },
+    "published_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "slug",
+    "content"
+  ]
+}

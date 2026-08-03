@@ -1,0 +1,39 @@
+{
+  "name": "Prescription",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "right_sph": {
+      "type": "string"
+    },
+    "right_cyl": {
+      "type": "string"
+    },
+    "right_axis": {
+      "type": "string"
+    },
+    "left_sph": {
+      "type": "string"
+    },
+    "left_cyl": {
+      "type": "string"
+    },
+    "left_axis": {
+      "type": "string"
+    },
+    "pd": {
+      "type": "string",
+      "description": "Pupillary distance"
+    },
+    "prescription_file_url": {
+      "type": "string",
+      "description": "Uploaded prescription PDF"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": []
+}

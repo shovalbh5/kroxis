@@ -1,0 +1,56 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "description": "1-5 star rating"
+    },
+    "title": {
+      "type": "string",
+      "description": "Review headline"
+    },
+    "content": {
+      "type": "string",
+      "description": "Review text"
+    },
+    "photos": {
+      "type": "array",
+      "description": "Uploaded customer photo URLs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verified_purchase": {
+      "type": "boolean",
+      "default": false
+    },
+    "helpful_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of helpful votes"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "product_id",
+    "rating"
+  ]
+}
