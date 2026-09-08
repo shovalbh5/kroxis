@@ -3,8 +3,8 @@
 Prepared 2026-09-08. Full interactive version (stat tiles, checklist,
 content pillars) published as a Claude Artifact and shared with the team;
 this file is the durable, version-controlled reference. Amazon, Shopify,
-and TikTok Shop are worked as three parallel tracks here, not sequenced
-one after another.
+TikTok Shop, Facebook, Instagram, and Pinterest are worked as parallel
+tracks here, not sequenced one after another.
 
 ## Where Momnagi stands today
 
@@ -202,6 +202,31 @@ content pillars above, the AI-label requirement, and Momnagi's brand voice
 | 2. Affiliate / Collab Center | Open the listing to creators at a set commission | Commission on sales only |
 | 3. Paid Shop Ads / GMV Max | Spend behind a proven winner from Layer 1 | Ad budget — Phase 2, not funded yet |
 
+## Facebook, Instagram & Pinterest — same catalog, more shelves
+
+Shopify already sits at the center of this plan, so adding these three is
+mostly a catalog-sync exercise, not a new content pipeline — the same AI
+videos and product photos extend to three more storefronts for close to
+zero extra production cost.
+
+| Channel | How it connects | What it unlocks |
+|---|---|---|
+| **Facebook + Instagram** | One Shopify app ("Facebook & Instagram" sales channel) — one Meta Commerce Manager catalog feeds both Facebook Shop and Instagram Shopping at once, syncing on an hourly schedule | Shoppable posts, Reels, and Stories on both platforms from a single setup; needs Meta Business Manager + Page admin access |
+| **Pinterest** | Shopify's Pinterest app syncs titles, prices, images, and stock straight into shoppable product Pins — no manual feed work | Hosted checkout and preferential placement, but only for Verified Merchants — apply on day one, approval runs 2-4 weeks and is the real bottleneck |
+
+([prediko.io](https://www.prediko.io/blog/how-to-sync-shopify-products-with-facebook),
+[exactwhy.com](https://exactwhy.com/blogs/news/pinterest-hosted-checkout-shopify-2026))
+
+Content still needs to fit each platform's actual behavior — Instagram is
+the closest cousin to TikTok, Facebook rewards a person more than a video,
+and Pinterest runs on search intent, not a feed algorithm:
+
+| Platform | What runs | Extra work past the TikTok video |
+|---|---|---|
+| Instagram | Same 9:16 AI video as Reels + Stories, product-tagged | Cross-post via Meta's tools, tag the product — a few minutes |
+| Facebook | Same video as Reels/Page posts, plus organic participation in postpartum & parenting Facebook Groups | A person's time, not video — Groups are the highest-trust, zero-cost part of this channel |
+| Pinterest | Recropped 2:3 stills or an Idea Pin, with a keyworded title and description written like search copy | A VA recrop + rewrite per asset, ~10-15 min — worth prioritizing early since Pinterest's audience over-indexes on exactly this shopper: someone actively searching "c-section recovery essentials" or "postpartum must-haves" |
+
 ## 30 / 60 / 90 — three tracks, run at once
 
 Each phase happens across Amazon, Shopify, and TikTok Shop in the same
@@ -216,6 +241,9 @@ window — not one channel after another.
   SKUs live on-site.
 - *TikTok:* Seller Center verified, Shopify channel connected, Scar Tape
   Roll listed, 15-20 AI videos posted.
+- *Shopify:* connect the Facebook & Instagram sales channel; install
+  Pinterest and start the Verified Merchant Program application
+  immediately — its 2-4 week queue is the real bottleneck.
 
 **Days 31-60 — Signal & iterate**
 - *Inventory:* remaining inbound ASINs received; Shopify catalog reflects
@@ -226,16 +254,19 @@ window — not one channel after another.
   storefront.
 - *TikTok:* double down on the best-performing hook/pillar; open Collab
   Center; add C-Section Scar Strips.
+- *Content:* every new AI video cross-posted to Instagram Reels/Stories as
+  routine; Pinterest Pins go out per product once VMP is approved.
 
 **Days 61-90 — Scale decision point**
 - *Amazon:* route the 819-day overstock ASIN into TikTok Shop fulfillment
   via MCF once confirmed and connected.
-- *Shopify:* full 7-SKU catalog live, feeding all three channels from one
-  inventory pool.
+- *Shopify:* full 7-SKU catalog live, feeding Amazon, TikTok, Facebook,
+  Instagram, and Pinterest from one inventory pool.
 - *TikTok:* decide on Layer 3 paid spend backed by real CTR data; confirm
   whether Scar Tape Roll stays the lead SKU.
-- *Content:* reuse the same AI videos on Instagram Reels / YouTube Shorts
-  once a format is proven — zero extra production cost.
+- *Content:* compare which platform is actually converting — Pinterest's
+  search intent vs. TikTok/Reels' discovery — and weight production time
+  toward the winner.
 
 ## Economics side by side
 
@@ -259,6 +290,8 @@ category and change over time.
 - Contribution margin per unit after TikTok fees + any commission
 - Scar Tape Roll days-of-stock remaining (of 200 units)
 - AI-content label applied — 100% compliance, checked weekly
+- Pinterest VMP status, then saves/outbound clicks once approved
+- Orders by channel — Amazon vs. TikTok vs. Facebook/Instagram vs. Pinterest
 
 ---
 
