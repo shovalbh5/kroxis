@@ -1,38 +1,61 @@
-# Momnagi TikTok Shop Launch Playbook
+# Momnagi Multi-Channel Playbook
 
 Prepared 2026-09-08. Full interactive version (stat tiles, checklist,
 content pillars) published as a Claude Artifact and shared with the team;
-this file is the durable, version-controlled reference.
+this file is the durable, version-controlled reference. Amazon, Shopify,
+and TikTok Shop are worked as three parallel tracks here, not sequenced
+one after another.
 
 ## Where Momnagi stands today
 
-Pulled from the connected Amazon sales feed (2026-06-11 – 2026-09-01) and
-the live Shopify catalog:
+Pulled from the connected Amazon sales/inventory feed (2026-06-11 –
+2026-09-02) and the live Shopify catalog:
 
 - Amazon net margin over the 83-day window: **-1.4%** ($2,638.68 revenue,
   -$37.98 net profit).
-- **83.4%** of Amazon revenue is consumed by referral + FBA fees
-  ($2,200.35 of $2,638.68).
 - **17 straight days** (Aug 15-31) of $0 Amazon revenue while still paying
   $489.52 in fees.
+- **14 of 18** Amazon ASINs sit at 0 fulfillable units despite carrying
+  real stock (200-500 units each) — stuck inbound, not yet receivable.
 - ASIN `B0BXB947JS` carries **819 days** of stock on hand — flagged
-  overstock by the pricing-recommendation signal.
+  overstock, and it's the one ASIN with an ongoing sales history.
 - 7 active Shopify SKUs; only the **Silicone Scar Tape Roll** carries real
-  inventory (200 units). Everything else shows 0 on hand.
+  on-hand inventory (200 units). Everything else shows 0 on hand.
 - No TikTok Shop Seller Center account exists yet — this is a clean start.
 
-## Why TikTok Shop, why now
+## The finding that changes the plan
+
+Amazon's inventory feed shows 14 of 18 ASINs carrying real inbound stock —
+200 to 500 units each, covering all four scar tape variants, the belly
+band in every size, both milk collector counts, the C-section strips, the
+sink bather, the baby bath cushion, and the original crib liner (SKU
+`MN-CRIB-W2`) — that has never converted to fulfillable. It's sitting in
+Amazon's receiving pipeline, and the same SKUs show 0 on hand on Shopify
+too. **This is one shared blocker across every channel, not three
+separate inventory problems**, and it's the thing to unblock before the
+channel-specific work below matters much.
+
+It also explains the Aug 15-31 dead zone: ASIN `B0CF418Y8H` genuinely ran
+out (1 unit on Aug 11, 0 by Aug 14), while `B0BXB947JS` still had 52-92
+units on hand the whole time but its daily sales velocity collapsed from
+~1.1-1.7/day to ~0.14/day in that exact window — worth a Seller Central
+check for a Buy Box or listing-health issue, separate from the stock
+question.
+
+## Why now, and why in parallel
 
 1. Amazon is currently break-even-to-negative and single-threaded — reason
    enough to build a second demand channel, not to abandon Amazon.
-2. The new Shopify maternity/postpartum line (belly band, milk collector,
+2. The three channels aren't competing for the same hours. Getting inbound
+   FBA stock checked in, syncing it to Shopify, and setting up a TikTok
+   Shop account are three different kinds of work — admin, catalog, and
+   content — that don't block each other. Running them at once instead of
+   "Amazon first, then Shopify, then TikTok" gets Momnagi selling
+   everywhere sooner.
+3. The new Shopify maternity/postpartum line (belly band, milk collector,
    scar tape, sink bather) is exactly the candid, low-glam, high-trust
    content category that performs on TikTok's For You feed, and it suits a
    self-produced AI-video workflow.
-3. Real inventory is sitting idle on both platforms — 819 days of stock on
-   one Amazon ASIN, 200 units of Scar Tape Roll on Shopify — and TikTok
-   Shop's in-feed checkout is built to move exactly this kind of
-   impulse-adjacent, self-care product.
 
 ## Decision needed: which product leads?
 
@@ -179,22 +202,40 @@ content pillars above, the AI-label requirement, and Momnagi's brand voice
 | 2. Affiliate / Collab Center | Open the listing to creators at a set commission | Commission on sales only |
 | 3. Paid Shop Ads / GMV Max | Spend behind a proven winner from Layer 1 | Ad budget — Phase 2, not funded yet |
 
-## 30 / 60 / 90
+## 30 / 60 / 90 — three tracks, run at once
 
-**Days 1-30 — Foundation & first launch**
-Seller Center verified, Shopify channel connected, Scar Tape Roll listed
-with compliant copy, 15-20 AI videos posted, Collab Center opened at a
-starting commission rate.
+Each phase happens across Amazon, Shopify, and TikTok Shop in the same
+window — not one channel after another.
+
+**Days 1-30 — Unblock & launch**
+- *Inventory:* get the highest-priority inbound ASINs checked in at
+  Amazon; sync received units to Shopify.
+- *Amazon:* check `B0BXB947JS` for a Buy Box / listing-health issue behind
+  the velocity drop; reorder `B0CF418Y8H`.
+- *Shopify:* resolve Scar Tape Roll's price review; get first received
+  SKUs live on-site.
+- *TikTok:* Seller Center verified, Shopify channel connected, Scar Tape
+  Roll listed, 15-20 AI videos posted.
 
 **Days 31-60 — Signal & iterate**
-Identify the best-performing hook/pillar from analytics and double down;
-add C-Section Scar Strips once Shopify stock allows; compare TikTok's true
-take-rate against the Amazon baseline below.
+- *Inventory:* remaining inbound ASINs received; Shopify catalog reflects
+  real stock across all 7 SKUs.
+- *Amazon:* evaluate an MCF connector (CedCommerce or GeekSeller) once its
+  inventory is fulfillable.
+- *Shopify:* add restocked SKUs (belly band, milk collector) to the DTC
+  storefront.
+- *TikTok:* double down on the best-performing hook/pillar; open Collab
+  Center; add C-Section Scar Strips.
 
 **Days 61-90 — Scale decision point**
-Decide on Layer 3 paid spend backed by real CTR data; revisit cross-listing
-the Amazon ASINs to work off the overstock; confirm whether Scar Tape Roll
-stays the lead SKU.
+- *Amazon:* route the 819-day overstock ASIN into TikTok Shop fulfillment
+  via MCF once confirmed and connected.
+- *Shopify:* full 7-SKU catalog live, feeding all three channels from one
+  inventory pool.
+- *TikTok:* decide on Layer 3 paid spend backed by real CTR data; confirm
+  whether Scar Tape Roll stays the lead SKU.
+- *Content:* reuse the same AI videos on Instagram Reels / YouTube Shorts
+  once a format is proven — zero extra production cost.
 
 ## Economics side by side
 
