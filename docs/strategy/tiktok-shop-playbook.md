@@ -59,6 +59,44 @@ either one.
 | ASIN B0BXB947JS (Amazon) | ~$19.99 | 819 days cover | Confirm identity first |
 | ASIN B0CF418Y8H (Amazon) | ~$19.99 | unknown | Confirm identity first |
 
+## Fulfillment — ship from the Amazon warehouses you already pay for
+
+Amazon can be the shipping company. TikTok Shop officially added
+**Multi-Channel Fulfillment (MCF)** as a supported fulfillment method in
+February 2026, with setup guidance published August 6, 2026 — so the
+819-day overstock ASIN can fulfill TikTok Shop orders directly instead of
+sitting idle. ([myamazonguy.com](https://myamazonguy.com/news/tiktok-shop-amazon-integration/),
+[supplychain.amazon.com](https://supplychain.amazon.com/learn/amazon-mcf-for-tiktok-shop))
+
+There's no native, one-click connection — it runs through a middleware app
+that syncs TikTok Shop orders into Seller Central for MCF to pick, pack,
+and ship. TikTok's guidance names nine supported connectors: **Pipe17,
+Rithum, WebBee, CedCommerce, ChannelEngine, Order Desk, Lingxing, 4Seller
+ERP, and GeekSeller.** CedCommerce and GeekSeller are generally worth
+starting evaluation with for a single-brand, low-SKU setup — confirm
+current pricing directly.
+([relevantaudience.com](https://www.relevantaudience.com/ecommerce-marketing/amazon-mcf-tiktok-shop-nine-apps/))
+
+- Standard MCF delivery: 3 business days (2-day expedited available),
+  97%+ on-time, 99.98% undamaged, 100% tracking coverage — meets TikTok
+  Shop's delivery-SLA bar.
+- Eligible sellers may get up to a 15% MCF fee discount and up to $1 FBA
+  credit per unit shipped — check eligibility in Seller Central.
+- TikTok's mandatory "Fulfilled by TikTok" (FBT) requirement is currently
+  **paused** — MCF stays valid for now, but re-check before scaling
+  volume, since the policy has moved before.
+  ([easyship.com](https://www.easyship.com/blog/tiktok-shop-reverses-us-shipping-mandate))
+- Before going live, check the MCF packaging setting — confirm whether
+  Amazon-branded packaging can be turned off. A TikTok Shop customer
+  unboxing an Amazon-branded box works against the DTC brand experience
+  this plan is built on.
+
+**Fulfillment setup checklist**
+- [ ] Evaluate 1-2 connector apps (start with CedCommerce or GeekSeller)
+      to sync TikTok Shop orders into Amazon MCF.
+- [ ] Check the MCF packaging setting before going live.
+- [ ] Confirm FBT-mandate status hasn't changed before scaling volume.
+
 ## Foundation checklist
 
 **Account & compliance**
@@ -112,6 +150,26 @@ an AI avatar as a genuine customer testimonial — frame videos as brand-made
 education and demonstration. This also matches Momnagi's own voice rule:
 reassure through specifics, never through claims that sound like someone
 else's real experience.
+
+## Production help — hiring cheap
+
+What this role needs is fluency in AI generation tools (an avatar tool like
+HeyGen, a generative video tool like Kling/Runway/Pika, CapCut for editing,
+Midjourney or similar for stills), not camera or lighting skill.
+
+- **Per-video, low commitment:** Fiverr — fixed price per finished
+  AI-UGC-style video, gig-based, easy to test 2-3 sellers before
+  committing. AI UGC creators on Upwork run roughly $25-55/hr; general
+  editors range $15-150+/hr depending on seniority.
+  ([upwork.com](https://www.upwork.com/hire/ai-ugc-creators/))
+- **Ongoing, best value at 4-5 videos/week:** a dedicated VA (e.g. via
+  OnlineJobs.ph) skilled in CapCut/Canva AI/Kling at an hourly rate —
+  cheaper than per-gig pricing once volume is steady.
+
+Search "AI UGC creator" or "AI video ads" rather than "video editor" —
+that's the actual skill set this pipeline needs. Brief them with the five
+content pillars above, the AI-label requirement, and Momnagi's brand voice
+(gentle, specific, never clinical or alarmist).
 
 ## Distribution — three layers, one funded today
 
