@@ -32,7 +32,7 @@ const AuthenticatedApp = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center" style={{ background: '#0B151A' }}>
         <div className="text-center">
-          <span className="text-2xl tracking-widest" style={{ color: '#E2EBE8', fontFamily: 'Georgia, serif' }}>PORTOLAN</span>
+          <span className="text-2xl tracking-widest" style={{ color: '#E2EBE8', fontFamily: 'Georgia, serif' }}>KROXIS · PORTOLAN</span>
           <div className="w-8 h-8 border-4 rounded-full animate-spin mx-auto mt-4" style={{ borderColor: 'rgba(226,235,232,.2)', borderTopColor: '#52C0A2' }}></div>
         </div>
       </div>

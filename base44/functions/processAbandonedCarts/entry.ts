@@ -1,6 +1,13 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.23';
 
+// The KROXIS store closed when kroxis.com became the Portolan site, so cart
+// recovery emails (with a checkout link that no longer exists) are switched off.
+const STORE_CLOSED = true;
+
 Deno.serve(async (req) => {
+    if (STORE_CLOSED) {
+        return Response.json({ success: true, sentCount: 0, skipped: 'store closed' });
+    }
     try {
         const base44 = createClientFromRequest(req);
         

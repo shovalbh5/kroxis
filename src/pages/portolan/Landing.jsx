@@ -25,7 +25,7 @@ const OFFERS = [
       'Which of your documents and listing fields match the request',
       'A draft reply you can edit and send',
     ],
-    replaces: 'Reinstatement agencies charge $1,000–3,500 for this.',
+    replaces: 'Reinstatement agencies can charge $1,000–3,500 for this. We show what is being asked. We do not promise reinstatement.',
     cta: 'Paste a notice',
   },
   {
@@ -53,7 +53,7 @@ const OFFERS = [
       'Open questions where we need a fact from you',
       'Accepted labs to ask for a quote when a test is required',
     ],
-    replaces: 'Typical manual reports cost about $79 or days of research.',
+    replaces: 'Best before you place the factory order, while changes are still cheap.',
     cta: 'Request a report',
   },
 ];
@@ -72,9 +72,11 @@ const COVERAGE = [
 ];
 
 const FAQ = [
-  ['Is this legal advice?', 'No. Portolan gives regulatory information drawn from official sources, with the source shown for every point. It does not replace a lawyer, and it does not create a lawyer–client relationship.'],
+  ['Is this legal advice?', 'No. Kroxis Portolan gives regulatory information drawn from official sources, with the source shown for every point. It does not replace a lawyer, and it does not create a lawyer–client relationship.'],
   ['Do you test, certify or approve products?', 'No. We are not a laboratory, a certification body or a customs broker. We tell you which requirements likely apply, check whether your documents match your product, and show accepted labs when a test is needed.'],
   ['Why not just ask the lab?', 'A lab tests what you ask it to test. Sellers get blocked when the wrong standard was tested, the model number does not match, or the age grade is off. We help you ask for the right test and check the report against your product.'],
+  ['Will this get my listing reinstated?', 'We cannot promise that. The marketplace decides. We show what the notice asks for, what your documents cover and what is missing, so your reply answers the actual request.'],
+  ['Do you earn anything from labs?', 'If you choose a lab from our list, the lab may pay us a referral fee. It does not change what you pay, and we list accepted labs whether or not they pay us.'],
   ['What does the document check cost?', 'During the pilot it is $49, and if we find no problem you pay nothing. Notice triage is free during the pilot.'],
   ['Which marketplaces do you cover?', 'Amazon (US, EU, UK, Canada), Walmart, TikTok Shop and nine more sales channels.'],
   ['What happens to what I send you?', 'We use it only to answer your request. We do not sell it or share it with advertisers. See the privacy page.'],
@@ -199,14 +201,14 @@ function LeadForm({ offer, setOffer }) {
 
 export default function Landing() {
   const [offer, setOffer] = useState('notice_triage');
-  useEffect(() => { document.title = 'Portolan · Product compliance for online sellers'; document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; }, []);
+  useEffect(() => { document.title = 'Kroxis Portolan · Product compliance for online sellers'; document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; }, []);
   const start = (id) => () => { setOffer(id); document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' }); };
 
   return (
     <div className="pt-root">
       <header className="pt-head">
         <div className="pt-wrap">
-          <a href="#top" className="pt-wordmark"><Mark />Portolan</a>
+          <a href="#top" className="pt-wordmark"><Mark />Kroxis<span className="pt-wordmark-sub">Portolan</span></a>
           <nav className="pt-nav" aria-label="Main">
             <a href="#offers" className="pt-hide-sm">What we do</a>
             <a href="#how" className="pt-hide-sm">How it works</a>
@@ -220,14 +222,15 @@ export default function Landing() {
         <section className="pt-hero" id="top">
           <Rose />
           <div className="pt-wrap">
-            <span className="pt-eyebrow">Product compliance for online sellers</span>
-            <h1>Know what your product needs <em>before</em> the marketplace asks.</h1>
-            <p className="pt-lede">Portolan checks your product against US, EU, UK and Canadian rules and against what Amazon, Walmart and TikTok Shop require. Every answer shows its source. Anything we cannot know becomes a question for you.</p>
+            <span className="pt-eyebrow">Kroxis Portolan · product compliance for online sellers</span>
+            <h1>Know what your product needs <em>before</em> you ship it.</h1>
+            <p className="pt-tagline">Your markets, charted. Every line, sourced.</p>
+            <p className="pt-lede">Kroxis Portolan checks your product against US, EU, UK and Canadian rules and against what Amazon, Walmart and TikTok Shop require. Use it before you place the factory order, or when a listing gets blocked. Anything we cannot know from your description comes back to you as a question.</p>
             <div className="pt-cta-row">
               <button type="button" className="pt-btn pt-btn-main" onClick={start('notice_triage')}>Triage a notice, free</button>
               <button type="button" className="pt-btn pt-btn-ghost" onClick={start('document_check')}>Check supplier documents · $49</button>
             </div>
-            <p className="pt-fine">Charts drawn from the trips other sellers already made. Regulatory information, not legal advice.</p>
+            <p className="pt-fine">Portolans were sailing charts drawn by sailors who had already made the trip. Regulatory information, not legal advice. We do not promise reinstatement.</p>
             <div className="pt-numbers">
               {NUMBERS.map(([n, label]) => <div key={label}><b>{n}</b><span>{label}</span></div>)}
             </div>
@@ -236,8 +239,8 @@ export default function Landing() {
 
         <section className="pt-section" id="offers">
           <div className="pt-wrap">
-            <h2>Three ways in, depending on where you are stuck</h2>
-            <p className="pt-lede">Most sellers find us after a listing is blocked. You can also come before you order from the factory.</p>
+            <h2>Three ways in, depending on where you are</h2>
+            <p className="pt-lede">Small importers use it before ordering from the factory, while changes are still cheap. Sellers with a blocked listing use it to see what the marketplace is actually asking for.</p>
             <div className="pt-offers">
               {OFFERS.map((o) => (
                 <article className="pt-offer" key={o.id}>
@@ -278,7 +281,7 @@ export default function Landing() {
             <div>
               <h2>Send your request</h2>
               <p className="pt-lede">Tell us what you need. We reply by email with the answer, or with the questions we need answered first.</p>
-              <p className="pt-muted">During the pilot we take a small number of sellers at a time, so we can check every answer by hand before it goes out.</p>
+              <p className="pt-muted">During the pilot we take a small number of sellers at a time, and a person reviews every answer before it goes out.</p>
             </div>
             <LeadForm offer={offer} setOffer={setOffer} />
           </div>
@@ -296,13 +299,13 @@ export default function Landing() {
 
       <footer className="pt-foot">
         <div className="pt-wrap">
-          <a href="#top" className="pt-wordmark"><Mark />Portolan</a>
+          <a href="#top" className="pt-wordmark"><Mark />Kroxis<span className="pt-wordmark-sub">Portolan</span></a>
           <nav aria-label="Footer">
             <Link to="/terms">Terms</Link>
             <Link to="/privacy">Privacy</Link>
             <span>Contact: <span className="pt-select">{CONTACT}</span></span>
           </nav>
-          <p className="pt-disclaimer">Portolan provides regulatory information for online sellers. It is not legal advice, and Portolan does not test, certify or approve products. Requirements change; check the cited source before you act.</p>
+          <p className="pt-disclaimer">Kroxis Portolan provides regulatory information for online sellers. It is not legal advice, it does not promise reinstatement of any listing, and it does not test, certify or approve products. Requirements change, so check the cited source before you act.</p>
         </div>
       </footer>
     </div>
