@@ -1,0 +1,836 @@
+<meta name="dash-one-writer">
+<style>
+  /* Layout: a header with the day's takeaway and tabs; each tab is a stack of cards in an auto-fit grid. */
+  .kx { direction: rtl; font-family: var(--font-anthropic-sans); color: var(--color-fg); display: grid; gap: var(--cds-gap-lg); }
+  .kx h1, .kx h2, .kx h3 { margin: 0; text-wrap: balance; }
+  .kx-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); }
+  .kx-lede { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 68ch; line-height: 1.55; }
+  .kx-lede b { color: var(--color-fg); }
+  .kx-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: var(--cds-gap-xs); margin-top: var(--cds-gap-md); border-bottom: 1px solid var(--color-border-line); }
+  .kx-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--color-fg-muted); font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-sm) var(--cds-pad-sm); cursor: pointer; margin-bottom: -1px; white-space: nowrap; }
+  .kx-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .kx-tab:focus-visible, .kx-seg button:focus-visible, .kx-scan tbody tr:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+  .kx-page { display: grid; gap: var(--cds-gap-lg); }
+  .kx-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
+  .kx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start; }
+  .kx-card h2, .kx-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .kx-note { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.5; }
+  .kx-section-h { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .kx-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--cds-gap-sm); }
+  .kx-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); list-style: none; margin: 0; padding: 0; }
+  .kx-chip { display: inline-flex; gap: .35em; align-items: center; border: 1px solid var(--color-border-line); border-radius: 999px; padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); background: var(--color-panel); }
+  .kx-chip::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--cds-chart-muted); }
+  .kx-chip.good::before { background: var(--color-ok); }
+  .kx-chip.bad::before { background: var(--color-bad); }
+  .kx-chip b { font-weight: var(--cds-font-weight-medium); }
+  .kx-acc-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+  .kx-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+  .kx-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: var(--cds-gap-sm); margin: 0; }
+  .kx-stats div { display: grid; gap: 2px; }
+  .kx-stats dt { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .kx-stats dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+  .kx-num, .kx td.n { direction: ltr; unicode-bidi: isolate; text-align: right; font-variant-numeric: tabular-nums; }
+  .kx .up { color: var(--color-ok); }
+  .kx .down { color: var(--color-bad); }
+  .kx-tablebox { overflow-x: auto; max-width: 100%; }
+  .kx-tablebox.tall { max-height: 34rem; overflow: auto; }
+  .kx table { border-collapse: collapse; width: 100%; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .kx th { text-align: right; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; position: sticky; top: 0; background: var(--color-panel); }
+  .kx td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; text-align: right; }
+  .kx-scan tbody tr { cursor: pointer; }
+  .kx-scan tbody tr:hover { background: color-mix(in srgb, var(--color-fg) 5%, transparent); }
+  .kx-scan tbody tr.sel { background: color-mix(in srgb, var(--color-fg) 10%, transparent); }
+  .kx-sym { font-weight: var(--cds-font-weight-medium); }
+  .kx-pill { display: inline-block; border-radius: 999px; padding: 1px var(--cds-pad-sm); font-size: var(--cds-font-size-caption); border: 1px solid currentColor; }
+  .kx-pill.BUY { color: var(--color-ok); }
+  .kx-pill.WATCH { color: var(--color-warn); }
+  .kx-pill.UPTREND { color: var(--color-fg-muted); }
+  .kx-empty { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .kx-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+  .kx-seg button { appearance: none; border: 0; background: none; font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-md); cursor: pointer; }
+  .kx-seg button + button { border-inline-start: 1px solid var(--color-border-line); }
+  .kx-seg button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+  .kx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); list-style: none; margin: 0; padding: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .kx-legend li { display: inline-flex; align-items: center; gap: .4em; }
+  .kx-sw { width: .9rem; height: 2px; border-radius: 1px; display: inline-block; background: var(--cds-chart-muted); }
+  .kx-sw.dash { height: 0; border-top: 2px dashed var(--cds-chart-muted); background: none; }
+  .kx-chart { position: relative; width: 100%; min-height: 16rem; }
+  .kx-chart.short { min-height: 13rem; }
+  .kx-chart svg { display: block; direction: ltr; overflow: visible; }
+  .kx-chart text { fill: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+  .kx-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); direction: rtl; white-space: nowrap; z-index: 2; }
+  .kx-tip .d { color: var(--cds-text-secondary); }
+  .kx-tip .l { display: flex; gap: .4em; align-items: center; font-variant-numeric: tabular-nums; }
+  .kx-tip .s { width: .55rem; height: .55rem; border-radius: 2px; display: inline-block; }
+  .kx details { border-top: 1px solid var(--color-border-line); padding-top: var(--cds-pad-md); }
+  .kx summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
+  .kx details dl { display: grid; gap: var(--cds-gap-sm); margin: var(--cds-gap-md) 0 0; max-width: 72ch; }
+  .kx details dt { font-weight: var(--cds-font-weight-medium); }
+  .kx details dd { margin: 0; color: var(--color-fg-muted); line-height: 1.55; }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="kx" lang="he" dir="rtl">
+  <header id="top">
+    <h1 class="kx-title">Kroxis Trader</h1>
+    <p class="kx-lede">סריקה מיום <b data-draw="scanDate" data-source="market" data-field="date">—</b>: <b data-draw="buyCount" data-source="market" data-field="buy_signals">—</b> אותות קנייה מתוך <b data-draw="scanned" data-source="market" data-field="stocks_scanned">—</b> מניות שנסרקו. בבדיקת העבר עסקה לפי הספרים הרוויחה ב-<b data-draw="wrLo" data-source="wr_range" data-field="lo">—</b> עד <b data-draw="wrHi" data-source="wr_range" data-field="hi">—</b> מהמקרים. הרווח בא מכך שעסקה מנצחת גדולה בהרבה מעסקה מפסידה.</p>
+    <nav class="kx-tabs" role="tablist" aria-label="עמודים">
+      <button class="kx-tab" role="tab" data-tab="today" aria-selected="true">היום</button>
+      <button class="kx-tab" role="tab" data-tab="backtest" aria-selected="false">בדיקת עבר</button>
+      <button class="kx-tab" role="tab" data-tab="stops" aria-selected="false">סטופ לוס</button>
+      <button class="kx-tab" role="tab" data-tab="predict" aria-selected="false">אפשר לנבא?</button>
+    </nav>
+  </header>
+
+  <!-- ============ TODAY ============ -->
+  <section class="kx-page" id="today" data-page="today">
+    <ul class="kx-chips" aria-label="מצב השוק">
+      <li class="kx-chip" data-chip="spy50">SPY מול ממוצע 50: <b data-opt="yes" hidden>מעל</b><b data-opt="no" hidden>מתחת</b><span data-draw="chip" data-key="spy_above_50d" data-source="market"></span></li>
+      <li class="kx-chip" data-chip="spy200">SPY מול ממוצע 200: <b data-opt="yes" hidden>מעל</b><b data-opt="no" hidden>מתחת</b><span data-draw="chip" data-key="spy_above_200d" data-source="market"></span></li>
+      <li class="kx-chip">מסנן השוק של מינרביני: <b data-opt="yes" hidden>מותר לקנות</b><b data-opt="no" hidden>לא קונים</b><span data-draw="chip" data-key="minervini_market_ok" data-source="market"></span></li>
+      <li class="kx-chip">מסנן השוק של אוניל: <b data-opt="yes" hidden>מותר לקנות</b><b data-opt="no" hidden>לא קונים</b><span data-draw="chip" data-key="oneil_market_ok" data-source="market"></span></li>
+    </ul>
+
+    <div class="kx-grid" id="accounts">
+      <article class="kx-card" id="acc-minervini">
+        <div class="kx-acc-top">
+          <h2>חשבון דמו – מינרביני</h2>
+          <span class="kx-big" data-draw="acc" data-fmt="money" data-source="accounts" data-field="equity" data-where="account=minervini">—</span>
+        </div>
+        <p class="kx-note">כסף וירטואלי, מחירים אמיתיים. פעיל מיום <span data-draw="acc" data-fmt="date" data-source="accounts" data-field="start_date" data-where="account=minervini">—</span>.</p>
+        <dl class="kx-stats">
+          <div><dt>תשואה</dt><dd data-draw="acc" data-fmt="spct" data-source="accounts" data-field="return" data-where="account=minervini">—</dd></div>
+          <div><dt>SPY באותה תקופה</dt><dd data-draw="acc" data-fmt="spct" data-source="accounts" data-field="spy_return" data-where="account=minervini">—</dd></div>
+          <div><dt>פוזיציות פתוחות</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="open_positions" data-where="account=minervini">—</dd></div>
+          <div><dt>פקודות למחר</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="pending_orders" data-where="account=minervini">—</dd></div>
+          <div><dt>עסקאות שנסגרו</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="closed_trades" data-where="account=minervini">—</dd></div>
+        </dl>
+      </article>
+      <article class="kx-card" id="acc-oneil">
+        <div class="kx-acc-top">
+          <h2>חשבון דמו – אוניל</h2>
+          <span class="kx-big" data-draw="acc" data-fmt="money" data-source="accounts" data-field="equity" data-where="account=oneil">—</span>
+        </div>
+        <p class="kx-note">כסף וירטואלי, מחירים אמיתיים. פעיל מיום <span data-draw="acc" data-fmt="date" data-source="accounts" data-field="start_date" data-where="account=oneil">—</span>.</p>
+        <dl class="kx-stats">
+          <div><dt>תשואה</dt><dd data-draw="acc" data-fmt="spct" data-source="accounts" data-field="return" data-where="account=oneil">—</dd></div>
+          <div><dt>SPY באותה תקופה</dt><dd data-draw="acc" data-fmt="spct" data-source="accounts" data-field="spy_return" data-where="account=oneil">—</dd></div>
+          <div><dt>פוזיציות פתוחות</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="open_positions" data-where="account=oneil">—</dd></div>
+          <div><dt>פקודות למחר</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="pending_orders" data-where="account=oneil">—</dd></div>
+          <div><dt>עסקאות שנסגרו</dt><dd data-draw="acc" data-fmt="int" data-source="accounts" data-field="closed_trades" data-where="account=oneil">—</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="kx-grid">
+      <article class="kx-card" id="orders">
+        <h3>פקודות קנייה לפתיחה הבאה</h3>
+        <p class="kx-note">חשבון הדמו קונה בפתיחה, רק אם מחיר הפתיחה לא גבוה מעמודת "קנייה עד".</p>
+        <div class="kx-tablebox">
+          <table data-source="orders" data-row-key="key">
+            <thead><tr><th data-field="account_he">חשבון</th><th data-field="symbol">מניה</th><th data-field="pivot">נקודת פריצה</th><th data-field="buy_max">קנייה עד</th></tr></thead>
+            <tbody data-draw="ordersBody"></tbody>
+          </table>
+        </div>
+        <p class="kx-empty" data-empty="orders" hidden>אין פקודות פתוחות.</p>
+      </article>
+      <article class="kx-card" id="positions">
+        <h3>פוזיציות פתוחות</h3>
+        <p class="kx-note">מה חשבונות הדמו מחזיקים עכשיו, והסטופ הנוכחי של כל פוזיציה.</p>
+        <div class="kx-tablebox">
+          <table data-source="positions" data-row-key="key">
+            <thead><tr><th data-field="account_he">חשבון</th><th data-field="symbol">מניה</th><th data-field="entry_date">נכנס ב</th><th data-field="entry_price">כניסה</th><th data-field="last_close">סגירה</th><th data-field="pnl_pct">רווח/הפסד</th><th data-field="stop_now">סטופ</th></tr></thead>
+            <tbody data-draw="positionsBody"></tbody>
+          </table>
+        </div>
+        <p class="kx-empty" data-empty="positions" hidden>עדיין אין פוזיציות. הקניות הראשונות יתבצעו בפתיחה של יום המסחר הבא אחרי האות.</p>
+      </article>
+    </div>
+
+    <article class="kx-card" id="scan">
+      <div class="kx-row">
+        <h2>הסריקה היומית</h2>
+      </div>
+      <p class="kx-note">קנייה = פרצה היום לפי חוקי הספר. מחכה לפריצה = מבנה תקין, קונים רק אם המניה נסגרת מעל "קנייה מעל" במחזור גבוה מהרגיל. במגמה = רק למעקב. הקישו על שורה כדי לראות את הגרף שלה.</p>
+      <div class="kx-tablebox tall">
+        <table class="kx-scan" data-source="scan" data-row-key="rank">
+          <thead><tr>
+            <th data-field="rank">#</th><th data-field="symbol">מניה</th><th data-field="strategy_he">שיטה</th><th data-field="status_he">מצב</th>
+            <th data-field="close">סגירה</th><th data-field="buy_above">קנייה מעל</th><th data-field="stop">סטופ</th><th data-field="risk_pct">סיכון</th>
+            <th data-field="distance_to_buy">מרחק לקנייה</th><th data-field="rs">RS</th><th data-field="vol_ratio">נפח</th><th data-field="win_rate">סיכוי היסטורי</th>
+          </tr></thead>
+          <tbody data-draw="scanBody"></tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="kx-card" id="stock">
+      <div class="kx-row">
+        <h2>גרף המניה: <span data-draw="det" data-k="symbol" data-source="scan">—</span></h2>
+        <ul class="kx-legend" aria-label="מקרא">
+          <li><span class="kx-sw" data-sw="0"></span>מחיר</li>
+          <li><span class="kx-sw" data-sw="1"></span>ממוצע 50</li>
+          <li><span class="kx-sw" data-sw="2"></span>ממוצע 150</li>
+          <li><span class="kx-sw" data-sw="3"></span>ממוצע 200</li>
+          <li><span class="kx-sw dash" data-sw="ok"></span>קנייה מעל</li>
+          <li><span class="kx-sw dash" data-sw="bad"></span>סטופ</li>
+        </ul>
+      </div>
+      <dl class="kx-stats">
+        <div><dt>שיטה</dt><dd data-draw="det" data-k="strategy_he" data-source="scan">—</dd></div>
+        <div><dt>מצב</dt><dd data-draw="det" data-k="status_he" data-source="scan">—</dd></div>
+        <div><dt>קנייה מעל</dt><dd data-draw="det" data-k="buy_above" data-source="scan">—</dd></div>
+        <div><dt>קנייה עד</dt><dd data-draw="det" data-k="buy_max" data-source="scan">—</dd></div>
+        <div><dt>סטופ</dt><dd data-draw="det" data-k="stop" data-source="scan">—</dd></div>
+        <div><dt>סיכון לעסקה</dt><dd data-draw="det" data-k="risk_pct" data-source="scan">—</dd></div>
+        <div><dt>סיכוי היסטורי</dt><dd data-draw="det" data-k="win_rate" data-source="scan">—</dd></div>
+        <div><dt>טווח 95%</dt><dd data-draw="det" data-k="win_ci" data-source="scan">—</dd></div>
+      </dl>
+      <div class="kx-chart" data-draw="stockChart" data-source="prices scan"></div>
+      <p class="kx-note">המחיר בחודשים האחרונים. הסטופ מחושב כפי 3 מהתנודה היומית הממוצעת (3×ATR) מתחת למחיר הקנייה.</p>
+    </article>
+  </section>
+
+  <!-- ============ BACKTEST ============ -->
+  <section class="kx-page" id="backtest" data-page="backtest" hidden>
+    <div class="kx-row">
+      <h2 class="kx-section-h">בדיקת עבר לפי הספרים</h2>
+      <div class="kx-seg" role="group" aria-label="תקופה">
+        <button data-param="period" data-val="p2020" aria-pressed="true">2020–2026 · S&amp;P 1500</button>
+        <button data-param="period" data-val="p2006" aria-pressed="false">2006–2017 · כל השוק</button>
+      </div>
+    </div>
+    <article class="kx-card" id="equity">
+      <h3>התיק: מינרביני ואוניל מול SPY</h3>
+      <ul class="kx-legend">
+        <li><span class="kx-sw" data-sw="0"></span>מינרביני</li>
+        <li><span class="kx-sw" data-sw="1"></span>אוניל</li>
+        <li><span class="kx-sw" data-sw="muted"></span>SPY (קנה והחזק)</li>
+        <li><span class="kx-sw dash" data-sw="muted"></span>כל המניות במשקל שווה</li>
+      </ul>
+      <div class="kx-chart" data-draw="equityChart" data-source="equity"></div>
+      <p class="kx-note">התיק מתחיל מ-<b data-draw="eqStart" data-source="equity">—</b>. כולל עמלה והחלקה בכל קנייה ומכירה, סיכון קבוע מההון בכל עסקה ומספר מוגבל של פוזיציות במקביל.</p>
+    </article>
+    <div class="kx-grid">
+      <article class="kx-card" id="pertrade">
+        <h3>כל אות כעסקה</h3>
+        <p class="kx-note">אחוז ההצלחה מול כניסות אקראיות עם אותם חוקי יציאה. בכניסות האקראיות הטווח הוא בין החזרות.</p>
+        <div class="kx-tablebox">
+          <table data-source="pertrade" data-row-key="key">
+            <thead><tr><th data-field="name_he">שיטה</th><th data-field="trades">עסקאות</th><th data-field="win_rate">אחוז ניצחון</th><th data-field="ci_low">מ-</th><th data-field="ci_high">עד</th><th data-field="avg_win">רווח ממוצע</th><th data-field="avg_loss">הפסד ממוצע</th><th data-field="profit_factor">Profit Factor</th><th data-field="expectancy">עסקה ממוצעת</th></tr></thead>
+            <tbody data-draw="pertradeBody"></tbody>
+          </table>
+        </div>
+      </article>
+      <article class="kx-card" id="portfolio">
+        <h3>התיק כולו</h3>
+        <p class="kx-note">תשואה שנתית ממוצעת, הירידה הגדולה ביותר מהשיא, ו-Sharpe (תשואה ביחס לתנודתיות).</p>
+        <div class="kx-tablebox">
+          <table data-source="portfolio" data-row-key="key">
+            <thead><tr><th data-field="name_he">תיק</th><th data-field="cagr">תשואה שנתית</th><th data-field="max_dd">ירידה מקסימלית</th><th data-field="sharpe">Sharpe</th><th data-field="trades">עסקאות</th><th data-field="win_rate">אחוז ניצחון</th></tr></thead>
+            <tbody data-draw="portfolioBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+    <article class="kx-card" id="yearly">
+      <h3>תשואה לפי שנה</h3>
+      <ul class="kx-legend">
+        <li><span class="kx-sw" data-sw="muted"></span>SPY</li>
+        <li><span class="kx-sw" data-sw="0"></span>מינרביני</li>
+        <li><span class="kx-sw" data-sw="1"></span>אוניל</li>
+      </ul>
+      <div class="kx-chart short" data-draw="yearlyChart" data-source="yearly"></div>
+    </article>
+  </section>
+
+  <!-- ============ STOPS ============ -->
+  <section class="kx-page" id="stops" data-page="stops" hidden>
+    <div class="kx-row">
+      <h2 class="kx-section-h">למה הסטופ קופץ מוקדם מדי?</h2>
+      <div class="kx-row">
+        <div class="kx-seg" role="group" aria-label="שיטה">
+          <button data-param="strat" data-val="minervini" aria-pressed="true">מינרביני</button>
+          <button data-param="strat" data-val="oneil" aria-pressed="false">אוניל</button>
+        </div>
+        <div class="kx-seg" role="group" aria-label="תקופה">
+          <button data-param="period" data-val="p2020" aria-pressed="true">2020–2026</button>
+          <button data-param="period" data-val="p2006" aria-pressed="false">2006–2017</button>
+        </div>
+      </div>
+    </div>
+    <p class="kx-lede">אותן כניסות בדיוק, ורק סוג הסטופ משתנה. סטופ צמוד יושב בתוך התנודה היומית הרגילה של המניה, ולכן נפגע ואז המניה חוזרת למעלה בלעדיך.</p>
+    <div class="kx-grid">
+      <article class="kx-card" id="recovered">
+        <h3>נזרקו מהעסקה והמניה חזרה מעל מחיר הקנייה</h3>
+        <p class="kx-note">מתוך העסקאות שנסגרו בסטופ: כמה חזרו מעל מחיר הקנייה תוך חודש מסחר.</p>
+        <div class="kx-chart short" data-draw="recoveredChart" data-source="stops"></div>
+      </article>
+      <article class="kx-card" id="stopcagr">
+        <h3>תשואה שנתית של התיק לפי סוג הסטופ</h3>
+        <p class="kx-note">אותו תיק, אותן כניסות, סטופ אחר.</p>
+        <div class="kx-chart short" data-draw="stopCagrChart" data-source="stops"></div>
+      </article>
+    </div>
+    <article class="kx-card" id="stoptable">
+      <h3>כל המספרים</h3>
+      <div class="kx-tablebox">
+        <table data-source="stops" data-row-key="key">
+          <thead><tr><th data-field="stop_he">סטופ</th><th data-field="win_rate">אחוז ניצחון</th><th data-field="recovered">חזרו מעל הקנייה</th><th data-field="recovered10">ועלו עוד 10%</th><th data-field="cagr">תשואה שנתית</th><th data-field="max_dd">ירידה מקסימלית</th></tr></thead>
+          <tbody data-draw="stopsBody"></tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ PREDICT ============ -->
+  <section class="kx-page" id="predict" data-page="predict" hidden>
+    <h2 class="kx-section-h">אפשר לדעת מראש איזו עסקה תרוויח?</h2>
+    <p class="kx-lede">לא. מודל שלמד מעסקאות עבר, עם עשרות נתונים על כל אחת, נבדק על שנים שלא ראה. העסקאות שהוא דירג גבוה הרוויחו בערך באותו אחוז כמו אלה שדירג נמוך. הגורם היחיד שהחזיק לאורך רוב התקופות הוא נפח המסחר ביום הפריצה.</p>
+    <div class="kx-grid">
+      <article class="kx-card" id="calibration">
+        <h3>מה המודל אמר מול מה שקרה</h3>
+        <p class="kx-note">העסקאות חולקו לחמש קבוצות לפי הסיכוי שהמודל נתן. אם המודל היה טוב, הנקודות היו על הקו המקווקו. הקווים האנכיים הם טווח 95%.</p>
+        <ul class="kx-legend">
+          <li><span class="kx-sw" data-sw="0"></span>מבחן 2023–2026</li>
+          <li><span class="kx-sw" data-sw="1"></span>מבחן 2012–2017</li>
+          <li><span class="kx-sw dash" data-sw="muted"></span>ניבוי מושלם</li>
+        </ul>
+        <div class="kx-chart" data-draw="calChart" data-source="calibration"></div>
+      </article>
+      <article class="kx-card" id="volume">
+        <h3>סיכוי לפי נפח המסחר ביום הפריצה</h3>
+        <p class="kx-note">פי כמה מהנפח הממוצע נסחר ביום הפריצה. הקווים האנכיים הם טווח 95%.</p>
+        <ul class="kx-legend">
+          <li><span class="kx-sw" data-sw="0"></span>מינרביני</li>
+          <li><span class="kx-sw" data-sw="1"></span>אוניל</li>
+        </ul>
+        <div class="kx-chart" data-draw="volChart" data-source="volume"></div>
+      </article>
+    </div>
+  </section>
+
+  <details>
+    <summary>איך זה נבדק, ומה חסר</summary>
+    <dl>
+      <dt>הספרים</dt><dd>ויליאם אוניל, How to Make Money in Stocks (CAN SLIM), ומארק מינרביני, Trade Like a Stock Market Wizard (Trend Template ופריצת VCP). החוקים נכתבו כקוד לפי הכללים המתועדים של הספרים.</dd>
+      <dt>בלי לרמות</dt><dd>האות נקבע בסגירה והקנייה בפתיחה של היום הבא. הסטופ מתבצע במחיר הסטופ, או במחיר הפתיחה אם המניה נפתחה בפער מתחתיו. חשבון הדמו רץ באותו קוד בדיוק, ונבדק שהוא יוצא זהה לבדיקת העבר.</dd>
+      <dt>מקור הנתונים</dt><dd>Yahoo Finance. בדיקת העבר: מניות S&amp;P 1500 בשנים 2020–2026, וכמעט כל השוק האמריקאי בשנים 2006–2017.</dd>
+      <dt>מה חסר</dt><dd>נתוני רווחים היסטוריים (C ו-A של אוניל) לא נבדקו. הנתונים כוללים רק מניות ששרדו עד סוף התקופה, וזה מנפח את כל התוצאות. זה כלי מחקר ולא ייעוץ השקעות.</dd>
+    </dl>
+  </details>
+</div>
+
+<script>
+dash.calc('wr_range', {
+  inputs: ['volume'],
+  title: 'טווח הסיכוי לעסקה',
+  description: 'אחוז הניצחון הנמוך והגבוה ביותר בין קבוצות נפח הפריצה, בשתי השיטות.',
+  fn: (volume) => [{ lo: Math.min(...volume.map((r) => r.win_rate)), hi: Math.max(...volume.map((r) => r.win_rate)) }],
+});
+</script>
+
+<script>
+(() => {
+  const kx = (window.kx = window.kx || {});
+  const pct = d3.format('.1%');
+  const spct = (v) => (v > 0 ? '+' : '') + d3.format('.1%')(v);
+  const price = d3.format(',.2f');
+  const money = (v) => '$' + d3.format(',.0f')(v);
+  const int = d3.format(',');
+  const dateFmt = (s) => d3.utcFormat('%-d.%-m.%Y')(new Date(s));
+  const ratio = (v) => d3.format('.1f')(v) + 'x';
+  Object.assign(kx, { pct, spct, price, money, int, dateFmt, ratio });
+
+  const P = () => Object.assign({ period: 'p2020', strat: 'minervini', sym: '' }, dash.params());
+  const rowsOf = (id) => { const g = dash.data(id); return g.status === 'ok' ? g.data : null; };
+  const fill = (el, text) => { el.textContent = text; };
+  const cssVar = (name) => getComputedStyle(document.querySelector('.kx')).getPropertyValue(name).trim();
+  const colorOf = (key) => (key === 'muted' ? 'var(--cds-chart-muted)' : key === 'ok' ? 'var(--color-ok)' : key === 'bad' ? 'var(--color-bad)' : dash.colors[+key]);
+
+  // ---------- tabs ----------
+  const showTab = (name, link) => {
+    document.querySelectorAll('.kx-page').forEach((s) => { s.hidden = s.dataset.page !== name; });
+    document.querySelectorAll('.kx-tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+    if (link) dash.setLink(name);
+  };
+  document.querySelectorAll('.kx-tab').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab, true)));
+  const start = location.hash.slice(1);
+  if (['today', 'backtest', 'stops', 'predict'].includes(start)) showTab(start, false);
+
+  // ---------- segmented controls (page state in params) ----------
+  document.querySelectorAll('.kx-seg button').forEach((b) =>
+    b.addEventListener('click', () => dash.setParams({ [b.dataset.param]: b.dataset.val })));
+
+  dash.onData(() => {
+    const p = P();
+    document.querySelectorAll('.kx-seg button').forEach((b) => b.setAttribute('aria-pressed', String(p[b.dataset.param] === b.dataset.val)));
+    document.querySelectorAll('.kx-sw').forEach((s) => {
+      const c = colorOf(s.dataset.sw);
+      if (s.classList.contains('dash')) s.style.borderTopColor = c; else s.style.background = c;
+    });
+  });
+
+  // ---------- header ----------
+  const market = () => { const r = rowsOf('market'); return r && r[0]; };
+  dash.draw('scanDate', (el) => { const m = market(); fill(el, m ? dateFmt(m.date) : '—'); });
+  dash.draw('buyCount', (el) => { const m = market(); fill(el, m ? int(m.buy_signals) : '—'); });
+  dash.draw('scanned', (el) => { const m = market(); fill(el, m ? int(m.stocks_scanned) : '—'); });
+  const wr = () => { const g = dash.data('wr_range'); return g.status === 'ok' && g.data.length ? g.data[0] : null; };
+  dash.draw('wrLo', (el) => { const w = wr(); fill(el, w ? d3.format('.0%')(w.lo) : '—'); });
+  dash.draw('wrHi', (el) => { const w = wr(); fill(el, w ? d3.format('.0%')(w.hi) : '—'); });
+
+  // ---------- today ----------
+  dash.draw('chip', (el) => {
+    const m = market();
+    const chip = el.closest('.kx-chip');
+    const v = m ? !!m[el.dataset.key] : null;
+    chip.querySelectorAll('[data-opt]').forEach((b) => { b.hidden = v === null || (b.dataset.opt === 'yes') !== v; });
+    chip.classList.toggle('good', v === true);
+    chip.classList.toggle('bad', v === false);
+    el.textContent = '';
+  });
+
+  const fmtBy = { money, spct, int, date: dateFmt, pct, price };
+  dash.draw('acc', (el) => {
+    const rows = rowsOf('accounts');
+    const acct = (el.dataset.where || '').split('=')[1];
+    const r = rows && rows.find((x) => x.account === acct);
+    const v = r ? r[el.dataset.field] : null;
+    if (v === null || v === undefined) { fill(el, '—'); el.className = el.className.replace(/\b(up|down)\b/g, '').trim(); return; }
+    fill(el, fmtBy[el.dataset.fmt](v));
+    if (el.dataset.fmt === 'spct') { el.classList.toggle('up', v > 0); el.classList.toggle('down', v < 0); el.classList.add('kx-num'); }
+  });
+
+  const tableBody = (el, rows, cols, keyOf) => {
+    el.replaceChildren();
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      if (keyOf) tr.dataset.key = keyOf(r);
+      for (const [field, f, cls] of cols) {
+        const td = document.createElement('td');
+        const v = r[field];
+        td.textContent = v === null || v === undefined ? '–' : f ? f(v) : v;
+        if (cls) td.className = typeof cls === 'function' ? cls(v, r) : cls;
+        tr.appendChild(td);
+      }
+      el.appendChild(tr);
+    }
+  };
+  const setEmpty = (name, isEmpty) => document.querySelectorAll(`[data-empty="${name}"]`).forEach((p) => { p.hidden = !isEmpty; });
+
+  dash.draw('ordersBody', (el) => {
+    const rows = rowsOf('orders');
+    tableBody(el, rows || [], [['account_he'], ['symbol', null, 'kx-sym'], ['pivot', price, 'n'], ['buy_max', price, 'n']], (r) => r.key);
+    setEmpty('orders', rows !== null && rows.length === 0);
+  });
+  dash.draw('positionsBody', (el) => {
+    const rows = rowsOf('positions');
+    const sign = (v) => 'n ' + (v > 0 ? 'up' : v < 0 ? 'down' : '');
+    tableBody(el, rows || [], [['account_he'], ['symbol', null, 'kx-sym'], ['entry_date', dateFmt], ['entry_price', price, 'n'],
+      ['last_close', price, 'n'], ['pnl_pct', spct, sign], ['stop_now', price, 'n']], (r) => r.key);
+    setEmpty('positions', rows !== null && rows.length === 0);
+  });
+
+  const selected = () => {
+    const rows = rowsOf('scan');
+    if (!rows || !rows.length) return null;
+    const sym = P().sym;
+    return rows.find((r) => r.symbol === sym) || rows[0];
+  };
+  kx.selected = selected;
+
+  dash.draw('scanBody', (el) => {
+    const rows = rowsOf('scan') || [];
+    const sel = selected();
+    el.replaceChildren();
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      tr.tabIndex = 0;
+      if (sel && r.rank === sel.rank) tr.classList.add('sel');
+      const cells = [
+        [String(r.rank)], [r.symbol, 'kx-sym'], [r.strategy_he], [null],
+        [price(r.close), 'n'], [price(r.buy_above), 'n'], [price(r.stop), 'n'], [pct(r.risk_pct), 'n'],
+        [spct(r.distance_to_buy), 'n'], [int(r.rs), 'n'], [r.vol_ratio === null ? '–' : ratio(r.vol_ratio), 'n'], [pct(r.win_rate), 'n'],
+      ];
+      cells.forEach(([text, cls], i) => {
+        const td = document.createElement('td');
+        if (i === 3) {
+          const pill = document.createElement('span');
+          pill.className = 'kx-pill ' + r.status;
+          pill.textContent = r.status_he;
+          td.appendChild(pill);
+        } else td.textContent = text;
+        if (cls) td.className = cls;
+        tr.appendChild(td);
+      });
+      const pick = () => dash.setParams({ sym: r.symbol });
+      tr.addEventListener('click', pick);
+      tr.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+      el.appendChild(tr);
+    }
+  });
+
+  dash.draw('det', (el) => {
+    const r = selected();
+    if (!r) { fill(el, '—'); return; }
+    const k = el.dataset.k;
+    const f = { buy_above: price, buy_max: price, stop: price, risk_pct: pct, win_rate: pct };
+    if (k === 'win_ci') fill(el, `${pct(r.win_ci_low)}–${pct(r.win_ci_high)}`);
+    else fill(el, f[k] ? f[k](r[k]) : r[k]);
+    if (k === 'win_ci' || f[k]) el.classList.add('kx-num');
+  });
+})();
+</script>
+
+<script>
+(() => {
+  const kx = window.kx;
+  const P = () => Object.assign({ period: 'p2020', strat: 'minervini', sym: '' }, dash.params());
+  const rowsOf = (id) => { const g = dash.data(id); return g.status === 'ok' ? g.data : null; };
+
+  // A tooltip that stays inside its chart box.
+  const tipFor = (box) => {
+    let tip = box.querySelector('.kx-tip');
+    if (!tip) { tip = document.createElement('div'); tip.className = 'kx-tip'; tip.hidden = true; box.appendChild(tip); }
+    return {
+      show(x, y, head, lines) {
+        tip.replaceChildren();
+        const d = document.createElement('div'); d.className = 'd'; d.textContent = head; tip.appendChild(d);
+        for (const [color, label, value] of lines) {
+          const l = document.createElement('div'); l.className = 'l';
+          if (color) { const s = document.createElement('span'); s.className = 's'; s.style.background = color; l.appendChild(s); }
+          const t = document.createElement('span'); t.textContent = `${label} ${value}`; l.appendChild(t);
+          tip.appendChild(l);
+        }
+        tip.hidden = false;
+        const w = tip.offsetWidth, h = tip.offsetHeight, W = box.clientWidth;
+        let left = x + 12; if (left + w > W) left = x - w - 12; if (left < 0) left = 0;
+        tip.style.left = left + 'px';
+        tip.style.top = Math.max(0, y - h - 8) + 'px';
+      },
+      hide() { tip.hidden = true; },
+    };
+  };
+
+  // Measure the widest label so margins fit the data.
+  const measure = (svg, texts) => {
+    const g = svg.append('g').attr('opacity', 0);
+    let w = 0;
+    for (const t of texts) w = Math.max(w, g.append('text').text(t).node().getComputedTextLength());
+    g.remove();
+    return Math.ceil(w);
+  };
+  const styleAxis = (g) => {
+    g.attr('font-size', null).attr('font-family', null);
+    g.selectAll('.domain').attr('style', 'stroke: var(--cds-chart-axis)');
+    g.selectAll('.tick line').attr('style', 'stroke: var(--cds-chart-grid)');
+  };
+  const empty = (el, status) => {
+    el.replaceChildren();
+    if (status === 'error') {
+      const p = document.createElement('p'); p.className = 'kx-empty'; p.textContent = 'Failed to load'; el.appendChild(p);
+    }
+  };
+
+  // ---------- line chart over dates ----------
+  function lineChart(el, { series, height = 260, yFmt, labelFmt, refs = [], endLabels = true }) {
+    el.replaceChildren();
+    const W = el.clientWidth; if (!W) return;
+    if (W < 520) endLabels = false;          // the legend names the lines on a phone
+    const lf = labelFmt || yFmt;
+    const iso = (t) => '\u2066' + t + '\u2069'; // keep "$145k" in one piece next to Hebrew
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${height}`);
+    const all = series.flatMap((s) => s.values);
+    const yVals = all.map((d) => d.y).concat(refs.map((r) => r.y));
+    let y0 = d3.min(yVals), y1 = d3.max(yVals); const pad = (y1 - y0) * 0.06 || 1; y0 -= pad; y1 += pad;
+    const yProbe = d3.scaleLinear([y0, y1], [height, 0]).nice(5);
+    const ticksY = yProbe.ticks(5);
+    const left = measure(svg, ticksY.map(yFmt)) + 8;
+    const endTexts = endLabels ? series.map((s) => `${s.label} ${iso(lf(s.values[s.values.length - 1].y))}`) : [];
+    const refTexts = refs.map((r) => `${r.label} ${iso(lf(r.y))}`);
+    const right = Math.min(W * 0.42, measure(svg, endTexts.concat(refTexts)) + 10);
+    const m = { top: 10, right, bottom: 24, left };
+    const x = d3.scaleUtc(d3.extent(all, (d) => d.x), [m.left, W - m.right]);
+    const y = d3.scaleLinear([y0, y1], [height - m.bottom, m.top]).nice(5);
+    const xTicks = Math.max(3, Math.floor((W - m.left - m.right) / 70));
+    const [xa, xb] = x.domain();
+    const xFmt = (xb - xa) / 864e5 > 730 ? '%Y' : (series[0].dateFmt || '%-d.%-m');
+    svg.append('g').attr('transform', `translate(0,${height - m.bottom})`)
+      .call(d3.axisBottom(x).ticks(xTicks).tickSizeOuter(0).tickFormat(d3.utcFormat(xFmt))).call(styleAxis);
+    svg.append('g').attr('transform', `translate(${m.left},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickFormat(yFmt).tickSize(-(W - m.left - m.right))).call(styleAxis)
+      .call((g) => g.select('.domain').remove());
+    for (const r of refs) {
+      svg.append('line').attr('x1', m.left).attr('x2', W - m.right).attr('y1', y(r.y)).attr('y2', y(r.y))
+        .attr('stroke-dasharray', '5 4').attr('stroke-width', 1.5).attr('style', `stroke: ${r.color}`);
+    }
+    const line = d3.line().defined((d) => d.y !== null && Number.isFinite(d.y)).x((d) => x(d.x)).y((d) => y(d.y));
+    for (const s of series) {
+      svg.append('path').datum(s.values).attr('fill', 'none').attr('stroke-width', s.width || 2)
+        .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+        .attr('stroke-dasharray', s.dash || null).attr('style', `stroke: ${s.color}`).attr('d', line);
+    }
+    // end labels, nudged apart
+    const labels = [];
+    if (endLabels) series.forEach((s, i) => { const v = s.values[s.values.length - 1]; labels.push({ y: y(v.y), text: endTexts[i], color: s.color }); });
+    refs.forEach((r, i) => labels.push({ y: y(r.y), text: refTexts[i], color: r.color }));
+    labels.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < labels.length; i++) if (labels[i].y - labels[i - 1].y < 13) labels[i].y = labels[i - 1].y + 13;
+    for (const l of labels) svg.append('text').attr('x', W - m.right + 6).attr('y', l.y).attr('dy', '0.32em').attr('style', `fill: ${l.color}`).text(l.text);
+    // hover
+    const tip = tipFor(el);
+    const dot = svg.append('g').attr('pointer-events', 'none');
+    const rule = svg.append('line').attr('y1', m.top).attr('y2', height - m.bottom).attr('style', 'stroke: var(--cds-chart-reference)').attr('opacity', 0);
+    const xs = series[0].values.map((d) => d.x);
+    const bis = d3.bisector((d) => d).center;
+    svg.append('rect').attr('x', m.left).attr('y', m.top).attr('width', W - m.left - m.right).attr('height', height - m.top - m.bottom)
+      .attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev);
+        const i = bis(xs, x.invert(px)); const d = xs[i];
+        rule.attr('x1', x(d)).attr('x2', x(d)).attr('opacity', 1);
+        dot.selectAll('*').remove();
+        const lines = [];
+        for (const s of series) {
+          const v = s.values[i]; if (!v || v.y === null) continue;
+          dot.append('circle').attr('cx', x(v.x)).attr('cy', y(v.y)).attr('r', 3.5).attr('style', `fill: ${s.color}`);
+          lines.push([s.color, s.label, yFmt(v.y)]);
+        }
+        tip.show(x(d), d3.min(series, (s) => (s.values[i] && s.values[i].y !== null ? y(s.values[i].y) : height)), d3.utcFormat('%-d.%-m.%Y')(d), lines);
+      })
+      .on('pointerleave', () => { tip.hide(); dot.selectAll('*').remove(); rule.attr('opacity', 0); });
+  }
+  kx.lineChart = lineChart;
+
+  // ---------- stock chart ----------
+  dash.draw('stockChart', (el) => {
+    const g = dash.data('prices'); const sel = kx.selected();
+    if (g.status !== 'ok' || !sel) { empty(el, g.status); return; }
+    const rows = g.data.filter((r) => r.symbol === sel.symbol);
+    if (!rows.length) { empty(el); return; }
+    const ser = (key) => rows.map((r) => ({ x: new Date(r.date), y: r[key] === null ? null : +r[key] }));
+    lineChart(el, {
+      height: 280, yFmt: (v) => d3.format(',.0f')(v), labelFmt: kx.price,
+      series: [
+        { label: 'מחיר', color: dash.colors[0], values: ser('close'), width: 2, dateFmt: '%-d.%-m' },
+        { label: 'ממוצע 50', color: dash.colors[1], values: ser('sma50'), width: 1.5 },
+        { label: 'ממוצע 150', color: dash.colors[2], values: ser('sma150'), width: 1.5 },
+        { label: 'ממוצע 200', color: dash.colors[3], values: ser('sma200'), width: 1.5 },
+      ],
+      endLabels: false,
+      refs: [{ y: sel.buy_above, label: 'קנייה', color: 'var(--color-ok)' }, { y: sel.stop, label: 'סטופ', color: 'var(--color-bad)' }],
+    });
+  });
+
+  // ---------- equity chart ----------
+  dash.draw('equityChart', (el) => {
+    const g = dash.data('equity');
+    if (g.status !== 'ok') { empty(el, g.status); return; }
+    const rows = g.data.filter((r) => r.period === P().period);
+    const ser = (key) => rows.map((r) => ({ x: new Date(r.date), y: r[key] === null ? null : +r[key] }));
+    lineChart(el, {
+      height: 300, yFmt: (v) => '$' + d3.format('.3~s')(v),
+      series: [
+        { label: 'כל המניות', color: 'var(--cds-chart-muted)', values: ser('ew'), width: 1.5, dash: '4 3' },
+        { label: 'SPY', color: 'var(--cds-chart-muted)', values: ser('spy'), width: 2 },
+        { label: 'אוניל', color: dash.colors[1], values: ser('oneil'), width: 2 },
+        { label: 'מינרביני', color: dash.colors[0], values: ser('minervini'), width: 2.5 },
+      ],
+    });
+  });
+
+  dash.draw('eqStart', (el) => {
+    const rows = (rowsOf('equity') || []).filter((r) => r.period === P().period);
+    el.textContent = rows.length ? kx.money(rows[0].minervini) : '—';
+  });
+
+  // ---------- grouped bars ----------
+  function groupedBars(el, { cats, groups, value, fmt, height = 240, ci, yDomain }) {
+    el.replaceChildren();
+    const W = el.clientWidth; if (!W) return;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${height}`);
+    const vals = cats.flatMap((c) => groups.map((gr) => value(c, gr))).filter((v) => v !== null && v !== undefined);
+    const extra = ci ? cats.flatMap((c) => groups.map((gr) => ci(c, gr))).flat().filter((v) => v !== null && v !== undefined) : [];
+    const lo = Math.min(0, d3.min(vals.concat(extra))), hi = Math.max(0, d3.max(vals.concat(extra)));
+    const yProbe = d3.scaleLinear(yDomain || [lo, hi], [height, 0]).nice(5);
+    const left = measure(svg, yProbe.ticks(5).map(fmt)) + 8;
+    const m = { top: 10, right: 6, bottom: 24, left };
+    const x0 = d3.scaleBand(cats.map((c) => c.label), [m.left, W - m.right]).paddingInner(0.25).paddingOuter(0.1);
+    const x1 = d3.scaleBand(groups.map((gr) => gr.label), [0, x0.bandwidth()]).padding(0.08);
+    const y = d3.scaleLinear(yDomain || [lo, hi], [height - m.bottom, m.top]).nice(5);
+    const xAxis = d3.axisBottom(x0).tickSizeOuter(0);
+    const maxLabels = Math.floor((W - m.left - m.right) / 38);
+    if (cats.length > maxLabels) { const step = Math.ceil(cats.length / maxLabels); xAxis.tickValues(cats.map((c) => c.label).filter((_, i) => i % step === 0)); }
+    svg.append('g').attr('transform', `translate(${m.left},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickFormat(fmt).tickSize(-(W - m.left - m.right))).call(styleAxis).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${height - m.bottom})`).call(xAxis).call(styleAxis).call((g) => g.select('.domain').remove());
+    svg.append('line').attr('x1', m.left).attr('x2', W - m.right).attr('y1', y(0)).attr('y2', y(0)).attr('style', 'stroke: var(--cds-chart-axis)');
+    const tip = tipFor(el);
+    const bw = Math.min(32, x1.bandwidth());
+    for (const c of cats) {
+      for (const gr of groups) {
+        const v = value(c, gr); if (v === null || v === undefined) continue;
+        const bx = x0(c.label) + x1(gr.label) + (x1.bandwidth() - bw) / 2;
+        const rect = svg.append('rect').attr('x', bx).attr('width', bw)
+          .attr('y', Math.min(y(v), y(0))).attr('height', Math.max(1, Math.abs(y(v) - y(0))))
+          .attr('rx', Math.min(3, bw / 2)).attr('style', `fill: ${gr.color}`);
+        if (ci) {
+          const [a, b] = ci(c, gr);
+          if (a !== null && b !== null) {
+            svg.append('line').attr('x1', bx + bw / 2).attr('x2', bx + bw / 2).attr('y1', y(a)).attr('y2', y(b))
+              .attr('stroke-width', 1.5).attr('style', 'stroke: var(--color-fg)');
+          }
+        }
+        rect.on('pointermove', (ev) => {
+          const [px, py] = d3.pointer(ev, el);
+          tip.show(px, py, c.label, groups.map((g2) => [g2.color, g2.label, value(c, g2) === null ? '–' : fmt(value(c, g2))]));
+        }).on('pointerleave', () => tip.hide());
+      }
+    }
+  }
+
+  dash.draw('yearlyChart', (el) => {
+    const g = dash.data('yearly');
+    if (g.status !== 'ok') { empty(el, g.status); return; }
+    const rows = g.data.filter((r) => r.period === P().period);
+    groupedBars(el, {
+      cats: rows.map((r) => ({ label: String(r.year), r })),
+      groups: [
+        { label: 'SPY', key: 'spy', color: 'var(--cds-chart-muted)' },
+        { label: 'מינרביני', key: 'minervini', color: dash.colors[0] },
+        { label: 'אוניל', key: 'oneil', color: dash.colors[1] },
+      ],
+      value: (c, gr) => c.r[gr.key], fmt: d3.format('+.0%'),
+    });
+  });
+
+  // ---------- horizontal bars for the stop study ----------
+  function hBars(el, { rows, label, value, fmt, color, height }) {
+    el.replaceChildren();
+    const W = el.clientWidth; if (!W) return;
+    const H = height || rows.length * 26 + 30;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const lw = measure(svg, rows.map(label)) + 10;
+    const vw = measure(svg, rows.map((r) => fmt(value(r)))) + 8;
+    const m = { top: 4, right: vw, bottom: 22, left: lw };
+    const vals = rows.map(value);
+    const lo = Math.min(0, d3.min(vals)), hi = Math.max(0, d3.max(vals));
+    const x = d3.scaleLinear([lo, hi], [m.left, W - m.right]).nice(4);
+    const yb = d3.scaleBand(rows.map(label), [m.top, H - m.bottom]).padding(0.25);
+    svg.append('g').attr('transform', `translate(0,${H - m.bottom})`)
+      .call(d3.axisBottom(x).ticks(Math.max(2, Math.min(5, Math.floor((W - m.left - m.right) / 60)))).tickFormat(d3.format('.0%')).tickSize(-(H - m.top - m.bottom))).call(styleAxis).call((g) => g.select('.domain').remove());
+    const bh = Math.min(20, yb.bandwidth());
+    for (const r of rows) {
+      const v = value(r); const yy = yb(label(r)) + (yb.bandwidth() - bh) / 2;
+      svg.append('text').attr('x', m.left - 8).attr('y', yy + bh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(label(r));
+      svg.append('rect').attr('x', Math.min(x(v), x(0))).attr('y', yy).attr('height', bh)
+        .attr('width', Math.max(1, Math.abs(x(v) - x(0)))).attr('rx', 3).attr('style', `fill: ${color(r)}`);
+      svg.append('text').attr('x', Math.max(x(v), x(0)) + 5).attr('y', yy + bh / 2).attr('dy', '0.32em').text(fmt(v));
+    }
+    svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', m.top).attr('y2', H - m.bottom).attr('style', 'stroke: var(--cds-chart-axis)');
+  }
+
+  const stopRows = () => {
+    const g = dash.data('stops'); if (g.status !== 'ok') return { status: g.status, rows: null };
+    const p = P();
+    return { status: 'ok', rows: g.data.filter((r) => r.period === p.period && r.strategy === p.strat) };
+  };
+  const tight = new Set(['fix3', 'atr15']);
+  dash.draw('recoveredChart', (el) => {
+    const s = stopRows(); if (!s.rows) { empty(el, s.status); return; }
+    hBars(el, { rows: s.rows, label: (r) => r.stop_he, value: (r) => r.recovered, fmt: d3.format('.0%'),
+      color: (r) => (tight.has(r.stop) ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)') });
+  });
+  dash.draw('stopCagrChart', (el) => {
+    const s = stopRows(); if (!s.rows) { empty(el, s.status); return; }
+    const best = d3.max(s.rows, (r) => r.cagr);
+    hBars(el, { rows: s.rows, label: (r) => r.stop_he, value: (r) => r.cagr, fmt: d3.format('+.1%'),
+      color: (r) => (r.cagr === best ? dash.colors[0] : r.cagr < 0 ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)') });
+  });
+
+  // ---------- backtest tables ----------
+  const body = (el, rows, cols) => {
+    el.replaceChildren();
+    for (const r of rows) {
+      const tr = document.createElement('tr'); tr.dataset.key = r.key;
+      for (const [field, f, cls] of cols) {
+        const td = document.createElement('td'); const v = r[field];
+        td.textContent = v === null || v === undefined ? '–' : f ? f(v) : v;
+        if (cls) td.className = typeof cls === 'function' ? cls(v) : cls;
+        tr.appendChild(td);
+      }
+      el.appendChild(tr);
+    }
+  };
+  const signCls = (v) => 'n ' + (v > 0 ? 'up' : v < 0 ? 'down' : '');
+  dash.draw('pertradeBody', (el) => {
+    const rows = (rowsOf('pertrade') || []).filter((r) => r.period === P().period);
+    body(el, rows, [['name_he'], ['trades', kx.int, 'n'], ['win_rate', kx.pct, 'n'], ['ci_low', kx.pct, 'n'], ['ci_high', kx.pct, 'n'],
+      ['avg_win', kx.spct, 'n up'], ['avg_loss', kx.spct, 'n down'], ['profit_factor', d3.format('.2f'), 'n'], ['expectancy', kx.spct, signCls]]);
+  });
+  dash.draw('portfolioBody', (el) => {
+    const rows = (rowsOf('portfolio') || []).filter((r) => r.period === P().period);
+    body(el, rows, [['name_he'], ['cagr', kx.spct, signCls], ['max_dd', kx.spct, 'n down'], ['sharpe', d3.format('.2f'), 'n'],
+      ['trades', kx.int, 'n'], ['win_rate', kx.pct, 'n']]);
+  });
+  dash.draw('stopsBody', (el) => {
+    const s = stopRows();
+    body(el, s.rows || [], [['stop_he'], ['win_rate', kx.pct, 'n'], ['recovered', kx.pct, 'n'], ['recovered10', kx.pct, 'n'],
+      ['cagr', kx.spct, signCls], ['max_dd', kx.spct, 'n down']]);
+  });
+
+  // ---------- calibration ----------
+  dash.draw('calChart', (el) => {
+    const g = dash.data('calibration');
+    if (g.status !== 'ok') { empty(el, g.status); return; }
+    el.replaceChildren();
+    const W = el.clientWidth; if (!W) return;
+    const H = Math.min(320, Math.max(240, W * 0.7));
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const tests = Array.from(new Set(g.data.map((r) => r.test)));
+    const all = g.data.flatMap((r) => [r.predicted, r.ci_low, r.ci_high]);
+    const lo = Math.max(0, d3.min(all) - 0.03), hi = d3.max(all) + 0.03;
+    const fmt = d3.format('.0%');
+    const probe = d3.scaleLinear([lo, hi], [H, 0]).nice(5);
+    const m = { top: 10, right: 10, bottom: 34, left: measure(svg, probe.ticks(5).map(fmt)) + 8 };
+    const x = d3.scaleLinear([lo, hi], [m.left, W - m.right]).nice(5);
+    const y = d3.scaleLinear([lo, hi], [H - m.bottom, m.top]).nice(5);
+    svg.append('g').attr('transform', `translate(0,${H - m.bottom})`).call(d3.axisBottom(x).ticks(5).tickFormat((d, i) => (i === 0 ? '' : fmt(d))).tickSize(-(H - m.top - m.bottom))).call(styleAxis).call((g2) => g2.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(${m.left},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmt).tickSize(-(W - m.left - m.right))).call(styleAxis).call((g2) => g2.select('.domain').remove());
+    svg.append('text').attr('x', (m.left + W - m.right) / 2).attr('y', H - 4).attr('text-anchor', 'middle').text('המודל אמר');
+    const d0 = Math.max(x.domain()[0], y.domain()[0]), d1 = Math.min(x.domain()[1], y.domain()[1]);
+    svg.append('line').attr('x1', x(d0)).attr('y1', y(d0)).attr('x2', x(d1)).attr('y2', y(d1)).attr('stroke-dasharray', '5 4').attr('style', 'stroke: var(--cds-chart-reference)');
+    const tip = tipFor(el);
+    tests.forEach((t, i) => {
+      const rows = g.data.filter((r) => r.test === t).sort((a, b) => a.bucket - b.bucket);
+      const color = dash.colors[i];
+      const off = (i - 0.5) * 5;
+      svg.append('path').datum(rows).attr('fill', 'none').attr('stroke-width', 1.5).attr('opacity', 0.6).attr('style', `stroke: ${color}`)
+        .attr('d', d3.line().x((r) => x(r.predicted) + off).y((r) => y(r.actual)));
+      for (const r of rows) {
+        svg.append('line').attr('x1', x(r.predicted) + off).attr('x2', x(r.predicted) + off).attr('y1', y(r.ci_low)).attr('y2', y(r.ci_high)).attr('stroke-width', 1.5).attr('style', `stroke: ${color}`);
+        svg.append('circle').attr('cx', x(r.predicted) + off).attr('cy', y(r.actual)).attr('r', 4.5).attr('style', `fill: ${color}`)
+          .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); tip.show(px, py, `מבחן ${t} · קבוצה ${r.bucket}`, [[color, 'המודל אמר', fmt(r.predicted)], [null, 'בפועל', d3.format('.1%')(r.actual)], [null, 'עסקאות', d3.format(',')(r.n)]]); })
+          .on('pointerleave', () => tip.hide());
+      }
+    });
+  });
+
+  dash.draw('volChart', (el) => {
+    const g = dash.data('volume');
+    if (g.status !== 'ok') { empty(el, g.status); return; }
+    const buckets = ['1.4-2x', '2-3x', '3x+'];
+    const names = { '1.4-2x': 'פי 1.4–2', '2-3x': 'פי 2–3', '3x+': 'פי 3 ומעלה' };
+    const get = (b, s) => g.data.find((r) => r.bucket === b && r.strategy === s);
+    groupedBars(el, {
+      cats: buckets.map((b) => ({ label: names[b], b })),
+      groups: [{ label: 'מינרביני', s: 'minervini', color: dash.colors[0] }, { label: 'אוניל', s: 'oneil', color: dash.colors[1] }],
+      value: (c, gr) => (get(c.b, gr.s) || {}).win_rate ?? null,
+      ci: (c, gr) => { const r = get(c.b, gr.s); return r ? [r.ci_low, r.ci_high] : [null, null]; },
+      fmt: d3.format('.0%'), height: 260, yDomain: [0, 0.5],
+    });
+  });
+})();
+</script>
