@@ -1,0 +1,123 @@
+//@version=6
+// Kroxis – book strategies for TradingView
+// Method 1: Mark Minervini, "Trade Like a Stock Market Wizard" (Trend Template + VCP breakout)
+// Method 2: William O'Neil, "How to Make Money in Stocks" (CAN SLIM price/volume rules)
+//
+// Same rules as the Python backtest in trading/kroxis_trader (see README_HE.md).
+// Differences: RS rating is approximated as "stock outperforms the benchmark over
+// 12 months (IBD weighting)" because TradingView can't rank all stocks, and the
+// O'Neil distribution-day count uses a plain 25-bar window.
+// Use on DAILY charts of US stocks.
+strategy("Kroxis – Minervini / O'Neil", overlay = true, initial_capital = 100000,
+     commission_type = strategy.commission.percent, commission_value = 0.05,
+     slippage = 2, pyramiding = 0, max_bars_back = 300)
+
+method      = input.string("Minervini", "Method", options = ["Minervini", "O'Neil"])
+benchSym    = input.symbol("AMEX:SPY", "Benchmark (market)")
+riskPct     = input.float(1.25, "Risk per trade (% of equity)", minval = 0.1, step = 0.25)
+maxPosPct   = input.float(20.0, "Max position (% of equity)", minval = 1)
+useMarket   = input.bool(true, "Use market filter")
+
+// ---------- common indicators ----------
+sma50  = ta.sma(close, 50)
+sma150 = ta.sma(close, 150)
+sma200 = ta.sma(close, 200)
+hi52   = ta.highest(high, 252)
+lo52   = ta.lowest(low, 252)
+avgVol = ta.sma(volume, 50)[1]
+
+rsScore(src) => 0.4 * (src / src[63] - 1) + 0.2 * (src / src[126] - 1) + 0.2 * (src / src[189] - 1) + 0.2 * (src / src[252] - 1)
+benchClose = request.security(benchSym, "D", close)
+benchSma50 = request.security(benchSym, "D", ta.sma(close, 50))
+benchSma200 = request.security(benchSym, "D", ta.sma(close, 200))
+distDays = request.security(benchSym, "D", math.sum((close / close[1] - 1 <= -0.002 and volume > volume[1]) ? 1 : 0, 25))
+rsOK = rsScore(close) > rsScore(benchClose)
+
+// ---------- Minervini ----------
+trendTemplate = close > sma150 and close > sma200 and sma150 > sma200 and sma200 > sma200[22] and sma50 > sma150 and sma50 > sma200 and close > sma50 and close >= 1.30 * lo52 and close >= 0.75 * hi52 and rsOK
+
+hh50 = ta.highest(high, 50)[1]
+ll50 = ta.lowest(low, 50)[1]
+hh20 = ta.highest(high, 20)[1]
+ll20 = ta.lowest(low, 20)[1]
+hh10 = ta.highest(high, 10)[1]
+ll10 = ta.lowest(low, 10)[1]
+d50 = (hh50 - ll50) / hh50
+d20 = (hh20 - ll20) / hh20
+d10 = (hh10 - ll10) / hh10
+vol10 = ta.sma(volume, 10)[1]
+vcpSetup = d50 <= 0.35 and d20 < d50 and d10 < d20 and d10 <= 0.10 and d10 <= 0.6 * d50 and vol10 < avgVol and hh10 >= 0.85 * hh50
+minerviniSignal = vcpSetup and close > hh10 and close <= 1.05 * hh10 and volume >= 1.4 * avgVol and trendTemplate and (not useMarket or benchClose > benchSma200)
+
+// ---------- O'Neil ----------
+pivot35 = ta.highest(high, 35)[1]
+low35   = ta.lowest(low, 35)[1]
+depth35 = (pivot35 - low35) / pivot35
+oneilSignal = depth35 <= 0.33 and close > pivot35 and close <= 1.05 * pivot35 and volume >= 1.5 * avgVol and close >= 0.95 * hi52 and close > sma200 and sma200 > sma200[22] and rsOK and close >= 15 and (not useMarket or (benchClose > benchSma50 and distDays < 6))
+
+isMin = method == "Minervini"
+signal = (isMin ? minerviniSignal : oneilSignal) and strategy.position_size == 0
+pivotPx = isMin ? hh10 : pivot35
+stopRef = isMin ? math.max(ll10 * 0.995, close * 0.92) : close * 0.925
+
+// ---------- orders ----------
+var float entryPx = na
+var float initStop = na
+var float stopPx = na
+var float refLow = na
+var int entryBar = na
+var int holdUntil = na
+sellMsg = '{"action":"sell","symbol":"' + syminfo.ticker + '"}'
+
+if signal
+    riskPerShare = close - stopRef
+    qty = math.floor(math.min(strategy.equity * riskPct / 100 / riskPerShare, strategy.equity * maxPosPct / 100 / close))
+    if qty >= 1
+        buyMsg = '{"action":"buy","symbol":"' + syminfo.ticker + '","method":"' + method + '","qty":' + str.tostring(qty) + ',"stop":' + str.tostring(stopRef, "#.##") + '}'
+        strategy.entry("L", strategy.long, qty = qty, comment = isMin ? "VCP" : "CANSLIM", alert_message = buyMsg)
+        refLow := ll10
+        // protective orders are live from the fill bar
+        if isMin
+            strategy.exit("SL", "L", stop = stopRef, alert_message = sellMsg)
+        else
+            strategy.exit("TP", "L", limit = close * 1.20, stop = stopRef, alert_message = sellMsg)
+
+inPos = strategy.position_size > 0
+if inPos and not inPos[1]
+    // re-anchor the stop on the actual fill price
+    entryPx := strategy.position_avg_price
+    entryBar := bar_index
+    holdUntil := na
+    initStop := isMin ? math.max(refLow * 0.995, entryPx * 0.92) : entryPx * 0.925
+    stopPx := initStop
+
+if inPos
+    risk = entryPx - initStop
+    if isMin
+        // breakeven after +2R, then trail with the 50-day average
+        if close >= entryPx + 2 * risk
+            stopPx := math.max(stopPx, entryPx)
+        strategy.exit("SL", "L", stop = stopPx, alert_message = sellMsg)
+        if close < sma50
+            strategy.close("L", comment = "50d break", alert_message = sellMsg)
+    else
+        // 8-week rule: +20% within 3 weeks -> hold 8 weeks, stop at breakeven
+        if na(holdUntil) and high >= entryPx * 1.20 and bar_index - entryBar < 15
+            holdUntil := entryBar + 40
+            stopPx := math.max(stopPx, entryPx)
+            strategy.cancel("TP")
+        if na(holdUntil)
+            strategy.exit("TP", "L", limit = entryPx * 1.20, stop = stopPx, alert_message = sellMsg)
+        else
+            strategy.exit("SL", "L", stop = stopPx, alert_message = sellMsg)
+        holding = not na(holdUntil) and bar_index < holdUntil
+        if not holding and close < sma50 and (volume > 1.5 * avgVol or not na(holdUntil))
+            strategy.close("L", comment = "50d break", alert_message = sellMsg)
+
+// ---------- chart ----------
+plot(sma50, "50d", color = color.new(color.blue, 0))
+plot(sma150, "150d", color = color.new(color.orange, 0))
+plot(sma200, "200d", color = color.new(color.red, 0))
+plot(inPos ? stopPx : na, "Stop", color = color.red, style = plot.style_linebr)
+plotshape(signal, "Buy signal", shape.triangleup, location.belowbar, color.green, size = size.small)
+bgcolor(isMin and trendTemplate ? color.new(color.green, 92) : na, title = "Trend Template OK")

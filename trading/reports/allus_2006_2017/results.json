@@ -1,0 +1,1083 @@
+{
+ "dataset": "allus_2006_2017",
+ "stocks": 5784,
+ "test_start": "2006-02-27",
+ "test_end": "2017-11-10",
+ "cost_per_side": 0.001,
+ "strategies": {
+  "minervini": {
+   "title": "Minervini SEPA (Trend Template + VCP breakout)",
+   "signals": 7413,
+   "all_signals": {
+    "trades": 5322,
+    "win_rate": 0.343668,
+    "win_rate_ci95": [
+     0.331025,
+     0.356536
+    ],
+    "avg_win": 0.104912,
+    "avg_loss": -0.047419,
+    "payoff_ratio": 2.212451,
+    "profit_factor": 1.15848,
+    "expectancy": 0.004932,
+    "expectancy_ci95": [
+     0.002248,
+     0.007946
+    ],
+    "expectancy_r": 0.070526,
+    "median_days": 25.0,
+    "exit_reasons": {
+     "below_50dma": 0.712,
+     "stop": 0.256,
+     "end_of_data": 0.033
+    }
+   },
+   "first_half": {
+    "trades": 1558,
+    "win_rate": 0.328626,
+    "win_rate_ci95": [
+     0.305749,
+     0.352347
+    ],
+    "avg_win": 0.113934,
+    "avg_loss": -0.05378,
+    "payoff_ratio": 2.118515,
+    "profit_factor": 1.036978,
+    "expectancy": 0.001335,
+    "expectancy_ci95": [
+     -0.00408,
+     0.007064
+    ],
+    "expectancy_r": 0.028552,
+    "median_days": 26.0,
+    "exit_reasons": {
+     "below_50dma": 0.685,
+     "stop": 0.315
+    }
+   },
+   "second_half": {
+    "trades": 3764,
+    "win_rate": 0.349894,
+    "win_rate_ci95": [
+     0.334817,
+     0.365276
+    ],
+    "avg_win": 0.101404,
+    "avg_loss": -0.0447,
+    "payoff_ratio": 2.268573,
+    "profit_factor": 1.220969,
+    "expectancy": 0.006421,
+    "expectancy_ci95": [
+     0.003027,
+     0.009881
+    ],
+    "expectancy_r": 0.087961,
+    "median_days": 25.0,
+    "exit_reasons": {
+     "below_50dma": 0.723,
+     "stop": 0.231,
+     "end_of_data": 0.046
+    }
+   },
+   "by_year": {
+    "2006": {
+     "trades": 331,
+     "win_rate": 0.377644,
+     "expectancy": 0.008665
+    },
+    "2007": {
+     "trades": 484,
+     "win_rate": 0.349174,
+     "expectancy": 0.009528
+    },
+    "2008": {
+     "trades": 2,
+     "win_rate": 0.0,
+     "expectancy": -0.050954
+    },
+    "2009": {
+     "trades": 114,
+     "win_rate": 0.254386,
+     "expectancy": -0.022749
+    },
+    "2010": {
+     "trades": 352,
+     "win_rate": 0.355114,
+     "expectancy": 0.009461
+    },
+    "2011": {
+     "trades": 275,
+     "win_rate": 0.232727,
+     "expectancy": -0.021944
+    },
+    "2012": {
+     "trades": 462,
+     "win_rate": 0.402597,
+     "expectancy": 0.014406
+    },
+    "2013": {
+     "trades": 743,
+     "win_rate": 0.399731,
+     "expectancy": 0.020938
+    },
+    "2014": {
+     "trades": 659,
+     "win_rate": 0.298938,
+     "expectancy": -0.007157
+    },
+    "2015": {
+     "trades": 577,
+     "win_rate": 0.227036,
+     "expectancy": -0.020254
+    },
+    "2016": {
+     "trades": 472,
+     "win_rate": 0.347458,
+     "expectancy": 0.009108
+    },
+    "2017": {
+     "trades": 851,
+     "win_rate": 0.40188,
+     "expectancy": 0.016523
+    }
+   },
+   "random_control": {
+    "none": {
+     "win_rate": {
+      "mean": 0.36304,
+      "min": 0.352644,
+      "max": 0.371951
+     },
+     "expectancy": {
+      "mean": 0.002423,
+      "min": 0.000344,
+      "max": 0.003189
+     },
+     "profit_factor": {
+      "mean": 1.127302,
+      "min": 1.017385,
+      "max": 1.166771
+     },
+     "avg_win": {
+      "mean": 0.059469,
+      "min": 0.057111,
+      "max": 0.061653
+     },
+     "avg_loss": {
+      "mean": -0.030092,
+      "min": -0.030579,
+      "max": -0.029645
+     }
+    },
+    "trend200": {
+     "win_rate": {
+      "mean": 0.347595,
+      "min": 0.33537,
+      "max": 0.361384
+     },
+     "expectancy": {
+      "mean": 0.001201,
+      "min": -0.001449,
+      "max": 0.003414
+     },
+     "profit_factor": {
+      "mean": 1.065189,
+      "min": 0.925447,
+      "max": 1.186316
+     },
+     "avg_win": {
+      "mean": 0.057432,
+      "min": 0.05241,
+      "max": 0.064563
+     },
+     "avg_loss": {
+      "mean": -0.028728,
+      "min": -0.029547,
+      "max": -0.02807
+     }
+    }
+   },
+   "stop_study": {
+    "fixed 3%": {
+     "trades": 5753,
+     "win_rate": 0.219016,
+     "win_rate_ci95": [
+      0.208518,
+      0.229889
+     ],
+     "avg_win": 0.108161,
+     "avg_loss": -0.028586,
+     "payoff_ratio": 3.783697,
+     "profit_factor": 1.061086,
+     "expectancy": 0.001364,
+     "expectancy_ci95": [
+      -0.000871,
+      0.003532
+     ],
+     "expectancy_r": 0.044036,
+     "median_days": 8.0,
+     "exit_reasons": {
+      "stop": 0.703,
+      "below_50dma": 0.276,
+      "end_of_data": 0.021
+     },
+     "stopped": 4044,
+     "recovered_above_entry": 0.717359,
+     "recovered_plus10": 0.127844,
+     "first_half_expectancy": 0.000914,
+     "second_half_expectancy": 0.001551,
+     "portfolio_cagr": 0.035674,
+     "portfolio_max_dd": -0.299349,
+     "portfolio_sharpe": 0.304754
+    },
+    "fixed 5%": {
+     "trades": 5425,
+     "win_rate": 0.304885,
+     "win_rate_ci95": [
+      0.292776,
+      0.31727
+     ],
+     "avg_win": 0.107634,
+     "avg_loss": -0.040985,
+     "payoff_ratio": 2.62618,
+     "profit_factor": 1.15187,
+     "expectancy": 0.004327,
+     "expectancy_ci95": [
+      0.001791,
+      0.007086
+     ],
+     "expectancy_r": 0.084922,
+     "median_days": 20.0,
+     "exit_reasons": {
+      "below_50dma": 0.541,
+      "stop": 0.428,
+      "end_of_data": 0.03
+     },
+     "stopped": 2324,
+     "recovered_above_entry": 0.568417,
+     "recovered_plus10": 0.113167,
+     "first_half_expectancy": 0.001675,
+     "second_half_expectancy": 0.005435,
+     "portfolio_cagr": 0.092348,
+     "portfolio_max_dd": -0.287075,
+     "portfolio_sharpe": 0.621888
+    },
+    "fixed 7.5%": {
+     "trades": 5303,
+     "win_rate": 0.346031,
+     "win_rate_ci95": [
+      0.333343,
+      0.358941
+     ],
+     "avg_win": 0.104863,
+     "avg_loss": -0.047953,
+     "payoff_ratio": 2.186802,
+     "profit_factor": 1.157088,
+     "expectancy": 0.004926,
+     "expectancy_ci95": [
+      0.002091,
+      0.007788
+     ],
+     "expectancy_r": 0.064883,
+     "median_days": 26.0,
+     "exit_reasons": {
+      "below_50dma": 0.768,
+      "stop": 0.199,
+      "end_of_data": 0.033
+     },
+     "stopped": 1053,
+     "recovered_above_entry": 0.451092,
+     "recovered_plus10": 0.096866,
+     "first_half_expectancy": 0.002075,
+     "second_half_expectancy": 0.006103,
+     "portfolio_cagr": 0.066332,
+     "portfolio_max_dd": -0.214484,
+     "portfolio_sharpe": 0.486672
+    },
+    "fixed 10%": {
+     "trades": 5262,
+     "win_rate": 0.360889,
+     "win_rate_ci95": [
+      0.348019,
+      0.373963
+     ],
+     "avg_win": 0.104029,
+     "avg_loss": -0.050039,
+     "payoff_ratio": 2.078976,
+     "profit_factor": 1.173944,
+     "expectancy": 0.005563,
+     "expectancy_ci95": [
+      0.002666,
+      0.008649
+     ],
+     "expectancy_r": 0.055132,
+     "median_days": 27.0,
+     "exit_reasons": {
+      "below_50dma": 0.882,
+      "stop": 0.084,
+      "end_of_data": 0.034
+     },
+     "stopped": 444,
+     "recovered_above_entry": 0.349099,
+     "recovered_plus10": 0.06982,
+     "first_half_expectancy": 0.00218,
+     "second_half_expectancy": 0.006958,
+     "portfolio_cagr": 0.055332,
+     "portfolio_max_dd": -0.222034,
+     "portfolio_sharpe": 0.437163
+    },
+    "ATR x1.5": {
+     "trades": 5706,
+     "win_rate": 0.223975,
+     "win_rate_ci95": [
+      0.213345,
+      0.234976
+     ],
+     "avg_win": 0.117044,
+     "avg_loss": -0.030984,
+     "payoff_ratio": 3.777503,
+     "profit_factor": 1.090255,
+     "expectancy": 0.00217,
+     "expectancy_ci95": [
+      -0.000284,
+      0.004519
+     ],
+     "expectancy_r": 0.065493,
+     "median_days": 9.0,
+     "exit_reasons": {
+      "stop": 0.693,
+      "below_50dma": 0.288,
+      "end_of_data": 0.019
+     },
+     "stopped": 3952,
+     "recovered_above_entry": 0.702429,
+     "recovered_plus10": 0.109565,
+     "first_half_expectancy": 0.00228,
+     "second_half_expectancy": 0.002125,
+     "portfolio_cagr": 0.04711,
+     "portfolio_max_dd": -0.340263,
+     "portfolio_sharpe": 0.356548
+    },
+    "ATR x2": {
+     "trades": 5541,
+     "win_rate": 0.277748,
+     "win_rate_ci95": [
+      0.266112,
+      0.289692
+     ],
+     "avg_win": 0.110769,
+     "avg_loss": -0.038759,
+     "payoff_ratio": 2.857924,
+     "profit_factor": 1.099037,
+     "expectancy": 0.002772,
+     "expectancy_ci95": [
+      0.000165,
+      0.005413
+     ],
+     "expectancy_r": 0.070229,
+     "median_days": 15.0,
+     "exit_reasons": {
+      "stop": 0.541,
+      "below_50dma": 0.435,
+      "end_of_data": 0.024
+     },
+     "stopped": 2998,
+     "recovered_above_entry": 0.611741,
+     "recovered_plus10": 0.087392,
+     "first_half_expectancy": 0.001571,
+     "second_half_expectancy": 0.003269,
+     "portfolio_cagr": 0.063732,
+     "portfolio_max_dd": -0.271239,
+     "portfolio_sharpe": 0.456866
+    },
+    "ATR x3": {
+     "trades": 5329,
+     "win_rate": 0.342466,
+     "win_rate_ci95": [
+      0.329842,
+      0.355316
+     ],
+     "avg_win": 0.105917,
+     "avg_loss": -0.047593,
+     "payoff_ratio": 2.225488,
+     "profit_factor": 1.159108,
+     "expectancy": 0.004979,
+     "expectancy_ci95": [
+      0.002067,
+      0.007908
+     ],
+     "expectancy_r": 0.084882,
+     "median_days": 25.0,
+     "exit_reasons": {
+      "below_50dma": 0.697,
+      "stop": 0.271,
+      "end_of_data": 0.032
+     },
+     "stopped": 1444,
+     "recovered_above_entry": 0.439751,
+     "recovered_plus10": 0.051247,
+     "first_half_expectancy": 0.001788,
+     "second_half_expectancy": 0.006295,
+     "portfolio_cagr": 0.083495,
+     "portfolio_max_dd": -0.208415,
+     "portfolio_sharpe": 0.603736
+    },
+    "below base low (max 8%)": {
+     "trades": 5322,
+     "win_rate": 0.343668,
+     "win_rate_ci95": [
+      0.331025,
+      0.356536
+     ],
+     "avg_win": 0.104912,
+     "avg_loss": -0.047419,
+     "payoff_ratio": 2.212451,
+     "profit_factor": 1.15848,
+     "expectancy": 0.004932,
+     "expectancy_ci95": [
+      0.002248,
+      0.007946
+     ],
+     "expectancy_r": 0.070526,
+     "median_days": 25.0,
+     "exit_reasons": {
+      "below_50dma": 0.712,
+      "stop": 0.256,
+      "end_of_data": 0.033
+     },
+     "stopped": 1360,
+     "recovered_above_entry": 0.459559,
+     "recovered_plus10": 0.078676,
+     "first_half_expectancy": 0.001335,
+     "second_half_expectancy": 0.006421,
+     "portfolio_cagr": 0.076874,
+     "portfolio_max_dd": -0.216805,
+     "portfolio_sharpe": 0.555288
+    }
+   },
+   "portfolio": {
+    "start": "2006-02-27",
+    "end": "2017-11-10",
+    "total_return": 1.37892,
+    "cagr": 0.076874,
+    "max_drawdown": -0.216805,
+    "volatility": 0.155128,
+    "sharpe": 0.555288,
+    "sortino": 0.682728,
+    "calmar": 0.354576,
+    "avg_exposure": 0.754652,
+    "trades": 454,
+    "win_rate": 0.39207,
+    "win_rate_ci95": [
+     0.348246,
+     0.437706
+    ],
+    "avg_win": 0.115317,
+    "avg_loss": -0.052658,
+    "payoff_ratio": 2.189921,
+    "profit_factor": 1.41234,
+    "expectancy": 0.0132,
+    "expectancy_ci95": [
+     0.000981,
+     0.026992
+    ],
+    "expectancy_r": 0.193981,
+    "median_days": 28.5,
+    "exit_reasons": {
+     "below_50dma": 0.7,
+     "stop": 0.282,
+     "end_of_data": 0.018
+    }
+   },
+   "portfolio_yearly": {
+    "2006": 0.023103,
+    "2007": 0.097114,
+    "2008": -0.043506,
+    "2009": 0.031611,
+    "2010": 0.106952,
+    "2011": -0.076724,
+    "2012": -0.00022,
+    "2013": 0.131267,
+    "2014": 0.145531,
+    "2015": -0.009124,
+    "2016": 0.395348,
+    "2017": 0.173199
+   },
+   "portfolio_random_control": {
+    "cagr": 0.027908,
+    "max_drawdown": -0.331294,
+    "sharpe": 0.26147
+   }
+  },
+  "oneil": {
+   "title": "O'Neil CAN SLIM (price/volume rules: N, L, M)",
+   "signals": 8984,
+   "all_signals": {
+    "trades": 5223,
+    "win_rate": 0.376986,
+    "win_rate_ci95": [
+     0.363938,
+     0.390216
+    ],
+    "avg_win": 0.127255,
+    "avg_loss": -0.064454,
+    "payoff_ratio": 1.974358,
+    "profit_factor": 1.194687,
+    "expectancy": 0.007818,
+    "expectancy_ci95": [
+     0.004955,
+     0.010847
+    ],
+    "expectancy_r": 0.102969,
+    "median_days": 31.0,
+    "exit_reasons": {
+     "stop": 0.411,
+     "below_50dma": 0.359,
+     "target": 0.185,
+     "end_of_data": 0.045
+    }
+   },
+   "first_half": {
+    "trades": 1729,
+    "win_rate": 0.341238,
+    "win_rate_ci95": [
+     0.319263,
+     0.363916
+    ],
+    "avg_win": 0.147794,
+    "avg_loss": -0.070118,
+    "payoff_ratio": 2.107792,
+    "profit_factor": 1.091832,
+    "expectancy": 0.004242,
+    "expectancy_ci95": [
+     -0.001085,
+     0.00986
+    ],
+    "expectancy_r": 0.055869,
+    "median_days": 26.0,
+    "exit_reasons": {
+     "stop": 0.516,
+     "below_50dma": 0.272,
+     "target": 0.212
+    }
+   },
+   "second_half": {
+    "trades": 3494,
+    "win_rate": 0.394677,
+    "win_rate_ci95": [
+     0.378594,
+     0.410991
+    ],
+    "avg_win": 0.118468,
+    "avg_loss": -0.061404,
+    "payoff_ratio": 1.929324,
+    "profit_factor": 1.257938,
+    "expectancy": 0.009587,
+    "expectancy_ci95": [
+     0.006115,
+     0.013087
+    ],
+    "expectancy_r": 0.126275,
+    "median_days": 34.0,
+    "exit_reasons": {
+     "below_50dma": 0.402,
+     "stop": 0.359,
+     "target": 0.171,
+     "end_of_data": 0.068
+    }
+   },
+   "by_year": {
+    "2006": {
+     "trades": 337,
+     "win_rate": 0.412463,
+     "expectancy": 0.023061
+    },
+    "2007": {
+     "trades": 425,
+     "win_rate": 0.36,
+     "expectancy": 0.007743
+    },
+    "2008": {
+     "trades": 96,
+     "win_rate": 0.21875,
+     "expectancy": -0.026111
+    },
+    "2009": {
+     "trades": 89,
+     "win_rate": 0.292135,
+     "expectancy": -0.010404
+    },
+    "2010": {
+     "trades": 338,
+     "win_rate": 0.372781,
+     "expectancy": 0.014364
+    },
+    "2011": {
+     "trades": 444,
+     "win_rate": 0.281532,
+     "expectancy": -0.011601
+    },
+    "2012": {
+     "trades": 429,
+     "win_rate": 0.44289,
+     "expectancy": 0.019634
+    },
+    "2013": {
+     "trades": 615,
+     "win_rate": 0.44878,
+     "expectancy": 0.029635
+    },
+    "2014": {
+     "trades": 686,
+     "win_rate": 0.332362,
+     "expectancy": -0.004626
+    },
+    "2015": {
+     "trades": 409,
+     "win_rate": 0.261614,
+     "expectancy": -0.018471
+    },
+    "2016": {
+     "trades": 468,
+     "win_rate": 0.339744,
+     "expectancy": -0.001305
+    },
+    "2017": {
+     "trades": 887,
+     "win_rate": 0.472379,
+     "expectancy": 0.020505
+    }
+   },
+   "random_control": {
+    "none": {
+     "win_rate": {
+      "mean": 0.375762,
+      "min": 0.370522,
+      "max": 0.384746
+     },
+     "expectancy": {
+      "mean": 0.006633,
+      "min": 0.005543,
+      "max": 0.007945
+     },
+     "profit_factor": {
+      "mean": 1.197201,
+      "min": 1.163844,
+      "max": 1.24007
+     },
+     "avg_win": {
+      "mean": 0.107266,
+      "min": 0.104291,
+      "max": 0.111096
+     },
+     "avg_loss": {
+      "mean": -0.05393,
+      "min": -0.054359,
+      "max": -0.053684
+     }
+    },
+    "oneil": {
+     "win_rate": {
+      "mean": 0.376175,
+      "min": 0.368457,
+      "max": 0.390931
+     },
+     "expectancy": {
+      "mean": 0.008698,
+      "min": 0.00416,
+      "max": 0.012306
+     },
+     "profit_factor": {
+      "mean": 1.264382,
+      "min": 1.121949,
+      "max": 1.382378
+     },
+     "avg_win": {
+      "mean": 0.111113,
+      "min": 0.103806,
+      "max": 0.117151
+     },
+     "avg_loss": {
+      "mean": -0.053074,
+      "min": -0.054043,
+      "max": -0.052261
+     }
+    }
+   },
+   "stop_study": {
+    "fixed 3%": {
+     "trades": 5884,
+     "win_rate": 0.208702,
+     "win_rate_ci95": [
+      0.19851,
+      0.219274
+     ],
+     "avg_win": 0.125642,
+     "avg_loss": -0.032818,
+     "payoff_ratio": 3.828431,
+     "profit_factor": 1.009732,
+     "expectancy": 0.000253,
+     "expectancy_ci95": [
+      -0.001723,
+      0.002143
+     ],
+     "expectancy_r": 0.008161,
+     "median_days": 7.0,
+     "exit_reasons": {
+      "stop": 0.765,
+      "below_50dma": 0.109,
+      "target": 0.098,
+      "end_of_data": 0.029
+     },
+     "stopped": 4502,
+     "recovered_above_entry": 0.735007,
+     "recovered_plus10": 0.14327,
+     "first_half_expectancy": -0.002356,
+     "second_half_expectancy": 0.001542,
+     "portfolio_cagr": 0.052377,
+     "portfolio_max_dd": -0.464702,
+     "portfolio_sharpe": 0.407782
+    },
+    "fixed 5%": {
+     "trades": 5457,
+     "win_rate": 0.305662,
+     "win_rate_ci95": [
+      0.293579,
+      0.318019
+     ],
+     "avg_win": 0.127659,
+     "avg_loss": -0.049833,
+     "payoff_ratio": 2.561756,
+     "profit_factor": 1.127741,
+     "expectancy": 0.00442,
+     "expectancy_ci95": [
+      0.001817,
+      0.007114
+     ],
+     "expectancy_r": 0.086752,
+     "median_days": 20.0,
+     "exit_reasons": {
+      "stop": 0.601,
+      "below_50dma": 0.215,
+      "target": 0.148,
+      "end_of_data": 0.036
+     },
+     "stopped": 3280,
+     "recovered_above_entry": 0.596646,
+     "recovered_plus10": 0.12622,
+     "first_half_expectancy": 0.000806,
+     "second_half_expectancy": 0.006218,
+     "portfolio_cagr": 0.034026,
+     "portfolio_max_dd": -0.492257,
+     "portfolio_sharpe": 0.287793
+    },
+    "fixed 7.5%": {
+     "trades": 5223,
+     "win_rate": 0.376986,
+     "win_rate_ci95": [
+      0.363938,
+      0.390216
+     ],
+     "avg_win": 0.127255,
+     "avg_loss": -0.064454,
+     "payoff_ratio": 1.974358,
+     "profit_factor": 1.194687,
+     "expectancy": 0.007818,
+     "expectancy_ci95": [
+      0.004955,
+      0.010847
+     ],
+     "expectancy_r": 0.102969,
+     "median_days": 31.0,
+     "exit_reasons": {
+      "stop": 0.411,
+      "below_50dma": 0.359,
+      "target": 0.185,
+      "end_of_data": 0.045
+     },
+     "stopped": 2147,
+     "recovered_above_entry": 0.465766,
+     "recovered_plus10": 0.109921,
+     "first_half_expectancy": 0.004242,
+     "second_half_expectancy": 0.009587,
+     "portfolio_cagr": 0.063801,
+     "portfolio_max_dd": -0.402381,
+     "portfolio_sharpe": 0.462511
+    },
+    "fixed 10%": {
+     "trades": 5130,
+     "win_rate": 0.411501,
+     "win_rate_ci95": [
+      0.398106,
+      0.425029
+     ],
+     "avg_win": 0.12776,
+     "avg_loss": -0.072592,
+     "payoff_ratio": 1.759991,
+     "profit_factor": 1.230653,
+     "expectancy": 0.009854,
+     "expectancy_ci95": [
+      0.006771,
+      0.013081
+     ],
+     "expectancy_r": 0.097657,
+     "median_days": 36.0,
+     "exit_reasons": {
+      "below_50dma": 0.477,
+      "stop": 0.269,
+      "target": 0.205,
+      "end_of_data": 0.048
+     },
+     "stopped": 1382,
+     "recovered_above_entry": 0.364689,
+     "recovered_plus10": 0.10492,
+     "first_half_expectancy": 0.006175,
+     "second_half_expectancy": 0.011656,
+     "portfolio_cagr": 0.068771,
+     "portfolio_max_dd": -0.380928,
+     "portfolio_sharpe": 0.498885
+    },
+    "ATR x1.5": {
+     "trades": 5724,
+     "win_rate": 0.236897,
+     "win_rate_ci95": [
+      0.226061,
+      0.248086
+     ],
+     "avg_win": 0.132877,
+     "avg_loss": -0.040126,
+     "payoff_ratio": 3.311485,
+     "profit_factor": 1.028016,
+     "expectancy": 0.000858,
+     "expectancy_ci95": [
+      -0.00123,
+      0.003167
+     ],
+     "expectancy_r": 0.055854,
+     "median_days": 10.0,
+     "exit_reasons": {
+      "stop": 0.73,
+      "below_50dma": 0.123,
+      "target": 0.121,
+      "end_of_data": 0.026
+     },
+     "stopped": 4177,
+     "recovered_above_entry": 0.689251,
+     "recovered_plus10": 0.115633,
+     "first_half_expectancy": -0.002593,
+     "second_half_expectancy": 0.002532,
+     "portfolio_cagr": 0.006671,
+     "portfolio_max_dd": -0.385662,
+     "portfolio_sharpe": 0.122055
+    },
+    "ATR x2": {
+     "trades": 5501,
+     "win_rate": 0.29631,
+     "win_rate_ci95": [
+      0.284388,
+      0.308516
+     ],
+     "avg_win": 0.131534,
+     "avg_loss": -0.050763,
+     "payoff_ratio": 2.591139,
+     "profit_factor": 1.091076,
+     "expectancy": 0.003253,
+     "expectancy_ci95": [
+      0.000759,
+      0.00588
+     ],
+     "expectancy_r": 0.098251,
+     "median_days": 18.0,
+     "exit_reasons": {
+      "stop": 0.63,
+      "below_50dma": 0.187,
+      "target": 0.15,
+      "end_of_data": 0.034
+     },
+     "stopped": 3466,
+     "recovered_above_entry": 0.603289,
+     "recovered_plus10": 0.104443,
+     "first_half_expectancy": -3e-06,
+     "second_half_expectancy": 0.004833,
+     "portfolio_cagr": 0.019494,
+     "portfolio_max_dd": -0.412467,
+     "portfolio_sharpe": 0.200806
+    },
+    "ATR x3": {
+     "trades": 5214,
+     "win_rate": 0.379171,
+     "win_rate_ci95": [
+      0.366095,
+      0.392426
+     ],
+     "avg_win": 0.128866,
+     "avg_loss": -0.066576,
+     "payoff_ratio": 1.935636,
+     "profit_factor": 1.182191,
+     "expectancy": 0.00753,
+     "expectancy_ci95": [
+      0.004541,
+      0.01068
+     ],
+     "expectancy_r": 0.130753,
+     "median_days": 31.0,
+     "exit_reasons": {
+      "stop": 0.436,
+      "below_50dma": 0.33,
+      "target": 0.191,
+      "end_of_data": 0.043
+     },
+     "stopped": 2274,
+     "recovered_above_entry": 0.437115,
+     "recovered_plus10": 0.072559,
+     "first_half_expectancy": 0.004728,
+     "second_half_expectancy": 0.008891,
+     "portfolio_cagr": 0.078873,
+     "portfolio_max_dd": -0.27667,
+     "portfolio_sharpe": 0.562536
+    },
+    "below base low (max 8%)": {
+     "trades": 5198,
+     "win_rate": 0.385341,
+     "win_rate_ci95": [
+      0.372199,
+      0.398651
+     ],
+     "avg_win": 0.127226,
+     "avg_loss": -0.066667,
+     "payoff_ratio": 1.908381,
+     "profit_factor": 1.196397,
+     "expectancy": 0.008048,
+     "expectancy_ci95": [
+      0.005013,
+      0.011062
+     ],
+     "expectancy_r": 0.098699,
+     "median_days": 33.0,
+     "exit_reasons": {
+      "stop": 0.383,
+      "below_50dma": 0.382,
+      "target": 0.189,
+      "end_of_data": 0.046
+     },
+     "stopped": 1993,
+     "recovered_above_entry": 0.454591,
+     "recovered_plus10": 0.106874,
+     "first_half_expectancy": 0.004229,
+     "second_half_expectancy": 0.009935,
+     "portfolio_cagr": 0.086727,
+     "portfolio_max_dd": -0.337192,
+     "portfolio_sharpe": 0.598358
+    }
+   },
+   "portfolio": {
+    "start": "2006-02-27",
+    "end": "2017-11-10",
+    "total_return": 1.062105,
+    "cagr": 0.063801,
+    "max_drawdown": -0.402381,
+    "volatility": 0.16224,
+    "sharpe": 0.462511,
+    "sortino": 0.613153,
+    "calmar": 0.15856,
+    "avg_exposure": 0.693814,
+    "trades": 480,
+    "win_rate": 0.354167,
+    "win_rate_ci95": [
+     0.312693,
+     0.397956
+    ],
+    "avg_win": 0.156999,
+    "avg_loss": -0.070767,
+    "payoff_ratio": 2.218536,
+    "profit_factor": 1.216616,
+    "expectancy": 0.0099,
+    "expectancy_ci95": [
+     -0.000561,
+     0.02053
+    ],
+    "expectancy_r": 0.130395,
+    "median_days": 24.0,
+    "exit_reasons": {
+     "stop": 0.525,
+     "target": 0.242,
+     "below_50dma": 0.217,
+     "end_of_data": 0.017
+    }
+   },
+   "portfolio_yearly": {
+    "2006": 0.194875,
+    "2007": 0.158666,
+    "2008": -0.205362,
+    "2009": -0.011844,
+    "2010": -0.013326,
+    "2011": 0.043386,
+    "2012": 0.143284,
+    "2013": 0.240166,
+    "2014": -0.13448,
+    "2015": 0.202593,
+    "2016": 0.101675,
+    "2017": 0.133271
+   },
+   "portfolio_random_control": {
+    "cagr": 0.030283,
+    "max_drawdown": -0.294695,
+    "sharpe": 0.271584
+   }
+  }
+ },
+ "benchmarks": {
+  "SPY buy & hold": {
+   "start": "2006-02-27",
+   "end": "2017-11-10",
+   "total_return": 1.288438,
+   "cagr": 0.073311,
+   "max_drawdown": -0.564745,
+   "volatility": 0.195386,
+   "sharpe": 0.459843,
+   "sortino": 0.561733,
+   "calmar": 0.129813
+  },
+  "Equal-weight all stocks": {
+   "start": "2006-02-27",
+   "end": "2017-11-10",
+   "total_return": 1.009858,
+   "cagr": 0.061471,
+   "max_drawdown": -0.594008,
+   "volatility": 0.226439,
+   "sharpe": 0.377143,
+   "sortino": 0.46914,
+   "calmar": 0.103485
+  }
+ },
+ "benchmark_yearly": {
+  "SPY": {
+   "2006": 0.0939,
+   "2007": 0.032423,
+   "2008": -0.38279,
+   "2009": 0.234742,
+   "2010": 0.128796,
+   "2011": 0.01871,
+   "2012": 0.160007,
+   "2013": 0.323216,
+   "2014": 0.134652,
+   "2015": 0.012294,
+   "2016": 0.119925,
+   "2017": 0.17106
+  },
+  "EW": {
+   "2006": 0.076736,
+   "2007": 0.045241,
+   "2008": -0.411305,
+   "2009": 0.348759,
+   "2010": 0.19908,
+   "2011": -0.042163,
+   "2012": 0.168416,
+   "2013": 0.328119,
+   "2014": 0.054137,
+   "2015": -0.059341,
+   "2016": 0.118611,
+   "2017": 0.137714
+  }
+ }
+}

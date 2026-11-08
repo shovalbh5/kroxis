@@ -1,0 +1,1013 @@
+{
+ "dataset": "sp1500_2020_2026",
+ "stocks": 1486,
+ "test_start": "2020-01-02",
+ "test_end": "2026-08-28",
+ "cost_per_side": 0.001,
+ "strategies": {
+  "minervini": {
+   "title": "Minervini SEPA (Trend Template + VCP breakout)",
+   "signals": 2748,
+   "all_signals": {
+    "trades": 2131,
+    "win_rate": 0.310652,
+    "win_rate_ci95": [
+     0.29136,
+     0.330626
+    ],
+    "avg_win": 0.121343,
+    "avg_loss": -0.052142,
+    "payoff_ratio": 2.327161,
+    "profit_factor": 1.048727,
+    "expectancy": 0.001751,
+    "expectancy_ci95": [
+     -0.003077,
+     0.006772
+    ],
+    "expectancy_r": 0.013807,
+    "median_days": 23.0,
+    "exit_reasons": {
+     "below_50dma": 0.68,
+     "stop": 0.302,
+     "end_of_data": 0.018
+    }
+   },
+   "first_half": {
+    "trades": 678,
+    "win_rate": 0.255162,
+    "win_rate_ci95": [
+     0.22379,
+     0.289294
+    ],
+    "avg_win": 0.111016,
+    "avg_loss": -0.053495,
+    "payoff_ratio": 2.075261,
+    "profit_factor": 0.710931,
+    "expectancy": -0.011518,
+    "expectancy_ci95": [
+     -0.018986,
+     -0.003713
+    ],
+    "expectancy_r": -0.180223,
+    "median_days": 20.0,
+    "exit_reasons": {
+     "below_50dma": 0.659,
+     "stop": 0.341
+    }
+   },
+   "second_half": {
+    "trades": 1453,
+    "win_rate": 0.336545,
+    "win_rate_ci95": [
+     0.312707,
+     0.361245
+    ],
+    "avg_win": 0.124996,
+    "avg_loss": -0.051433,
+    "payoff_ratio": 2.430261,
+    "profit_factor": 1.232778,
+    "expectancy": 0.007943,
+    "expectancy_ci95": [
+     0.001601,
+     0.013888
+    ],
+    "expectancy_r": 0.104704,
+    "median_days": 24.0,
+    "exit_reasons": {
+     "below_50dma": 0.69,
+     "stop": 0.284,
+     "end_of_data": 0.026
+    }
+   },
+   "by_year": {
+    "2020": {
+     "trades": 270,
+     "win_rate": 0.27037,
+     "expectancy": -0.00191
+    },
+    "2021": {
+     "trades": 334,
+     "win_rate": 0.278443,
+     "expectancy": -0.012059
+    },
+    "2022": {
+     "trades": 74,
+     "win_rate": 0.094595,
+     "expectancy": -0.044135
+    },
+    "2023": {
+     "trades": 388,
+     "win_rate": 0.314433,
+     "expectancy": 0.013154
+    },
+    "2024": {
+     "trades": 523,
+     "win_rate": 0.378585,
+     "expectancy": 0.016894
+    },
+    "2025": {
+     "trades": 306,
+     "win_rate": 0.287582,
+     "expectancy": -0.009093
+    },
+    "2026": {
+     "trades": 236,
+     "win_rate": 0.34322,
+     "expectancy": 0.00163
+    }
+   },
+   "random_control": {
+    "none": {
+     "win_rate": {
+      "mean": 0.35922,
+      "min": 0.343984,
+      "max": 0.382263
+     },
+     "expectancy": {
+      "mean": 0.003508,
+      "min": 0.000402,
+      "max": 0.005967
+     },
+     "profit_factor": {
+      "mean": 1.17047,
+      "min": 1.019317,
+      "max": 1.285507
+     },
+     "avg_win": {
+      "mean": 0.067325,
+      "min": 0.060873,
+      "max": 0.07511
+     },
+     "avg_loss": {
+      "mean": -0.032271,
+      "min": -0.032543,
+      "max": -0.031896
+     }
+    },
+    "trend200": {
+     "win_rate": {
+      "mean": 0.351993,
+      "min": 0.339584,
+      "max": 0.372253
+     },
+     "expectancy": {
+      "mean": 0.005416,
+      "min": 0.002657,
+      "max": 0.009021
+     },
+     "profit_factor": {
+      "mean": 1.257654,
+      "min": 1.12495,
+      "max": 1.439501
+     },
+     "avg_win": {
+      "mean": 0.075444,
+      "min": 0.068804,
+      "max": 0.081614
+     },
+     "avg_loss": {
+      "mean": -0.032598,
+      "min": -0.03383,
+      "max": -0.031813
+     }
+    }
+   },
+   "stop_study": {
+    "fixed 3%": {
+     "trades": 2264,
+     "win_rate": 0.160777,
+     "win_rate_ci95": [
+      0.146223,
+      0.176481
+     ],
+     "avg_win": 0.128809,
+     "avg_loss": -0.028546,
+     "payoff_ratio": 4.512362,
+     "profit_factor": 0.864474,
+     "expectancy": -0.003247,
+     "expectancy_ci95": [
+      -0.006626,
+      0.000217
+     ],
+     "expectancy_r": -0.104837,
+     "median_days": 6.0,
+     "exit_reasons": {
+      "stop": 0.79,
+      "below_50dma": 0.204,
+      "end_of_data": 0.006
+     },
+     "stopped": 1789,
+     "recovered_above_entry": 0.729458,
+     "recovered_plus10": 0.192845,
+     "first_half_expectancy": -0.011701,
+     "second_half_expectancy": 0.000616,
+     "portfolio_cagr": -0.05502,
+     "portfolio_max_dd": -0.420263,
+     "portfolio_sharpe": -0.272515
+    },
+    "fixed 5%": {
+     "trades": 2180,
+     "win_rate": 0.252294,
+     "win_rate_ci95": [
+      0.234508,
+      0.270951
+     ],
+     "avg_win": 0.126421,
+     "avg_loss": -0.043014,
+     "payoff_ratio": 2.939043,
+     "profit_factor": 0.991702,
+     "expectancy": -0.000267,
+     "expectancy_ci95": [
+      -0.004522,
+      0.004177
+     ],
+     "expectancy_r": -0.005238,
+     "median_days": 15.0,
+     "exit_reasons": {
+      "stop": 0.539,
+      "below_50dma": 0.449,
+      "end_of_data": 0.012
+     },
+     "stopped": 1175,
+     "recovered_above_entry": 0.597447,
+     "recovered_plus10": 0.158298,
+     "first_half_expectancy": -0.013523,
+     "second_half_expectancy": 0.005937,
+     "portfolio_cagr": 0.063922,
+     "portfolio_max_dd": -0.249135,
+     "portfolio_sharpe": 0.450598
+    },
+    "fixed 7.5%": {
+     "trades": 2130,
+     "win_rate": 0.309859,
+     "win_rate_ci95": [
+      0.290577,
+      0.329826
+     ],
+     "avg_win": 0.1211,
+     "avg_loss": -0.052758,
+     "payoff_ratio": 2.295369,
+     "profit_factor": 1.030574,
+     "expectancy": 0.001113,
+     "expectancy_ci95": [
+      -0.003817,
+      0.006102
+     ],
+     "expectancy_r": 0.014662,
+     "median_days": 23.0,
+     "exit_reasons": {
+      "below_50dma": 0.71,
+      "stop": 0.271,
+      "end_of_data": 0.018
+     },
+     "stopped": 578,
+     "recovered_above_entry": 0.441176,
+     "recovered_plus10": 0.128028,
+     "first_half_expectancy": -0.012903,
+     "second_half_expectancy": 0.007686,
+     "portfolio_cagr": 0.062754,
+     "portfolio_max_dd": -0.294074,
+     "portfolio_sharpe": 0.457101
+    },
+    "fixed 10%": {
+     "trades": 2117,
+     "win_rate": 0.32735,
+     "win_rate_ci95": [
+      0.307689,
+      0.347636
+     ],
+     "avg_win": 0.12089,
+     "avg_loss": -0.05598,
+     "payoff_ratio": 2.159531,
+     "profit_factor": 1.050952,
+     "expectancy": 0.001919,
+     "expectancy_ci95": [
+      -0.003022,
+      0.006987
+     ],
+     "expectancy_r": 0.019015,
+     "median_days": 25.0,
+     "exit_reasons": {
+      "below_50dma": 0.858,
+      "stop": 0.124,
+      "end_of_data": 0.018
+     },
+     "stopped": 262,
+     "recovered_above_entry": 0.332061,
+     "recovered_plus10": 0.099237,
+     "first_half_expectancy": -0.010057,
+     "second_half_expectancy": 0.007524,
+     "portfolio_cagr": 0.082532,
+     "portfolio_max_dd": -0.287568,
+     "portfolio_sharpe": 0.572763
+    },
+    "ATR x1.5": {
+     "trades": 2237,
+     "win_rate": 0.198033,
+     "win_rate_ci95": [
+      0.182042,
+      0.215059
+     ],
+     "avg_win": 0.13532,
+     "avg_loss": -0.034546,
+     "payoff_ratio": 3.91711,
+     "profit_factor": 0.967269,
+     "expectancy": -0.000907,
+     "expectancy_ci95": [
+      -0.004801,
+      0.003019
+     ],
+     "expectancy_r": -0.015105,
+     "median_days": 9.0,
+     "exit_reasons": {
+      "stop": 0.713,
+      "below_50dma": 0.278,
+      "end_of_data": 0.008
+     },
+     "stopped": 1595,
+     "recovered_above_entry": 0.688401,
+     "recovered_plus10": 0.159875,
+     "first_half_expectancy": -0.011828,
+     "second_half_expectancy": 0.004119,
+     "portfolio_cagr": 0.016833,
+     "portfolio_max_dd": -0.384716,
+     "portfolio_sharpe": 0.183021
+    },
+    "ATR x2": {
+     "trades": 2192,
+     "win_rate": 0.251369,
+     "win_rate_ci95": [
+      0.233654,
+      0.269953
+     ],
+     "avg_win": 0.129902,
+     "avg_loss": -0.042981,
+     "payoff_ratio": 3.022333,
+     "profit_factor": 1.014811,
+     "expectancy": 0.000477,
+     "expectancy_ci95": [
+      -0.003818,
+      0.004982
+     ],
+     "expectancy_r": 0.01376,
+     "median_days": 14.0,
+     "exit_reasons": {
+      "stop": 0.555,
+      "below_50dma": 0.432,
+      "end_of_data": 0.013
+     },
+     "stopped": 1216,
+     "recovered_above_entry": 0.588816,
+     "recovered_plus10": 0.126645,
+     "first_half_expectancy": -0.00933,
+     "second_half_expectancy": 0.005001,
+     "portfolio_cagr": 0.033282,
+     "portfolio_max_dd": -0.287082,
+     "portfolio_sharpe": 0.278282
+    },
+    "ATR x3": {
+     "trades": 2127,
+     "win_rate": 0.317348,
+     "win_rate_ci95": [
+      0.297912,
+      0.337443
+     ],
+     "avg_win": 0.121181,
+     "avg_loss": -0.052957,
+     "payoff_ratio": 2.288275,
+     "profit_factor": 1.063764,
+     "expectancy": 0.002305,
+     "expectancy_ci95": [
+      -0.002337,
+      0.007441
+     ],
+     "expectancy_r": 0.034092,
+     "median_days": 23.0,
+     "exit_reasons": {
+      "below_50dma": 0.696,
+      "stop": 0.286,
+      "end_of_data": 0.017
+     },
+     "stopped": 609,
+     "recovered_above_entry": 0.397373,
+     "recovered_plus10": 0.073892,
+     "first_half_expectancy": -0.009229,
+     "second_half_expectancy": 0.00769,
+     "portfolio_cagr": 0.107162,
+     "portfolio_max_dd": -0.241363,
+     "portfolio_sharpe": 0.712436
+    },
+    "below base low (max 8%)": {
+     "trades": 2131,
+     "win_rate": 0.310652,
+     "win_rate_ci95": [
+      0.29136,
+      0.330626
+     ],
+     "avg_win": 0.121343,
+     "avg_loss": -0.052142,
+     "payoff_ratio": 2.327161,
+     "profit_factor": 1.048727,
+     "expectancy": 0.001751,
+     "expectancy_ci95": [
+      -0.003077,
+      0.006772
+     ],
+     "expectancy_r": 0.013807,
+     "median_days": 23.0,
+     "exit_reasons": {
+      "below_50dma": 0.68,
+      "stop": 0.302,
+      "end_of_data": 0.018
+     },
+     "stopped": 644,
+     "recovered_above_entry": 0.450311,
+     "recovered_plus10": 0.114907,
+     "first_half_expectancy": -0.011518,
+     "second_half_expectancy": 0.007943,
+     "portfolio_cagr": 0.057541,
+     "portfolio_max_dd": -0.286589,
+     "portfolio_sharpe": 0.422977
+    }
+   },
+   "portfolio": {
+    "start": "2020-01-02",
+    "end": "2026-08-28",
+    "total_return": 0.450935,
+    "cagr": 0.057541,
+    "max_drawdown": -0.286589,
+    "volatility": 0.164798,
+    "sharpe": 0.422977,
+    "sortino": 0.555469,
+    "calmar": 0.200778,
+    "avg_exposure": 0.790006,
+    "trades": 295,
+    "win_rate": 0.355932,
+    "win_rate_ci95": [
+     0.303467,
+     0.412101
+    ],
+    "avg_win": 0.124427,
+    "avg_loss": -0.054785,
+    "payoff_ratio": 2.271179,
+    "profit_factor": 1.255125,
+    "expectancy": 0.009002,
+    "expectancy_ci95": [
+     -0.00386,
+     0.021708
+    ],
+    "expectancy_r": 0.128367,
+    "median_days": 25.0,
+    "exit_reasons": {
+     "below_50dma": 0.702,
+     "stop": 0.271,
+     "end_of_data": 0.027
+    }
+   },
+   "portfolio_yearly": {
+    "2020": -0.091883,
+    "2021": 0.183781,
+    "2022": -0.158964,
+    "2023": 0.255322,
+    "2024": 0.072189,
+    "2025": -0.081282,
+    "2026": 0.297811
+   },
+   "portfolio_random_control": {
+    "cagr": 0.028091,
+    "max_drawdown": -0.393293,
+    "sharpe": 0.2294
+   }
+  },
+  "oneil": {
+   "title": "O'Neil CAN SLIM (price/volume rules: N, L, M)",
+   "signals": 4430,
+   "all_signals": {
+    "trades": 2777,
+    "win_rate": 0.325891,
+    "win_rate_ci95": [
+     0.308709,
+     0.343554
+    ],
+    "avg_win": 0.157967,
+    "avg_loss": -0.069744,
+    "payoff_ratio": 2.264935,
+    "profit_factor": 1.094961,
+    "expectancy": 0.004465,
+    "expectancy_ci95": [
+     -2.4e-05,
+     0.008981
+    ],
+    "expectancy_r": 0.058804,
+    "median_days": 24.0,
+    "exit_reasons": {
+     "stop": 0.524,
+     "below_50dma": 0.268,
+     "target": 0.198,
+     "end_of_data": 0.01
+    }
+   },
+   "first_half": {
+    "trades": 993,
+    "win_rate": 0.23565,
+    "win_rate_ci95": [
+     0.210302,
+     0.263034
+    ],
+    "avg_win": 0.166323,
+    "avg_loss": -0.070221,
+    "payoff_ratio": 2.368557,
+    "profit_factor": 0.730227,
+    "expectancy": -0.01448,
+    "expectancy_ci95": [
+     -0.021552,
+     -0.007444
+    ],
+    "expectancy_r": -0.190712,
+    "median_days": 19.0,
+    "exit_reasons": {
+     "stop": 0.616,
+     "below_50dma": 0.234,
+     "target": 0.15
+    }
+   },
+   "second_half": {
+    "trades": 1784,
+    "win_rate": 0.376121,
+    "win_rate_ci95": [
+     0.353931,
+     0.398843
+    ],
+    "avg_win": 0.155053,
+    "avg_loss": -0.069419,
+    "payoff_ratio": 2.233564,
+    "profit_factor": 1.34656,
+    "expectancy": 0.015009,
+    "expectancy_ci95": [
+     0.009153,
+     0.021198
+    ],
+    "expectancy_r": 0.197688,
+    "median_days": 26.0,
+    "exit_reasons": {
+     "stop": 0.473,
+     "below_50dma": 0.288,
+     "target": 0.224,
+     "end_of_data": 0.016
+    }
+   },
+   "by_year": {
+    "2020": {
+     "trades": 393,
+     "win_rate": 0.251908,
+     "expectancy": -0.007847
+    },
+    "2021": {
+     "trades": 430,
+     "win_rate": 0.251163,
+     "expectancy": -0.010381
+    },
+    "2022": {
+     "trades": 170,
+     "win_rate": 0.158824,
+     "expectancy": -0.040178
+    },
+    "2023": {
+     "trades": 479,
+     "win_rate": 0.40501,
+     "expectancy": 0.019796
+    },
+    "2024": {
+     "trades": 674,
+     "win_rate": 0.376855,
+     "expectancy": 0.01635
+    },
+    "2025": {
+     "trades": 396,
+     "win_rate": 0.335859,
+     "expectancy": 0.000281
+    },
+    "2026": {
+     "trades": 235,
+     "win_rate": 0.382979,
+     "expectancy": 0.026227
+    }
+   },
+   "random_control": {
+    "none": {
+     "win_rate": {
+      "mean": 0.363899,
+      "min": 0.353347,
+      "max": 0.375173
+     },
+     "expectancy": {
+      "mean": 0.008767,
+      "min": 0.005597,
+      "max": 0.011808
+     },
+     "profit_factor": {
+      "mean": 1.245439,
+      "min": 1.155492,
+      "max": 1.332644
+     },
+     "avg_win": {
+      "mean": 0.122508,
+      "min": 0.117713,
+      "max": 0.12803
+     },
+     "avg_loss": {
+      "mean": -0.056322,
+      "min": -0.057183,
+      "max": -0.055666
+     }
+    },
+    "oneil": {
+     "win_rate": {
+      "mean": 0.340857,
+      "min": 0.335059,
+      "max": 0.346382
+     },
+     "expectancy": {
+      "mean": 0.004498,
+      "min": 0.000627,
+      "max": 0.007282
+     },
+     "profit_factor": {
+      "mean": 1.121312,
+      "min": 1.016196,
+      "max": 1.202203
+     },
+     "avg_win": {
+      "mean": 0.123224,
+      "min": 0.117426,
+      "max": 0.127325
+     },
+     "avg_loss": {
+      "mean": -0.056913,
+      "min": -0.058227,
+      "max": -0.055102
+     }
+    }
+   },
+   "stop_study": {
+    "fixed 3%": {
+     "trades": 3063,
+     "win_rate": 0.164218,
+     "win_rate_ci95": [
+      0.15152,
+      0.177757
+     ],
+     "avg_win": 0.164198,
+     "avg_loss": -0.033456,
+     "payoff_ratio": 4.907906,
+     "profit_factor": 0.964327,
+     "expectancy": -0.000997,
+     "expectancy_ci95": [
+      -0.004127,
+      0.002181
+     ],
+     "expectancy_r": -0.032209,
+     "median_days": 5.0,
+     "exit_reasons": {
+      "stop": 0.821,
+      "target": 0.096,
+      "below_50dma": 0.079,
+      "end_of_data": 0.004
+     },
+     "stopped": 2514,
+     "recovered_above_entry": 0.737072,
+     "recovered_plus10": 0.197295,
+     "first_half_expectancy": -0.012368,
+     "second_half_expectancy": 0.005178,
+     "portfolio_cagr": -0.005171,
+     "portfolio_max_dd": -0.420499,
+     "portfolio_sharpe": 0.07706
+    },
+    "fixed 5%": {
+     "trades": 2895,
+     "win_rate": 0.253886,
+     "win_rate_ci95": [
+      0.238365,
+      0.27006
+     ],
+     "avg_win": 0.160572,
+     "avg_loss": -0.05194,
+     "payoff_ratio": 3.091488,
+     "profit_factor": 1.051965,
+     "expectancy": 0.002014,
+     "expectancy_ci95": [
+      -0.001895,
+      0.006046
+     ],
+     "expectancy_r": 0.039526,
+     "median_days": 14.0,
+     "exit_reasons": {
+      "stop": 0.685,
+      "below_50dma": 0.156,
+      "target": 0.152,
+      "end_of_data": 0.007
+     },
+     "stopped": 1982,
+     "recovered_above_entry": 0.610999,
+     "recovered_plus10": 0.15893,
+     "first_half_expectancy": -0.014802,
+     "second_half_expectancy": 0.011175,
+     "portfolio_cagr": 0.016376,
+     "portfolio_max_dd": -0.350611,
+     "portfolio_sharpe": 0.1812
+    },
+    "fixed 7.5%": {
+     "trades": 2777,
+     "win_rate": 0.325891,
+     "win_rate_ci95": [
+      0.308709,
+      0.343554
+     ],
+     "avg_win": 0.157967,
+     "avg_loss": -0.069744,
+     "payoff_ratio": 2.264935,
+     "profit_factor": 1.094961,
+     "expectancy": 0.004465,
+     "expectancy_ci95": [
+      -2.4e-05,
+      0.008981
+     ],
+     "expectancy_r": 0.058804,
+     "median_days": 24.0,
+     "exit_reasons": {
+      "stop": 0.524,
+      "below_50dma": 0.268,
+      "target": 0.198,
+      "end_of_data": 0.01
+     },
+     "stopped": 1455,
+     "recovered_above_entry": 0.454983,
+     "recovered_plus10": 0.134021,
+     "first_half_expectancy": -0.01448,
+     "second_half_expectancy": 0.015009,
+     "portfolio_cagr": 0.031097,
+     "portfolio_max_dd": -0.345125,
+     "portfolio_sharpe": 0.25446
+    },
+    "fixed 10%": {
+     "trades": 2721,
+     "win_rate": 0.368247,
+     "win_rate_ci95": [
+      0.350321,
+      0.386544
+     ],
+     "avg_win": 0.159014,
+     "avg_loss": -0.081645,
+     "payoff_ratio": 1.947624,
+     "profit_factor": 1.135264,
+     "expectancy": 0.006977,
+     "expectancy_ci95": [
+      0.002087,
+      0.012264
+     ],
+     "expectancy_r": 0.069147,
+     "median_days": 30.0,
+     "exit_reasons": {
+      "below_50dma": 0.392,
+      "stop": 0.372,
+      "target": 0.224,
+      "end_of_data": 0.012
+     },
+     "stopped": 1011,
+     "recovered_above_entry": 0.347181,
+     "recovered_plus10": 0.099901,
+     "first_half_expectancy": -0.011987,
+     "second_half_expectancy": 0.01755,
+     "portfolio_cagr": 0.073409,
+     "portfolio_max_dd": -0.315556,
+     "portfolio_sharpe": 0.464785
+    },
+    "ATR x1.5": {
+     "trades": 2943,
+     "win_rate": 0.22528,
+     "win_rate_ci95": [
+      0.21055,
+      0.240727
+     ],
+     "avg_win": 0.167282,
+     "avg_loss": -0.046049,
+     "payoff_ratio": 3.632692,
+     "profit_factor": 1.056349,
+     "expectancy": 0.00201,
+     "expectancy_ci95": [
+      -0.00161,
+      0.005609
+     ],
+     "expectancy_r": 0.025447,
+     "median_days": 10.0,
+     "exit_reasons": {
+      "stop": 0.744,
+      "target": 0.139,
+      "below_50dma": 0.11,
+      "end_of_data": 0.006
+     },
+     "stopped": 2191,
+     "recovered_above_entry": 0.655408,
+     "recovered_plus10": 0.15655,
+     "first_half_expectancy": -0.010921,
+     "second_half_expectancy": 0.009056,
+     "portfolio_cagr": -0.021368,
+     "portfolio_max_dd": -0.414872,
+     "portfolio_sharpe": -0.015067
+    },
+    "ATR x2": {
+     "trades": 2860,
+     "win_rate": 0.281119,
+     "win_rate_ci95": [
+      0.264945,
+      0.29788
+     ],
+     "avg_win": 0.168679,
+     "avg_loss": -0.058811,
+     "payoff_ratio": 2.868166,
+     "profit_factor": 1.121598,
+     "expectancy": 0.005141,
+     "expectancy_ci95": [
+      0.000646,
+      0.010149
+     ],
+     "expectancy_r": 0.060463,
+     "median_days": 16.0,
+     "exit_reasons": {
+      "stop": 0.655,
+      "target": 0.173,
+      "below_50dma": 0.163,
+      "end_of_data": 0.009
+     },
+     "stopped": 1874,
+     "recovered_above_entry": 0.554429,
+     "recovered_plus10": 0.130203,
+     "first_half_expectancy": -0.009326,
+     "second_half_expectancy": 0.012991,
+     "portfolio_cagr": 0.013578,
+     "portfolio_max_dd": -0.411052,
+     "portfolio_sharpe": 0.166771
+    },
+    "ATR x3": {
+     "trades": 2752,
+     "win_rate": 0.352108,
+     "win_rate_ci95": [
+      0.33448,
+      0.370148
+     ],
+     "avg_win": 0.164428,
+     "avg_loss": -0.076548,
+     "payoff_ratio": 2.148033,
+     "profit_factor": 1.167383,
+     "expectancy": 0.008301,
+     "expectancy_ci95": [
+      0.003021,
+      0.013604
+     ],
+     "expectancy_r": 0.069652,
+     "median_days": 27.0,
+     "exit_reasons": {
+      "stop": 0.477,
+      "below_50dma": 0.291,
+      "target": 0.219,
+      "end_of_data": 0.013
+     },
+     "stopped": 1312,
+     "recovered_above_entry": 0.39939,
+     "recovered_plus10": 0.08003,
+     "first_half_expectancy": -0.008045,
+     "second_half_expectancy": 0.017327,
+     "portfolio_cagr": 0.033179,
+     "portfolio_max_dd": -0.279361,
+     "portfolio_sharpe": 0.274079
+    },
+    "below base low (max 8%)": {
+     "trades": 2763,
+     "win_rate": 0.335143,
+     "win_rate_ci95": [
+      0.317781,
+      0.352962
+     ],
+     "avg_win": 0.159094,
+     "avg_loss": -0.07274,
+     "payoff_ratio": 2.187171,
+     "profit_factor": 1.102515,
+     "expectancy": 0.004958,
+     "expectancy_ci95": [
+      0.000189,
+      0.009923
+     ],
+     "expectancy_r": 0.059973,
+     "median_days": 25.0,
+     "exit_reasons": {
+      "stop": 0.496,
+      "below_50dma": 0.29,
+      "target": 0.203,
+      "end_of_data": 0.011
+     },
+     "stopped": 1371,
+     "recovered_above_entry": 0.439825,
+     "recovered_plus10": 0.129103,
+     "first_half_expectancy": -0.013567,
+     "second_half_expectancy": 0.015285,
+     "portfolio_cagr": 0.021277,
+     "portfolio_max_dd": -0.368908,
+     "portfolio_sharpe": 0.206167
+    }
+   },
+   "portfolio": {
+    "start": "2020-01-02",
+    "end": "2026-08-28",
+    "total_return": 0.225978,
+    "cagr": 0.031097,
+    "max_drawdown": -0.345125,
+    "volatility": 0.197693,
+    "sharpe": 0.25446,
+    "sortino": 0.330186,
+    "calmar": 0.090105,
+    "avg_exposure": 0.736624,
+    "trades": 338,
+    "win_rate": 0.313609,
+    "win_rate_ci95": [
+     0.266476,
+     0.364933
+    ],
+    "avg_win": 0.17697,
+    "avg_loss": -0.072413,
+    "payoff_ratio": 2.443894,
+    "profit_factor": 1.116607,
+    "expectancy": 0.005796,
+    "expectancy_ci95": [
+     -0.008041,
+     0.019892
+    ],
+    "expectancy_r": 0.076336,
+    "median_days": 19.0,
+    "exit_reasons": {
+     "stop": 0.577,
+     "below_50dma": 0.204,
+     "target": 0.195,
+     "end_of_data": 0.024
+    }
+   },
+   "portfolio_yearly": {
+    "2020": -0.079411,
+    "2021": 0.042445,
+    "2022": -0.226264,
+    "2023": 0.313523,
+    "2024": 0.050445,
+    "2025": 0.062439,
+    "2026": 0.126306
+   },
+   "portfolio_random_control": {
+    "cagr": 0.046428,
+    "max_drawdown": -0.356143,
+    "sharpe": 0.330177
+   }
+  }
+ },
+ "benchmarks": {
+  "SPY buy & hold": {
+   "start": "2020-01-02",
+   "end": "2026-08-28",
+   "total_return": 1.598056,
+   "cagr": 0.154317,
+   "max_drawdown": -0.337173,
+   "volatility": 0.201455,
+   "sharpe": 0.815462,
+   "sortino": 1.008209,
+   "calmar": 0.457681
+  },
+  "Equal-weight all stocks": {
+   "start": "2020-01-02",
+   "end": "2026-08-28",
+   "total_return": 1.491257,
+   "cagr": 0.147057,
+   "max_drawdown": -0.418465,
+   "volatility": 0.235505,
+   "sharpe": 0.702715,
+   "sortino": 0.903841,
+   "calmar": 0.351421
+  }
+ },
+ "benchmark_yearly": {
+  "SPY": {
+   "2020": 0.172352,
+   "2021": 0.287288,
+   "2022": -0.181754,
+   "2023": 0.261758,
+   "2024": 0.248864,
+   "2025": 0.177191,
+   "2026": 0.134207
+  },
+  "EW": {
+   "2020": 0.192625,
+   "2021": 0.294499,
+   "2022": -0.132161,
+   "2023": 0.211022,
+   "2024": 0.153669,
+   "2025": 0.113911,
+   "2026": 0.194784
+  }
+ }
+}
