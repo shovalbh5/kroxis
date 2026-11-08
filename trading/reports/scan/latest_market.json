@@ -1,0 +1,11 @@
+{
+ "date": "2026-11-06",
+ "spy_close": 735.2899780273438,
+ "spy_above_50d": false,
+ "spy_above_200d": true,
+ "minervini_market_ok": true,
+ "oneil_market_ok": false,
+ "stocks_scanned": 1487,
+ "trend_template_count": 231,
+ "buy_signals": 2
+}

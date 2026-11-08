@@ -117,6 +117,19 @@ def main():
         with open(os.path.join(out_dir, name), "w") as fh:
             fh.write(md)
     rows.to_csv(os.path.join(out_dir, f"scan_{market['date']}.csv"), index_label="rank")
+    rows.to_csv(os.path.join(out_dir, "latest.csv"), index_label="rank")
+    with open(os.path.join(out_dir, "latest_market.json"), "w") as fh:
+        json.dump(market, fh, indent=1)
+    # recent prices of the listed stocks, for the dashboard's charts
+    hist = []
+    for sym in dict.fromkeys(rows.symbol):
+        c = panel.close[sym]
+        d = pd.DataFrame({"date": c.index.strftime("%Y-%m-%d"), "close": c,
+                          "sma50": c.rolling(50).mean(), "sma150": c.rolling(150).mean(),
+                          "sma200": c.rolling(200).mean()}).iloc[-160:]
+        d.insert(0, "symbol", sym)
+        hist.append(d)
+    pd.concat(hist).round(4).to_csv(os.path.join(out_dir, "latest_prices.csv"), index=False)
     print(md)
     if a.no_paper:
         return
