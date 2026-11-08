@@ -74,7 +74,7 @@ class Position:
     def __init__(self, mkt: Market, j: int, entry_idx: int, entry_price: float,
                  stop_ref: float, rules: ExitRules, cost: float):
         self.m, self.j, self.rules, self.cost = mkt, j, rules, cost
-        self.entry_idx, self.entry = entry_idx, entry_price
+        self.entry_idx, self.entry, self.stop_ref = entry_idx, entry_price, stop_ref
         raw_open = entry_price / (1 + cost)
         self.stop = self._initial_stop(raw_open, stop_ref, entry_idx)
         self.target = raw_open * (1 + rules.target_pct) if rules.target_pct else None
@@ -228,75 +228,119 @@ class PortfolioResult:
     trades: list = field(default_factory=list)
 
 
-def backtest_portfolio(mkt: Market, sig: dict, rules: ExitRules,
-                       cfg: PortfolioConfig, start_idx: int = 0) -> PortfolioResult:
-    n, _ = mkt.c.shape
-    entries, stop_ref, pivot, rank = sig["entry"], sig["stop_ref"], sig["pivot"], sig["rank"]
-    cash = cfg.initial_equity
-    positions: dict[int, Position] = {}
-    shares: dict[int, float] = {}
-    last_px: dict[int, float] = {}
-    trades, eq, expo = [], np.full(n, np.nan), np.zeros(n)
+class PortfolioSim:
+    """A portfolio that moves forward one trading day at a time.
 
-    def close_pos(j, t):
-        nonlocal cash
-        t.shares = shares[j]
-        cash += shares[j] * t.exit_price
-        trades.append(t)
-        del positions[j], shares[j]
+    backtest_portfolio() runs it over history. The paper-trading demo runs
+    it on each new day and saves its state in between, so both use exactly
+    the same buy, sell and sizing rules.
+    """
 
-    for i in range(start_idx, n):
+    def __init__(self, mkt: Market, rules: ExitRules, cfg: PortfolioConfig,
+                 cash: float | None = None):
+        self.m, self.rules, self.cfg = mkt, rules, cfg
+        self.cash = cfg.initial_equity if cash is None else cash
+        self.positions: dict[int, Position] = {}
+        self.shares: dict[int, float] = {}
+        self.last_px: dict[int, float] = {}
+        self.trades: list[Trade] = []
+
+    def market_value(self) -> float:
+        return sum(self.shares[j] * self.last_px.get(j, self.positions[j].entry)
+                   for j in self.positions)
+
+    def _close(self, j: int, t: Trade) -> None:
+        t.shares = self.shares[j]
+        self.cash += self.shares[j] * t.exit_price
+        self.trades.append(t)
+        del self.positions[j], self.shares[j]
+
+    def step(self, i: int, cand=(), pivot=None, stop_ref=None, rank=None) -> tuple[float, float]:
+        """Process day i. `cand` = stocks with a signal at the close of day
+        i-1, best first; pivot / stop_ref / rank are that day's rows."""
+        m, cfg = self.m, self.cfg
         # 1) exits at the open (gaps / pending close-rule exits)
-        for j in list(positions):
-            t = positions[j].on_open(i)
+        for j in list(self.positions):
+            t = self.positions[j].on_open(i)
             if t:
-                close_pos(j, t)
-        # 2) new entries from yesterday's signals, best RS first
-        if i > start_idx:
-            cand = np.flatnonzero(entries[i - 1])
-            cand = [j for j in cand if j not in positions]
-            cand.sort(key=lambda j: -rank[i - 1, j])
-            equity_now = cash + sum(shares[j] * last_px.get(j, positions[j].entry)
-                                    for j in positions)
+                self._close(j, t)
+        # 2) new entries from yesterday's signals
+        cand = [j for j in cand if j not in self.positions]
+        if cand:
+            equity_now = self.cash + self.market_value()
             for j in cand:
-                if len(positions) >= cfg.max_positions:
+                if len(self.positions) >= cfg.max_positions:
                     break
-                o = mkt.o[i, j]
+                o = m.o[i, j]
                 if not np.isfinite(o):
                     continue
-                if (cfg.max_entry_gap is not None and np.isfinite(pivot[i - 1, j])
-                        and o > pivot[i - 1, j] * (1 + cfg.max_entry_gap)):
+                if (cfg.max_entry_gap is not None and np.isfinite(pivot[j])
+                        and o > pivot[j] * (1 + cfg.max_entry_gap)):
                     continue
                 px = o * (1 + cfg.cost)
-                pos = Position(mkt, j, i, px, stop_ref[i - 1, j], rules, cfg.cost)
+                pos = Position(m, j, i, px, stop_ref[j], self.rules, cfg.cost)
                 risk_ps = px - pos.stop
                 if risk_ps <= 0:
                     continue
                 qty = min(cfg.risk_per_trade * equity_now / risk_ps,
                           cfg.max_position * equity_now / px,
-                          cash / px)
+                          self.cash / px)
                 if qty * px < 0.01 * equity_now:
                     continue
-                cash -= qty * px
-                pos.trade.signal_rank = float(rank[i - 1, j])
-                positions[j], shares[j] = pos, qty
+                self.cash -= qty * px
+                pos.trade.signal_rank = float(rank[j])
+                self.positions[j], self.shares[j] = pos, qty
         # 3) intraday stops / targets, then close rules
-        for j in list(positions):
-            t = positions[j].intraday(i)
+        for j in list(self.positions):
+            t = self.positions[j].intraday(i)
             if t:
-                close_pos(j, t)
+                self._close(j, t)
                 continue
-            positions[j].on_close(i)
+            self.positions[j].on_close(i)
         # 4) mark to market
-        mv = 0.0
-        for j in positions:
-            c = mkt.c[i, j]
+        for j in self.positions:
+            c = m.c[i, j]
             if np.isfinite(c):
-                last_px[j] = c
-            mv += shares[j] * last_px.get(j, positions[j].entry)
-        eq[i] = cash + mv
-        expo[i] = mv / eq[i] if eq[i] > 0 else 0
-    for j in list(positions):
-        close_pos(j, positions[j].force_close(n - 1))
+                self.last_px[j] = c
+        mv = self.market_value()
+        eq = self.cash + mv
+        return eq, (mv / eq if eq > 0 else 0.0)
+
+    def restore(self, j: int, entry_idx: int, entry_price: float, stop_ref: float,
+                shares: float, upto_idx: int) -> Trade | None:
+        """Rebuild an open position by replaying its days through upto_idx.
+        Returns a Trade if, on current data, it would already have closed."""
+        pos = Position(self.m, j, entry_idx, entry_price, stop_ref, self.rules, self.cfg.cost)
+        self.positions[j], self.shares[j] = pos, shares
+        for k in range(entry_idx, upto_idx + 1):
+            t = (pos.on_open(k) if k > entry_idx else None) or pos.intraday(k)
+            if t:
+                self._close(j, t)
+                return t
+            pos.on_close(k)
+            c = self.m.c[k, j]
+            if np.isfinite(c):
+                self.last_px[j] = c
+        return None
+
+    def close_all(self, i: int) -> None:
+        for j in list(self.positions):
+            self._close(j, self.positions[j].force_close(i))
+
+
+def backtest_portfolio(mkt: Market, sig: dict, rules: ExitRules,
+                       cfg: PortfolioConfig, start_idx: int = 0) -> PortfolioResult:
+    n, _ = mkt.c.shape
+    entries, stop_ref, pivot, rank = sig["entry"], sig["stop_ref"], sig["pivot"], sig["rank"]
+    sim = PortfolioSim(mkt, rules, cfg)
+    eq, expo = np.full(n, np.nan), np.zeros(n)
+    for i in range(start_idx, n):
+        if i > start_idx:
+            cand = sorted(np.flatnonzero(entries[i - 1]), key=lambda j: -rank[i - 1, j])
+            eq[i], expo[i] = sim.step(i, cand, pivot[i - 1], stop_ref[i - 1], rank[i - 1])
+        else:
+            eq[i], expo[i] = sim.step(i)
+    sim.close_all(n - 1)
     idx = mkt.dates[start_idx:]
-    return PortfolioResult(pd.Series(eq[start_idx:], idx), pd.Series(expo[start_idx:], idx), trades)
+    return PortfolioResult(pd.Series(eq[start_idx:], idx), pd.Series(expo[start_idx:], idx),
+                           sim.trades)

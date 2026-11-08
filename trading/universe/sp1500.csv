@@ -1,0 +1,1496 @@
+symbol,sector,index
+A,Healthcare,S&P 500
+AA,Materials,S&P 400
+AAL,Industrials,S&P 400
+AAMI,Financials,S&P 600
+AAON,Industrials,S&P 400
+AAP,Consumer Discretionary,S&P 600
+AAPL,Technology,S&P 500
+AAT,Real Estate,S&P 600
+ABBV,Healthcare,S&P 500
+ABCB,Financials,S&P 600
+ABG,Consumer Discretionary,S&P 600
+ABM,Industrials,S&P 600
+ABNB,Consumer Discretionary,S&P 500
+ABR,Financials,S&P 600
+ABT,Healthcare,S&P 500
+ACA,Industrials,S&P 600
+ACAD,Healthcare,S&P 600
+ACGL,Financials,S&P 500
+ACHC,Healthcare,S&P 600
+ACI,Consumer Staples,S&P 400
+ACIW,Technology,S&P 600
+ACLS,Technology,S&P 600
+ACM,Industrials,S&P 400
+ACMR,Technology,S&P 600
+ACN,Technology,S&P 500
+ACT,Financials,S&P 600
+ADAM,Real Estate,S&P 600
+ADBE,Technology,S&P 500
+ADC,Real Estate,S&P 400
+ADEA,Technology,S&P 600
+ADI,Technology,S&P 500
+ADIG,Technology,S&P 600
+ADM,Consumer Staples,S&P 500
+ADMA,Healthcare,S&P 600
+ADNT,Consumer Discretionary,S&P 600
+ADP,Industrials,S&P 500
+ADSK,Technology,S&P 500
+ADT,Consumer Discretionary,S&P 600
+ADUS,Healthcare,S&P 600
+AEE,Utilities,S&P 500
+AEIS,Technology,S&P 400
+AEO,Consumer Discretionary,S&P 600
+AEP,Utilities,S&P 500
+AES,Utilities,S&P 500
+AESI,Energy,S&P 600
+AFG,Financials,S&P 400
+AFL,Financials,S&P 500
+AGCO,Industrials,S&P 400
+AGNC,Financials,S&P 400
+AGNT,Real Estate,S&P 600
+AGO,Financials,S&P 600
+AGX,Industrials,S&P 600
+AGYS,Technology,S&P 600
+AHCO,Healthcare,S&P 600
+AHR,Real Estate,S&P 400
+AIG,Financials,S&P 500
+AIN,Industrials,S&P 600
+AIR,Industrials,S&P 600
+AIT,Industrials,S&P 400
+AIZ,Financials,S&P 500
+AJG,Financials,S&P 500
+AKAM,Technology,S&P 500
+AKR,Real Estate,S&P 600
+ALB,Materials,S&P 500
+ALG,Industrials,S&P 600
+ALGM,Technology,S&P 400
+ALGN,Healthcare,S&P 500
+ALGT,Industrials,S&P 600
+ALHC,Healthcare,S&P 600
+ALK,Industrials,S&P 400
+ALKS,Healthcare,S&P 600
+ALL,Financials,S&P 500
+ALLE,Industrials,S&P 500
+ALLY,Financials,S&P 400
+ALRM,Financials,S&P 600
+ALSN,Industrials,S&P 400
+ALV,Consumer Discretionary,S&P 400
+AM,Energy,S&P 400
+AMAT,Technology,S&P 500
+AMCR,Materials,S&P 500
+AMD,Technology,S&P 500
+AME,Industrials,S&P 500
+AMG,Financials,S&P 400
+AMGN,Healthcare,S&P 500
+AMH,Real Estate,S&P 400
+AMKR,Technology,S&P 400
+AMN,Healthcare,S&P 600
+AMP,Financials,S&P 500
+AMPH,Healthcare,S&P 600
+AMR,Materials,S&P 600
+AMRX,Healthcare,S&P 600
+AMSF,Financials,S&P 600
+AMT,Real Estate,S&P 500
+AMTM,Industrials,S&P 600
+AMZN,Consumer Discretionary,S&P 500
+AN,Consumer Discretionary,S&P 400
+ANDE,Consumer Staples,S&P 600
+ANET,Technology,S&P 500
+ANF,Consumer Discretionary,S&P 400
+ANIP,Healthcare,S&P 600
+AON,Financials,S&P 500
+AORT,Healthcare,S&P 600
+AOS,Industrials,S&P 500
+AOSL,Technology,S&P 600
+APA,Energy,S&P 500
+APAM,Financials,S&P 600
+APD,Materials,S&P 500
+APG,Industrials,S&P 400
+APH,Technology,S&P 500
+APLE,Real Estate,S&P 600
+APO,Financials,S&P 500
+APOG,Industrials,S&P 600
+APP,Communication Services,S&P 500
+APPF,Technology,S&P 400
+APTV,Consumer Discretionary,S&P 500
+AR,Energy,S&P 400
+ARCB,Industrials,S&P 600
+ARE,Real Estate,S&P 500
+ARES,Financials,S&P 500
+ARLO,Technology,S&P 600
+ARMK,Consumer Discretionary,S&P 400
+AROC,Energy,S&P 600
+ARR,Real Estate,S&P 600
+ARW,Technology,S&P 400
+ARWR,Healthcare,S&P 400
+ASB,Financials,S&P 400
+ASH,Materials,S&P 400
+ASO,Consumer Discretionary,S&P 600
+ASTE,Industrials,S&P 600
+ASTH,Healthcare,S&P 600
+ATEN,Technology,S&P 600
+ATI,Industrials,S&P 400
+ATMU,Industrials,S&P 600
+ATO,Utilities,S&P 500
+ATR,Materials,S&P 400
+AUB,Financials,S&P 600
+AVA,Utilities,S&P 600
+AVAV,Industrials,S&P 400
+AVGO,Technology,S&P 500
+AVNT,Materials,S&P 400
+AVT,Technology,S&P 400
+AVTR,Healthcare,S&P 400
+AVY,Materials,S&P 500
+AWI,Industrials,S&P 600
+AWK,Utilities,S&P 500
+AWR,Utilities,S&P 600
+AX,Financials,S&P 600
+AXON,Industrials,S&P 500
+AXP,Financials,S&P 500
+AXTA,Materials,S&P 400
+AYI,Industrials,S&P 400
+AZO,Consumer Discretionary,S&P 500
+AZTA,Healthcare,S&P 600
+AZZ,Industrials,S&P 600
+BA,Industrials,S&P 500
+BAC,Financials,S&P 500
+BAH,Industrials,S&P 400
+BALL,Materials,S&P 500
+BANC,Financials,S&P 600
+BANF,Financials,S&P 600
+BANR,Financials,S&P 600
+BAX,Healthcare,S&P 500
+BBT,Financials,S&P 600
+BBWI,Consumer Discretionary,S&P 400
+BBY,Consumer Discretionary,S&P 500
+BC,Consumer Discretionary,S&P 400
+BCC,Industrials,S&P 600
+BCO,Industrials,S&P 400
+BCPC,Materials,S&P 600
+BDC,Technology,S&P 400
+BDX,Healthcare,S&P 500
+BE,Industrials,S&P 500
+BEN,Financials,S&P 500
+BF-B,Consumer Staples,S&P 500
+BFAM,Consumer Discretionary,S&P 600
+BFH,Financials,S&P 600
+BFS,Real Estate,S&P 600
+BG,Consumer Staples,S&P 500
+BGC,Financials,S&P 600
+BHE,Technology,S&P 600
+BHF,Financials,S&P 400
+BIIB,Healthcare,S&P 500
+BILL,Technology,S&P 400
+BIO,Healthcare,S&P 400
+BJ,Consumer Staples,S&P 400
+BJRI,Consumer Discretionary,S&P 600
+BKE,Consumer Discretionary,S&P 600
+BKH,Utilities,S&P 400
+BKNG,Consumer Discretionary,S&P 500
+BKR,Energy,S&P 500
+BKU,Financials,S&P 600
+BL,Technology,S&P 600
+BLFS,Healthcare,S&P 600
+BLK,Financials,S&P 500
+BLKB,Technology,S&P 600
+BMI,Technology,S&P 600
+BMRN,Healthcare,S&P 400
+BMY,Healthcare,S&P 500
+BNL,Real Estate,S&P 600
+BNY,Financials,S&P 500
+BOH,Financials,S&P 600
+BOOT,Consumer Discretionary,S&P 600
+BOX,Technology,S&P 600
+BR,Industrials,S&P 500
+BRC,Industrials,S&P 600
+BRK-B,Financials,S&P 500
+BRKR,Healthcare,S&P 400
+BRO,Financials,S&P 500
+BROS,Consumer Discretionary,S&P 400
+BRX,Real Estate,S&P 400
+BSX,Healthcare,S&P 500
+BSY,Technology,S&P 400
+BTSG,Healthcare,S&P 400
+BTU,Energy,S&P 600
+BURL,Consumer Discretionary,S&P 400
+BWA,Consumer Discretionary,S&P 400
+BWXT,Industrials,S&P 400
+BX,Financials,S&P 500
+BXMT,Financials,S&P 600
+BXP,Real Estate,S&P 500
+BYD,Consumer Discretionary,S&P 400
+C,Financials,S&P 500
+CACC,Financials,S&P 600
+CACI,Industrials,S&P 400
+CAG,Consumer Staples,S&P 600
+CAH,Healthcare,S&P 500
+CAKE,Consumer Discretionary,S&P 600
+CALM,Consumer Staples,S&P 600
+CALX,Technology,S&P 600
+CALY,Consumer Discretionary,S&P 600
+CAR,Industrials,S&P 400
+CARG,Communication Services,S&P 600
+CARR,Industrials,S&P 500
+CART,Consumer Staples,S&P 400
+CASH,Financials,S&P 600
+CASY,Consumer Staples,S&P 500
+CAT,Industrials,S&P 500
+CATY,Financials,S&P 600
+CAVA,Consumer Discretionary,S&P 400
+CB,Financials,S&P 500
+CBOE,Financials,S&P 500
+CBRE,Real Estate,S&P 500
+CBRL,Consumer Discretionary,S&P 600
+CBSH,Financials,S&P 400
+CBT,Materials,S&P 400
+CBU,Financials,S&P 600
+CC,Materials,S&P 600
+CCI,Real Estate,S&P 500
+CCK,Materials,S&P 400
+CCL,Consumer Discretionary,S&P 500
+CCOI,Communication Services,S&P 600
+CCS,Consumer Discretionary,S&P 600
+CDE,Materials,S&P 400
+CDNS,Technology,S&P 500
+CDP,Real Estate,S&P 400
+CDW,Technology,S&P 500
+CE,Materials,S&P 600
+CEG,Utilities,S&P 500
+CELH,Consumer Staples,S&P 400
+CENT,Consumer Staples,S&P 600
+CENTA,Consumer Staples,S&P 600
+CENX,Materials,S&P 600
+CERT,Healthcare,S&P 600
+CF,Materials,S&P 500
+CFFN,Financials,S&P 600
+CFG,Financials,S&P 500
+CFR,Financials,S&P 400
+CG,Financials,S&P 400
+CGNX,Technology,S&P 400
+CHCO,Financials,S&P 600
+CHD,Consumer Staples,S&P 500
+CHDN,Consumer Discretionary,S&P 400
+CHE,Healthcare,S&P 400
+CHEF,Consumer Staples,S&P 600
+CHH,Consumer Discretionary,S&P 400
+CHRW,Industrials,S&P 500
+CHTR,Communication Services,S&P 500
+CHWY,Consumer Discretionary,S&P 400
+CI,Healthcare,S&P 500
+CIEN,Technology,S&P 500
+CINF,Financials,S&P 500
+CL,Consumer Staples,S&P 500
+CLF,Materials,S&P 400
+CLH,Industrials,S&P 400
+CLSK,Technology,S&P 600
+CLX,Consumer Staples,S&P 500
+CMC,Materials,S&P 400
+CMCSA,Communication Services,S&P 500
+CME,Financials,S&P 500
+CMG,Consumer Discretionary,S&P 500
+CMI,Industrials,S&P 500
+CMS,Utilities,S&P 500
+CNC,Healthcare,S&P 500
+CNH,Industrials,S&P 400
+CNK,Communication Services,S&P 600
+CNM,Industrials,S&P 400
+CNMD,Healthcare,S&P 600
+CNO,Financials,S&P 400
+CNP,Utilities,S&P 500
+CNR,Energy,S&P 600
+CNS,Financials,S&P 600
+CNX,Energy,S&P 400
+CNXC,Industrials,S&P 600
+CNXN,Technology,S&P 600
+COCO,Consumer Staples,S&P 600
+COF,Financials,S&P 500
+COHR,Technology,S&P 500
+COHU,Technology,S&P 600
+COIN,Financials,S&P 500
+COKE,Consumer Staples,S&P 400
+COLB,Financials,S&P 400
+COLL,Healthcare,S&P 600
+COLM,Consumer Discretionary,S&P 400
+CON,Healthcare,S&P 600
+COO,Healthcare,S&P 500
+COP,Energy,S&P 500
+COR,Healthcare,S&P 500
+CORT,Healthcare,S&P 400
+COST,Consumer Staples,S&P 500
+COTY,Consumer Staples,S&P 600
+CPAY,Financials,S&P 500
+CPB,Consumer Staples,S&P 600
+CPF,Financials,S&P 600
+CPK,Utilities,S&P 600
+CPRT,Industrials,S&P 500
+CPT,Real Estate,S&P 500
+CR,Industrials,S&P 400
+CRBG,Financials,S&P 400
+CRC,Energy,S&P 600
+CRGY,Energy,S&P 600
+CRH,Materials,S&P 500
+CRI,Consumer Discretionary,S&P 600
+CRK,Energy,S&P 600
+CRL,Healthcare,S&P 500
+CRM,Technology,S&P 500
+CROX,Consumer Discretionary,S&P 400
+CRS,Industrials,S&P 400
+CRSR,Technology,S&P 600
+CRUS,Technology,S&P 400
+CRVL,Healthcare,S&P 600
+CRWD,Technology,S&P 500
+CSCO,Technology,S&P 500
+CSGP,Real Estate,S&P 500
+CSL,Industrials,S&P 400
+CSR,Real Estate,S&P 600
+CSW,Industrials,S&P 600
+CSX,Industrials,S&P 500
+CTAS,Industrials,S&P 500
+CTRE,Real Estate,S&P 400
+CTS,Technology,S&P 600
+CTSH,Technology,S&P 500
+CTVA,Materials,S&P 500
+CUBE,Real Estate,S&P 400
+CUBI,Financials,S&P 600
+CURB,Real Estate,S&P 600
+CUZ,Real Estate,S&P 400
+CVBF,Financials,S&P 600
+CVCO,Consumer Discretionary,S&P 600
+CVI,Energy,S&P 600
+CVLT,Technology,S&P 400
+CVNA,Consumer Discretionary,S&P 500
+CVS,Healthcare,S&P 500
+CVSA,Consumer Discretionary,S&P 600
+CVX,Energy,S&P 500
+CW,Industrials,S&P 400
+CWEN,Utilities,S&P 600
+CWK,Real Estate,S&P 600
+CWST,Industrials,S&P 600
+CWT,Utilities,S&P 600
+CXM,Technology,S&P 600
+CXT,Technology,S&P 400
+CXW,Industrials,S&P 600
+CYTK,Healthcare,S&P 400
+CZR,Consumer Discretionary,S&P 600
+D,Utilities,S&P 500
+DAL,Industrials,S&P 500
+DAN,Consumer Discretionary,S&P 600
+DAR,Consumer Staples,S&P 400
+DASH,Consumer Discretionary,S&P 500
+DAVE,Financials,S&P 600
+DBD,Technology,S&P 600
+DBX,Technology,S&P 400
+DCH,Consumer Discretionary,S&P 600
+DCI,Industrials,S&P 400
+DCOM,Financials,S&P 600
+DD,Industrials,S&P 500
+DDOG,Technology,S&P 500
+DE,Industrials,S&P 500
+DEA,Real Estate,S&P 600
+DECK,Consumer Discretionary,S&P 500
+DEI,Real Estate,S&P 600
+DELL,Technology,S&P 500
+DFH,Consumer Discretionary,S&P 600
+DFIN,Financials,S&P 600
+DG,Consumer Staples,S&P 500
+DGII,Technology,S&P 600
+DGX,Healthcare,S&P 500
+DHI,Consumer Discretionary,S&P 500
+DHR,Healthcare,S&P 500
+DINO,Energy,S&P 400
+DIOD,Technology,S&P 600
+DIS,Communication Services,S&P 500
+DKS,Consumer Discretionary,S&P 400
+DLB,Technology,S&P 400
+DLR,Real Estate,S&P 500
+DLTR,Consumer Staples,S&P 500
+DLX,Industrials,S&P 600
+DMC,Consumer Staples,S&P 600
+DNOW,Industrials,S&P 600
+DOC,Real Estate,S&P 500
+DOCN,Technology,S&P 400
+DOCS,Healthcare,S&P 400
+DOCU,Technology,S&P 400
+DORM,Consumer Discretionary,S&P 600
+DOV,Industrials,S&P 500
+DOW,Materials,S&P 500
+DPZ,Consumer Discretionary,S&P 500
+DRH,Real Estate,S&P 600
+DRI,Consumer Discretionary,S&P 500
+DT,Technology,S&P 400
+DTE,Utilities,S&P 500
+DTM,Energy,S&P 400
+DUK,Utilities,S&P 500
+DUOL,Consumer Discretionary,S&P 400
+DV,Communication Services,S&P 600
+DVA,Healthcare,S&P 500
+DVN,Energy,S&P 500
+DXC,Technology,S&P 600
+DXCM,Healthcare,S&P 500
+DXPE,Industrials,S&P 600
+DY,Industrials,S&P 400
+EAT,Consumer Discretionary,S&P 400
+EBAY,Consumer Discretionary,S&P 500
+EBC,Financials,S&P 600
+ECG,Industrials,S&P 600
+ECHO,Communication Services,S&P 500
+ECL,Materials,S&P 500
+ECPG,Financials,S&P 600
+ED,Utilities,S&P 500
+EEFT,Financials,S&P 400
+EFC,Financials,S&P 600
+EFOR,Technology,S&P 600
+EFX,Industrials,S&P 500
+EG,Financials,S&P 500
+EGBN,Financials,S&P 600
+EGP,Real Estate,S&P 400
+EHC,Healthcare,S&P 400
+EIG,Financials,S&P 600
+EIX,Utilities,S&P 500
+EL,Consumer Staples,S&P 500
+ELAN,Healthcare,S&P 400
+ELF,Consumer Staples,S&P 400
+ELS,Real Estate,S&P 400
+ELV,Healthcare,S&P 500
+EME,Industrials,S&P 500
+EMN,Materials,S&P 600
+EMR,Industrials,S&P 500
+ENOV,Healthcare,S&P 600
+ENPH,Technology,S&P 600
+ENR,Consumer Staples,S&P 600
+ENS,Industrials,S&P 400
+ENSG,Healthcare,S&P 400
+ENTG,Technology,S&P 400
+ENVA,Financials,S&P 600
+EOG,Energy,S&P 500
+EPAC,Industrials,S&P 600
+EPAM,Technology,S&P 600
+EPC,Consumer Staples,S&P 600
+EPR,Real Estate,S&P 400
+EPRT,Real Estate,S&P 600
+EQH,Financials,S&P 400
+EQIX,Real Estate,S&P 500
+EQT,Energy,S&P 500
+ERIE,Financials,S&P 500
+ES,Utilities,S&P 500
+ESAB,Industrials,S&P 400
+ESE,Industrials,S&P 600
+ESI,Materials,S&P 600
+ESNT,Financials,S&P 400
+ESS,Real Estate,S&P 500
+ETN,Industrials,S&P 500
+ETR,Utilities,S&P 500
+ETSY,Consumer Discretionary,S&P 600
+EVR,Financials,S&P 400
+EVRG,Utilities,S&P 500
+EVTC,Financials,S&P 600
+EW,Healthcare,S&P 500
+EWBC,Financials,S&P 400
+EXC,Utilities,S&P 500
+EXE,Energy,S&P 500
+EXEL,Healthcare,S&P 400
+EXLS,Industrials,S&P 400
+EXP,Materials,S&P 400
+EXPD,Industrials,S&P 500
+EXPE,Consumer Discretionary,S&P 500
+EXPO,Industrials,S&P 400
+EXR,Real Estate,S&P 500
+EXTR,Technology,S&P 600
+EYE,Consumer Discretionary,S&P 600
+EZPW,Financials,S&P 600
+F,Consumer Discretionary,S&P 500
+FA,Industrials,S&P 600
+FAF,Financials,S&P 400
+FANG,Energy,S&P 500
+FAST,Industrials,S&P 500
+FBIN,Industrials,S&P 400
+FBK,Financials,S&P 600
+FBNC,Financials,S&P 600
+FBP,Financials,S&P 600
+FBRT,Real Estate,S&P 600
+FCF,Financials,S&P 600
+FCFS,Financials,S&P 400
+FCN,Industrials,S&P 400
+FCPT,Real Estate,S&P 600
+FCX,Materials,S&P 500
+FDS,Financials,S&P 500
+FDX,Industrials,S&P 500
+FDXF,Industrials,S&P 500
+FE,Utilities,S&P 500
+FELE,Industrials,S&P 600
+FERG,Industrials,S&P 500
+FFBC,Financials,S&P 600
+FFIN,Financials,S&P 400
+FFIV,Technology,S&P 500
+FG,Financials,S&P 600
+FHB,Financials,S&P 600
+FHI,Financials,S&P 400
+FHN,Financials,S&P 400
+FIBK,Financials,S&P 600
+FICO,Technology,S&P 500
+FIS,Financials,S&P 500
+FISV,Financials,S&P 500
+FITB,Financials,S&P 500
+FIVE,Consumer Discretionary,S&P 400
+FIVN,Technology,S&P 600
+FIX,Industrials,S&P 500
+FIZZ,Consumer Staples,S&P 600
+FLEX,Technology,S&P 500
+FLG,Financials,S&P 400
+FLO,Consumer Staples,S&P 600
+FLR,Industrials,S&P 400
+FLS,Industrials,S&P 400
+FMC,Materials,S&P 600
+FN,Technology,S&P 400
+FNB,Financials,S&P 400
+FND,Consumer Discretionary,S&P 400
+FNF,Financials,S&P 400
+FORM,Technology,S&P 600
+FOUR,Financials,S&P 400
+FOX,Communication Services,S&P 500
+FOXA,Communication Services,S&P 500
+FOXF,Consumer Discretionary,S&P 600
+FR,Real Estate,S&P 400
+FRPT,Consumer Staples,S&P 600
+FRT,Real Estate,S&P 500
+FSLR,Technology,S&P 500
+FSS,Industrials,S&P 600
+FTDR,Consumer Discretionary,S&P 600
+FTI,Energy,S&P 400
+FTNT,Technology,S&P 500
+FTRE,Healthcare,S&P 600
+FTV,Industrials,S&P 500
+FUL,Materials,S&P 600
+FULT,Financials,S&P 600
+FUN,Consumer Discretionary,S&P 600
+G,Industrials,S&P 400
+GAP,Consumer Discretionary,S&P 400
+GATX,Industrials,S&P 400
+GBCI,Financials,S&P 400
+GBX,Industrials,S&P 600
+GD,Industrials,S&P 500
+GDDY,Technology,S&P 500
+GE,Industrials,S&P 500
+GEF,Materials,S&P 400
+GEHC,Healthcare,S&P 500
+GEN,Technology,S&P 500
+GEO,Industrials,S&P 600
+GEV,Industrials,S&P 500
+GFF,Industrials,S&P 600
+GGG,Industrials,S&P 400
+GHC,Consumer Discretionary,S&P 400
+GIII,Consumer Discretionary,S&P 600
+GILD,Healthcare,S&P 500
+GIS,Consumer Staples,S&P 500
+GKOS,Healthcare,S&P 600
+GL,Financials,S&P 500
+GLPI,Real Estate,S&P 400
+GLW,Technology,S&P 500
+GM,Consumer Discretionary,S&P 500
+GME,Consumer Discretionary,S&P 400
+GMED,Healthcare,S&P 400
+GNL,Real Estate,S&P 600
+GNRC,Industrials,S&P 500
+GNTX,Consumer Discretionary,S&P 400
+GNW,Financials,S&P 600
+GO,Consumer Staples,S&P 600
+GOLF,Consumer Discretionary,S&P 600
+GOOG,Communication Services,S&P 500
+GOOGL,Communication Services,S&P 500
+GPC,Consumer Discretionary,S&P 500
+GPI,Consumer Discretionary,S&P 600
+GPK,Materials,S&P 400
+GPN,Financials,S&P 500
+GPOR,Energy,S&P 600
+GRBK,Consumer Discretionary,S&P 600
+GRMN,Consumer Discretionary,S&P 500
+GS,Financials,S&P 500
+GSHD,Financials,S&P 600
+GT,Consumer Discretionary,S&P 600
+GTES,Industrials,S&P 600
+GTM,Communication Services,S&P 600
+GTY,Real Estate,S&P 600
+GVA,Industrials,S&P 600
+GWRE,Technology,S&P 400
+GWW,Industrials,S&P 500
+GXO,Industrials,S&P 400
+H,Consumer Discretionary,S&P 400
+HAE,Healthcare,S&P 400
+HAFC,Financials,S&P 600
+HAL,Energy,S&P 500
+HALO,Healthcare,S&P 400
+HAS,Consumer Discretionary,S&P 500
+HASI,Financials,S&P 600
+HAYW,Industrials,S&P 600
+HBAN,Financials,S&P 500
+HCA,Healthcare,S&P 500
+HCC,Materials,S&P 600
+HCI,Financials,S&P 600
+HCSG,Industrials,S&P 600
+HD,Consumer Discretionary,S&P 500
+HE,Utilities,S&P 600
+HFWA,Financials,S&P 600
+HGV,Consumer Discretionary,S&P 400
+HIG,Financials,S&P 500
+HII,Industrials,S&P 500
+HIMS,Healthcare,S&P 400
+HIW,Real Estate,S&P 600
+HL,Materials,S&P 400
+HLI,Financials,S&P 400
+HLIT,Technology,S&P 600
+HLNE,Financials,S&P 400
+HLT,Consumer Discretionary,S&P 500
+HMN,Financials,S&P 600
+HNI,Industrials,S&P 600
+HOG,Consumer Discretionary,S&P 400
+HOMB,Financials,S&P 400
+HON,Industrials,S&P 500
+HONA,Industrials,S&P 500
+HOOD,Financials,S&P 500
+HOPE,Financials,S&P 600
+HP,Energy,S&P 600
+HPE,Technology,S&P 500
+HPQ,Technology,S&P 500
+HQY,Healthcare,S&P 400
+HR,Real Estate,S&P 400
+HRB,Consumer Discretionary,S&P 400
+HRL,Consumer Staples,S&P 500
+HRMY,Healthcare,S&P 600
+HSIC,Healthcare,S&P 500
+HST,Real Estate,S&P 500
+HSTM,Healthcare,S&P 600
+HSY,Consumer Staples,S&P 500
+HTH,Financials,S&P 600
+HTLD,Industrials,S&P 600
+HTO,Utilities,S&P 600
+HUBB,Industrials,S&P 500
+HUBG,Industrials,S&P 600
+HUBS,Technology,S&P 400
+HUM,Healthcare,S&P 500
+HWC,Financials,S&P 400
+HWKN,Materials,S&P 600
+HWM,Industrials,S&P 500
+HXL,Industrials,S&P 400
+HZO,Consumer Discretionary,S&P 600
+IART,Healthcare,S&P 600
+IBKR,Financials,S&P 500
+IBM,Technology,S&P 500
+IBOC,Financials,S&P 400
+IBP,Consumer Discretionary,S&P 600
+ICE,Financials,S&P 500
+ICHR,Technology,S&P 600
+ICUI,Healthcare,S&P 600
+IDA,Utilities,S&P 400
+IDCC,Technology,S&P 400
+IDXX,Healthcare,S&P 500
+IESC,Industrials,S&P 400
+IEX,Industrials,S&P 500
+IFF,Materials,S&P 500
+IIPR,Real Estate,S&P 600
+ILMN,Healthcare,S&P 500
+INCY,Healthcare,S&P 500
+INDB,Financials,S&P 600
+INGR,Consumer Staples,S&P 400
+INSP,Healthcare,S&P 600
+INSW,Energy,S&P 600
+INTC,Technology,S&P 500
+INTU,Technology,S&P 500
+INVA,Healthcare,S&P 600
+INVH,Real Estate,S&P 500
+INVX,Energy,S&P 600
+IOSP,Materials,S&P 600
+IP,Materials,S&P 500
+IPAR,Consumer Staples,S&P 600
+IPGP,Technology,S&P 400
+IQV,Healthcare,S&P 500
+IR,Industrials,S&P 500
+IRDM,Communication Services,S&P 600
+IRM,Real Estate,S&P 500
+IRT,Real Estate,S&P 400
+ISRG,Healthcare,S&P 500
+IT,Technology,S&P 500
+ITGR,Healthcare,S&P 600
+ITRI,Technology,S&P 600
+ITT,Industrials,S&P 400
+ITW,Industrials,S&P 500
+IVZ,Financials,S&P 500
+J,Industrials,S&P 500
+JAZZ,Healthcare,S&P 400
+JBGS,Real Estate,S&P 600
+JBHT,Industrials,S&P 500
+JBL,Technology,S&P 500
+JBLU,Industrials,S&P 600
+JBSS,Consumer Staples,S&P 600
+JBTM,Industrials,S&P 600
+JCI,Industrials,S&P 500
+JEF,Financials,S&P 400
+JJSF,Consumer Staples,S&P 600
+JKHY,Financials,S&P 500
+JLL,Real Estate,S&P 400
+JNJ,Healthcare,S&P 500
+JOE,Real Estate,S&P 600
+JPM,Financials,S&P 500
+JXN,Financials,S&P 600
+KAI,Industrials,S&P 600
+KALU,Materials,S&P 600
+KBH,Consumer Discretionary,S&P 400
+KBR,Industrials,S&P 400
+KD,Technology,S&P 400
+KDP,Consumer Staples,S&P 500
+KEX,Industrials,S&P 400
+KEY,Financials,S&P 500
+KEYS,Technology,S&P 500
+KFY,Industrials,S&P 600
+KGS,Energy,S&P 600
+KHC,Consumer Staples,S&P 500
+KIM,Real Estate,S&P 500
+KKR,Financials,S&P 500
+KLAC,Technology,S&P 500
+KLIC,Technology,S&P 600
+KMB,Consumer Staples,S&P 500
+KMI,Energy,S&P 500
+KMPR,Financials,S&P 600
+KMT,Industrials,S&P 600
+KMX,Consumer Discretionary,S&P 600
+KN,Technology,S&P 600
+KNF,Materials,S&P 400
+KNSL,Financials,S&P 400
+KNX,Industrials,S&P 400
+KO,Consumer Staples,S&P 500
+KOP,Materials,S&P 600
+KR,Consumer Staples,S&P 500
+KRC,Real Estate,S&P 400
+KRG,Real Estate,S&P 400
+KRMN,Industrials,S&P 600
+KRYS,Healthcare,S&P 400
+KSS,Consumer Discretionary,S&P 600
+KTB,Consumer Discretionary,S&P 600
+KTOS,Industrials,S&P 400
+KVUE,Consumer Staples,S&P 500
+KWR,Materials,S&P 600
+L,Financials,S&P 500
+LAD,Consumer Discretionary,S&P 400
+LAMR,Real Estate,S&P 400
+LAUR,Consumer Discretionary,S&P 600
+LAZ,Financials,S&P 600
+LBRT,Energy,S&P 600
+LCII,Consumer Discretionary,S&P 600
+LDOS,Industrials,S&P 500
+LEA,Consumer Discretionary,S&P 400
+LECO,Industrials,S&P 400
+LEN,Consumer Discretionary,S&P 500
+LEU,Energy,S&P 600
+LFST,Healthcare,S&P 600
+LFUS,Technology,S&P 400
+LGIH,Consumer Discretionary,S&P 600
+LGND,Healthcare,S&P 600
+LH,Healthcare,S&P 500
+LHX,Industrials,S&P 500
+LIF,Technology,S&P 600
+LII,Industrials,S&P 500
+LIN,Materials,S&P 500
+LITE,Technology,S&P 500
+LIVN,Healthcare,S&P 400
+LKFN,Financials,S&P 600
+LKQ,Consumer Discretionary,S&P 600
+LLY,Healthcare,S&P 500
+LMAT,Healthcare,S&P 600
+LMT,Industrials,S&P 500
+LNC,Financials,S&P 600
+LNN,Materials,S&P 600
+LNT,Utilities,S&P 500
+LNTH,Healthcare,S&P 400
+LOPE,Consumer Discretionary,S&P 400
+LOW,Consumer Discretionary,S&P 500
+LPG,Energy,S&P 600
+LPX,Industrials,S&P 400
+LQDA,Healthcare,S&P 600
+LQDT,Industrials,S&P 600
+LRCX,Technology,S&P 500
+LRN,Consumer Discretionary,S&P 600
+LSCC,Technology,S&P 400
+LSTR,Industrials,S&P 400
+LTC,Real Estate,S&P 600
+LTH,Consumer Discretionary,S&P 600
+LULU,Consumer Discretionary,S&P 500
+LUMN,Communication Services,S&P 600
+LUV,Industrials,S&P 500
+LVS,Consumer Discretionary,S&P 500
+LW,Consumer Staples,S&P 600
+LXP,Real Estate,S&P 600
+LYB,Materials,S&P 500
+LYFT,Industrials,S&P 600
+LYV,Communication Services,S&P 500
+LZ,Industrials,S&P 600
+LZB,Consumer Discretionary,S&P 600
+M,Consumer Discretionary,S&P 400
+MA,Financials,S&P 500
+MAA,Real Estate,S&P 500
+MAC,Real Estate,S&P 600
+MAN,Industrials,S&P 600
+MANH,Technology,S&P 400
+MAR,Consumer Discretionary,S&P 500
+MARA,Technology,S&P 600
+MAS,Industrials,S&P 500
+MAT,Consumer Discretionary,S&P 400
+MATW,Consumer Discretionary,S&P 600
+MATX,Industrials,S&P 600
+MBC,Industrials,S&P 600
+MBGL,Industrials,S&P 600
+MBIN,Financials,S&P 600
+MC,Financials,S&P 600
+MCD,Consumer Discretionary,S&P 500
+MCHP,Technology,S&P 500
+MCK,Healthcare,S&P 500
+MCO,Financials,S&P 500
+MCRI,Consumer Discretionary,S&P 600
+MCY,Financials,S&P 600
+MD,Healthcare,S&P 600
+MDLZ,Consumer Staples,S&P 500
+MDT,Healthcare,S&P 500
+MDU,Utilities,S&P 600
+MEDP,Healthcare,S&P 400
+MET,Financials,S&P 500
+META,Communication Services,S&P 500
+MFP,Industrials,S&P 600
+MGEE,Utilities,S&P 600
+MGM,Consumer Discretionary,S&P 500
+MGY,Energy,S&P 600
+MHK,Consumer Discretionary,S&P 600
+MHO,Consumer Discretionary,S&P 600
+MIDD,Industrials,S&P 400
+MIR,Technology,S&P 600
+MKC,Consumer Staples,S&P 500
+MKSI,Technology,S&P 400
+MKTX,Financials,S&P 600
+MLI,Industrials,S&P 400
+MLKN,Industrials,S&P 600
+MLM,Materials,S&P 500
+MMI,Real Estate,S&P 600
+MMM,Industrials,S&P 500
+MMS,Industrials,S&P 400
+MMSI,Healthcare,S&P 600
+MNST,Consumer Staples,S&P 500
+MO,Consumer Staples,S&P 500
+MOG-A,Industrials,S&P 400
+MOH,Healthcare,S&P 400
+MORN,Financials,S&P 400
+MOS,Materials,S&P 500
+MP,Materials,S&P 400
+MPC,Energy,S&P 500
+MPT,Real Estate,S&P 600
+MPWR,Technology,S&P 500
+MRCY,Industrials,S&P 600
+MRK,Healthcare,S&P 500
+MRNA,Healthcare,S&P 500
+MRP,Real Estate,S&P 600
+MRSH,Financials,S&P 500
+MRTN,Industrials,S&P 600
+MRVL,Technology,S&P 500
+MS,Financials,S&P 500
+MSA,Industrials,S&P 400
+MSCI,Financials,S&P 500
+MSEX,Utilities,S&P 600
+MSFT,Technology,S&P 500
+MSGS,Communication Services,S&P 600
+MSI,Technology,S&P 500
+MSM,Industrials,S&P 400
+MTB,Financials,S&P 500
+MTCH,Communication Services,S&P 600
+MTD,Healthcare,S&P 500
+MTDR,Energy,S&P 400
+MTG,Financials,S&P 400
+MTH,Consumer Discretionary,S&P 600
+MTN,Consumer Discretionary,S&P 400
+MTRN,Materials,S&P 600
+MTSI,Technology,S&P 400
+MTUS,Materials,S&P 600
+MTX,Materials,S&P 600
+MTZ,Industrials,S&P 400
+MU,Technology,S&P 500
+MUR,Energy,S&P 400
+MUSA,Consumer Discretionary,S&P 400
+MWA,Industrials,S&P 600
+MXL,Technology,S&P 600
+MYRG,Industrials,S&P 600
+MZTI,Consumer Staples,S&P 400
+NABL,Technology,S&P 600
+NATL,Financials,S&P 600
+NAVI,Financials,S&P 600
+NBHC,Financials,S&P 600
+NBIX,Healthcare,S&P 400
+NBTB,Financials,S&P 600
+NCLH,Consumer Discretionary,S&P 500
+NDAQ,Financials,S&P 500
+NDSN,Industrials,S&P 500
+NE,Energy,S&P 600
+NEE,Utilities,S&P 500
+NEM,Materials,S&P 500
+NEO,Healthcare,S&P 600
+NEOG,Healthcare,S&P 600
+NEU,Materials,S&P 400
+NFG,Utilities,S&P 400
+NFLX,Communication Services,S&P 500
+NGVT,Materials,S&P 600
+NHC,Healthcare,S&P 600
+NHI,Real Estate,S&P 600
+NI,Utilities,S&P 500
+NIC,Financials,S&P 600
+NJR,Utilities,S&P 400
+NKE,Consumer Discretionary,S&P 500
+NLY,Financials,S&P 400
+NMIH,Financials,S&P 600
+NNN,Real Estate,S&P 400
+NOC,Industrials,S&P 500
+NOG,Energy,S&P 600
+NOV,Energy,S&P 400
+NOVT,Technology,S&P 400
+NOW,Technology,S&P 500
+NPK,Industrials,S&P 600
+NPO,Industrials,S&P 600
+NRG,Utilities,S&P 500
+NSC,Industrials,S&P 500
+NSIT,Industrials,S&P 600
+NSP,Industrials,S&P 600
+NSSC,Technology,S&P 600
+NTAP,Technology,S&P 500
+NTCT,Technology,S&P 600
+NTNX,Technology,S&P 400
+NTRS,Financials,S&P 500
+NTST,Real Estate,S&P 600
+NUE,Materials,S&P 500
+NVDA,Technology,S&P 500
+NVR,Consumer Discretionary,S&P 500
+NVST,Healthcare,S&P 400
+NVT,Industrials,S&P 400
+NWBI,Financials,S&P 600
+NWE,Utilities,S&P 400
+NWL,Consumer Discretionary,S&P 600
+NWN,Utilities,S&P 600
+NWS,Communication Services,S&P 500
+NWSA,Communication Services,S&P 500
+NX,Industrials,S&P 600
+NXPI,Technology,S&P 500
+NXRT,Real Estate,S&P 600
+NXST,Communication Services,S&P 400
+NXT,Industrials,S&P 400
+NYT,Communication Services,S&P 400
+O,Real Estate,S&P 500
+OC,Industrials,S&P 400
+ODFL,Industrials,S&P 500
+OFG,Financials,S&P 600
+OGE,Utilities,S&P 400
+OGN,Healthcare,S&P 600
+OGS,Utilities,S&P 400
+OHI,Real Estate,S&P 400
+OI,Materials,S&P 600
+OII,Energy,S&P 600
+OKE,Energy,S&P 500
+OKTA,Technology,S&P 400
+OLED,Technology,S&P 400
+OLLI,Consumer Discretionary,S&P 400
+OLN,Materials,S&P 400
+OMC,Communication Services,S&P 500
+OMCL,Healthcare,S&P 600
+ON,Technology,S&P 500
+ONB,Financials,S&P 400
+ONTO,Technology,S&P 400
+OPCH,Healthcare,S&P 400
+OPLN,Industrials,S&P 600
+ORA,Utilities,S&P 400
+ORCL,Technology,S&P 500
+ORI,Financials,S&P 400
+ORLY,Consumer Discretionary,S&P 500
+OSIS,Technology,S&P 600
+OSK,Industrials,S&P 400
+OSW,Consumer Discretionary,S&P 600
+OTIS,Industrials,S&P 500
+OTTR,Utilities,S&P 600
+OUT,Real Estate,S&P 600
+OVV,Energy,S&P 400
+OXY,Energy,S&P 500
+OZK,Financials,S&P 400
+P,Technology,S&P 500
+PAG,Consumer Discretionary,S&P 400
+PAHC,Healthcare,S&P 600
+PANW,Technology,S&P 500
+PARR,Energy,S&P 600
+PATH,Technology,S&P 400
+PATK,Consumer Discretionary,S&P 600
+PAYC,Industrials,S&P 600
+PAYO,Financials,S&P 600
+PAYX,Industrials,S&P 500
+PB,Financials,S&P 400
+PBF,Energy,S&P 400
+PBH,Healthcare,S&P 600
+PBI,Industrials,S&P 600
+PCAR,Industrials,S&P 500
+PCG,Utilities,S&P 500
+PCRX,Healthcare,S&P 600
+PCTY,Industrials,S&P 400
+PDFS,Technology,S&P 600
+PEB,Real Estate,S&P 600
+PEG,Utilities,S&P 500
+PEGA,Technology,S&P 400
+PEN,Healthcare,S&P 400
+PENG,Technology,S&P 600
+PENN,Consumer Discretionary,S&P 600
+PEP,Consumer Staples,S&P 500
+PFBC,Financials,S&P 600
+PFE,Healthcare,S&P 500
+PFG,Financials,S&P 500
+PFGC,Consumer Staples,S&P 400
+PFS,Financials,S&P 600
+PG,Consumer Staples,S&P 500
+PGNY,Healthcare,S&P 600
+PGR,Financials,S&P 500
+PH,Industrials,S&P 500
+PHIN,Consumer Discretionary,S&P 600
+PHM,Consumer Discretionary,S&P 500
+PI,Technology,S&P 600
+PII,Consumer Discretionary,S&P 400
+PINS,Communication Services,S&P 400
+PIPR,Financials,S&P 600
+PJT,Financials,S&P 600
+PK,Real Estate,S&P 400
+PKG,Materials,S&P 500
+PLAB,Technology,S&P 600
+PLD,Real Estate,S&P 500
+PLMR,Financials,S&P 600
+PLNT,Consumer Discretionary,S&P 400
+PLTR,Technology,S&P 500
+PLUS,Technology,S&P 600
+PLXS,Technology,S&P 600
+PM,Consumer Staples,S&P 500
+PMT,Real Estate,S&P 600
+PNC,Financials,S&P 500
+PNFP,Financials,S&P 400
+PNR,Industrials,S&P 500
+PNW,Utilities,S&P 500
+PODD,Healthcare,S&P 500
+POOL,Consumer Discretionary,S&P 600
+POR,Utilities,S&P 400
+POST,Consumer Staples,S&P 400
+POWI,Technology,S&P 600
+POWL,Industrials,S&P 600
+PPC,Consumer Staples,S&P 400
+PPG,Materials,S&P 500
+PPL,Utilities,S&P 500
+PPLI,Communication Services,S&P 600
+PR,Energy,S&P 400
+PRDO,Consumer Discretionary,S&P 600
+PRG,Financials,S&P 600
+PRGO,Healthcare,S&P 600
+PRGS,Technology,S&P 600
+PRI,Financials,S&P 400
+PRIM,Industrials,S&P 600
+PRK,Financials,S&P 600
+PRKS,Consumer Discretionary,S&P 600
+PRLB,Industrials,S&P 600
+PRSU,Consumer Discretionary,S&P 600
+PRU,Financials,S&P 500
+PRVA,Healthcare,S&P 600
+PSA,Real Estate,S&P 500
+PSKY,Communication Services,S&P 500
+PSMT,Consumer Staples,S&P 600
+PSN,Industrials,S&P 400
+PSX,Energy,S&P 500
+PTC,Technology,S&P 500
+PTCT,Healthcare,S&P 600
+PTEN,Energy,S&P 600
+PTGX,Healthcare,S&P 600
+PTON,Consumer Discretionary,S&P 600
+PVH,Consumer Discretionary,S&P 400
+PWR,Industrials,S&P 500
+PYPL,Financials,S&P 500
+PZZA,Consumer Discretionary,S&P 600
+Q,Technology,S&P 500
+QCOM,Technology,S&P 500
+QDEL,Healthcare,S&P 600
+QLYS,Technology,S&P 400
+QNST,Communication Services,S&P 600
+QRVO,Technology,S&P 600
+QTWO,Technology,S&P 600
+R,Industrials,S&P 400
+RAL,Technology,S&P 600
+RAMP,Technology,S&P 600
+RBA,Industrials,S&P 400
+RBC,Industrials,S&P 400
+RCL,Consumer Discretionary,S&P 500
+RCUS,Healthcare,S&P 600
+RDDT,Communication Services,S&P 500
+RDN,Financials,S&P 600
+RDNT,Healthcare,S&P 600
+REG,Real Estate,S&P 500
+REGN,Healthcare,S&P 500
+RELY,Financials,S&P 600
+RES,Energy,S&P 600
+REX,Energy,S&P 600
+REXR,Real Estate,S&P 400
+REYN,Consumer Staples,S&P 600
+REZI,Industrials,S&P 600
+RF,Financials,S&P 500
+RGA,Financials,S&P 400
+RGEN,Healthcare,S&P 400
+RGLD,Materials,S&P 400
+RH,Consumer Discretionary,S&P 400
+RHI,Industrials,S&P 600
+RHP,Real Estate,S&P 600
+RITM,Financials,S&P 600
+RJF,Financials,S&P 500
+RL,Consumer Discretionary,S&P 500
+RLI,Financials,S&P 400
+RMBS,Technology,S&P 400
+RMD,Healthcare,S&P 500
+RNG,Technology,S&P 600
+RNR,Financials,S&P 400
+RNST,Financials,S&P 600
+ROAD,Industrials,S&P 600
+ROCK,Industrials,S&P 600
+ROG,Technology,S&P 600
+ROIV,Healthcare,S&P 400
+ROK,Industrials,S&P 500
+ROKU,Communication Services,S&P 400
+ROL,Industrials,S&P 500
+ROP,Technology,S&P 500
+ROST,Consumer Discretionary,S&P 500
+RPM,Materials,S&P 400
+RRC,Energy,S&P 400
+RRR,Consumer Discretionary,S&P 600
+RRX,Industrials,S&P 400
+RS,Materials,S&P 400
+RSG,Industrials,S&P 500
+RSI,Consumer Discretionary,S&P 600
+RTX,Industrials,S&P 500
+RUN,Industrials,S&P 600
+RUSHA,Industrials,S&P 600
+RVTY,Healthcare,S&P 500
+RXO,Industrials,S&P 600
+RYAN,Financials,S&P 400
+RYN,Real Estate,S&P 400
+SABR,Consumer Discretionary,S&P 600
+SAFE,Real Estate,S&P 600
+SAFT,Financials,S&P 600
+SAH,Consumer Discretionary,S&P 600
+SAIA,Industrials,S&P 400
+SAIC,Industrials,S&P 400
+SANM,Technology,S&P 400
+SARO,Industrials,S&P 400
+SBAC,Real Estate,S&P 500
+SBCF,Financials,S&P 600
+SBH,Consumer Discretionary,S&P 600
+SBRA,Real Estate,S&P 400
+SBSI,Financials,S&P 600
+SBUX,Consumer Discretionary,S&P 500
+SCHL,Consumer Discretionary,S&P 600
+SCHW,Financials,S&P 500
+SCI,Consumer Discretionary,S&P 400
+SCL,Materials,S&P 600
+SCSC,Technology,S&P 600
+SDGR,Healthcare,S&P 600
+SEDG,Technology,S&P 600
+SEI,Energy,S&P 600
+SEIC,Financials,S&P 400
+SF,Financials,S&P 400
+SFBS,Financials,S&P 600
+SFM,Consumer Staples,S&P 400
+SFNC,Financials,S&P 600
+SGI,Consumer Discretionary,S&P 400
+SHAK,Consumer Discretionary,S&P 600
+SHC,Healthcare,S&P 400
+SHEN,Communication Services,S&P 600
+SHO,Real Estate,S&P 600
+SHOO,Consumer Discretionary,S&P 600
+SHW,Materials,S&P 500
+SIG,Consumer Discretionary,S&P 600
+SIGI,Financials,S&P 400
+SIRI,Communication Services,S&P 400
+SITM,Technology,S&P 400
+SJM,Consumer Staples,S&P 500
+SKT,Real Estate,S&P 600
+SKY,Consumer Discretionary,S&P 600
+SKYW,Industrials,S&P 600
+SLAB,Technology,S&P 400
+SLB,Energy,S&P 500
+SLG,Real Estate,S&P 600
+SLGN,Materials,S&P 400
+SLM,Financials,S&P 400
+SLVM,Materials,S&P 600
+SM,Energy,S&P 600
+SMCI,Technology,S&P 500
+SMG,Materials,S&P 400
+SMP,Consumer Discretionary,S&P 600
+SMPL,Consumer Staples,S&P 600
+SMTC,Technology,S&P 400
+SN,Consumer Discretionary,S&P 400
+SNA,Industrials,S&P 500
+SNDK,Technology,S&P 500
+SNDR,Industrials,S&P 600
+SNEX,Financials,S&P 600
+SNPS,Technology,S&P 500
+SNX,Technology,S&P 400
+SO,Utilities,S&P 500
+SOLS,Materials,S&P 400
+SOLV,Healthcare,S&P 500
+SON,Materials,S&P 400
+SONO,Consumer Discretionary,S&P 600
+SPG,Real Estate,S&P 500
+SPGI,Financials,S&P 500
+SPHR,Communication Services,S&P 600
+SPNT,Financials,S&P 600
+SPSC,Technology,S&P 600
+SPXC,Industrials,S&P 400
+SR,Utilities,S&P 400
+SRE,Utilities,S&P 500
+SRPT,Healthcare,S&P 600
+SSB,Financials,S&P 400
+SSD,Industrials,S&P 400
+ST,Industrials,S&P 400
+STAA,Healthcare,S&P 600
+STAG,Real Estate,S&P 400
+STBA,Financials,S&P 600
+STC,Financials,S&P 600
+STE,Healthcare,S&P 500
+STEP,Financials,S&P 600
+STLD,Materials,S&P 500
+STRA,Consumer Discretionary,S&P 600
+STRL,Industrials,S&P 400
+STT,Financials,S&P 500
+STWD,Financials,S&P 400
+STX,Technology,S&P 500
+STZ,Consumer Staples,S&P 500
+SUI,Real Estate,S&P 400
+SUPN,Healthcare,S&P 600
+SW,Materials,S&P 500
+SWK,Industrials,S&P 500
+SWKS,Technology,S&P 500
+SWX,Utilities,S&P 400
+SXI,Industrials,S&P 600
+SXT,Materials,S&P 600
+SYF,Financials,S&P 500
+SYK,Healthcare,S&P 500
+SYNA,Technology,S&P 400
+SYY,Consumer Staples,S&P 500
+T,Communication Services,S&P 500
+TALO,Energy,S&P 600
+TBBK,Financials,S&P 600
+TCBI,Financials,S&P 400
+TDC,Technology,S&P 600
+TDG,Industrials,S&P 500
+TDS,Communication Services,S&P 600
+TDW,Energy,S&P 600
+TDY,Technology,S&P 500
+TECH,Healthcare,S&P 500
+TEL,Technology,S&P 500
+TER,Technology,S&P 500
+TEX,Industrials,S&P 400
+TFC,Financials,S&P 500
+TFIN,Financials,S&P 600
+TFX,Healthcare,S&P 600
+TGT,Consumer Staples,S&P 500
+TGTX,Healthcare,S&P 600
+THC,Healthcare,S&P 400
+THG,Financials,S&P 400
+THO,Consumer Discretionary,S&P 400
+THRM,Consumer Discretionary,S&P 600
+TILE,Industrials,S&P 600
+TJX,Consumer Discretionary,S&P 500
+TKO,Communication Services,S&P 500
+TKR,Industrials,S&P 400
+TLN,Utilities,S&P 400
+TMDX,Healthcare,S&P 600
+TMO,Healthcare,S&P 500
+TMP,Financials,S&P 600
+TMUS,Communication Services,S&P 500
+TNC,Industrials,S&P 600
+TNDM,Healthcare,S&P 600
+TNL,Consumer Discretionary,S&P 400
+TOL,Consumer Discretionary,S&P 400
+TOST,Financials,S&P 400
+TPC,Industrials,S&P 600
+TPL,Energy,S&P 500
+TPR,Consumer Discretionary,S&P 500
+TR,Consumer Staples,S&P 600
+TREX,Industrials,S&P 400
+TRGP,Energy,S&P 500
+TRIP,Communication Services,S&P 600
+TRMB,Technology,S&P 500
+TRMK,Financials,S&P 600
+TRN,Industrials,S&P 600
+TRNO,Real Estate,S&P 600
+TROW,Financials,S&P 500
+TRST,Financials,S&P 600
+TRU,Industrials,S&P 400
+TRUP,Financials,S&P 600
+TRV,Financials,S&P 500
+TSCO,Consumer Discretionary,S&P 500
+TSLA,Consumer Discretionary,S&P 500
+TSN,Consumer Staples,S&P 500
+TT,Industrials,S&P 500
+TTC,Industrials,S&P 400
+TTEK,Industrials,S&P 400
+TTMI,Technology,S&P 400
+TTWO,Communication Services,S&P 500
+TWLO,Technology,S&P 400
+TXN,Technology,S&P 500
+TXNM,Utilities,S&P 400
+TXRH,Consumer Discretionary,S&P 400
+TXT,Industrials,S&P 500
+TYL,Technology,S&P 500
+UA,Consumer Discretionary,S&P 600
+UAA,Consumer Discretionary,S&P 600
+UAL,Industrials,S&P 500
+UBER,Industrials,S&P 500
+UBSI,Financials,S&P 400
+UCB,Financials,S&P 600
+UCTT,Technology,S&P 600
+UDR,Real Estate,S&P 500
+UE,Real Estate,S&P 600
+UFCS,Financials,S&P 600
+UFPI,Industrials,S&P 400
+UFPT,Healthcare,S&P 600
+UGI,Utilities,S&P 400
+UHS,Healthcare,S&P 500
+ULS,Industrials,S&P 400
+ULTA,Consumer Discretionary,S&P 500
+UMBF,Financials,S&P 400
+UNF,Industrials,S&P 600
+UNFI,Consumer Staples,S&P 600
+UNH,Healthcare,S&P 500
+UNIT,Communication Services,S&P 600
+UNM,Financials,S&P 400
+UNP,Industrials,S&P 500
+UPBD,Consumer Discretionary,S&P 600
+UPS,Industrials,S&P 500
+UPWK,Industrials,S&P 600
+URBN,Consumer Discretionary,S&P 600
+URI,Industrials,S&P 500
+USB,Financials,S&P 500
+USFD,Consumer Staples,S&P 400
+USLM,Materials,S&P 600
+USPH,Healthcare,S&P 600
+UTHR,Healthcare,S&P 400
+UTI,Consumer Discretionary,S&P 600
+UTL,Utilities,S&P 600
+UVV,Consumer Staples,S&P 600
+V,Financials,S&P 500
+VAC,Consumer Discretionary,S&P 600
+VAL,Energy,S&P 400
+VC,Consumer Discretionary,S&P 400
+VCEL,Healthcare,S&P 600
+VCTR,Financials,S&P 600
+VCYT,Healthcare,S&P 600
+VECO,Technology,S&P 600
+VEEV,Healthcare,S&P 500
+VFC,Consumer Discretionary,S&P 400
+VGNT,Consumer Discretionary,S&P 600
+VIAV,Technology,S&P 400
+VICI,Real Estate,S&P 500
+VICR,Industrials,S&P 400
+VIR,Healthcare,S&P 600
+VIRT,Financials,S&P 600
+VLO,Energy,S&P 500
+VLTO,Industrials,S&P 500
+VLY,Financials,S&P 400
+VMC,Materials,S&P 500
+VMI,Industrials,S&P 400
+VMRK,Real Estate,S&P 500
+VNO,Real Estate,S&P 400
+VNOM,Energy,S&P 400
+VNT,Technology,S&P 400
+VOYA,Financials,S&P 400
+VRRM,Industrials,S&P 600
+VRSK,Industrials,S&P 500
+VRSN,Technology,S&P 500
+VRT,Industrials,S&P 500
+VRTS,Financials,S&P 600
+VRTX,Healthcare,S&P 500
+VSAT,Technology,S&P 600
+VSEC,Industrials,S&P 600
+VSH,Technology,S&P 600
+VSNT,Communication Services,S&P 600
+VST,Utilities,S&P 500
+VSTS,Industrials,S&P 600
+VSXY,Consumer Discretionary,S&P 600
+VTOL,Energy,S&P 600
+VTR,Real Estate,S&P 500
+VTRS,Healthcare,S&P 500
+VVV,Consumer Discretionary,S&P 400
+VVX,Industrials,S&P 600
+VYX,Technology,S&P 600
+VZ,Communication Services,S&P 500
+WAB,Industrials,S&P 500
+WABC,Financials,S&P 600
+WAFD,Financials,S&P 600
+WAL,Financials,S&P 400
+WAT,Healthcare,S&P 500
+WAY,Healthcare,S&P 600
+WBD,Communication Services,S&P 500
+WCC,Industrials,S&P 400
+WD,Financials,S&P 600
+WDAY,Technology,S&P 500
+WDC,Technology,S&P 500
+WDFC,Consumer Staples,S&P 600
+WEC,Utilities,S&P 500
+WELL,Real Estate,S&P 500
+WEN,Consumer Discretionary,S&P 600
+WERN,Industrials,S&P 600
+WEX,Financials,S&P 400
+WFC,Financials,S&P 500
+WFRD,Energy,S&P 400
+WGO,Consumer Discretionary,S&P 600
+WH,Consumer Discretionary,S&P 400
+WHD,Energy,S&P 600
+WHR,Consumer Discretionary,S&P 400
+WINA,Consumer Discretionary,S&P 600
+WING,Consumer Discretionary,S&P 400
+WKC,Energy,S&P 600
+WLK,Materials,S&P 400
+WLY,Communication Services,S&P 600
+WM,Industrials,S&P 500
+WMB,Energy,S&P 500
+WMG,Communication Services,S&P 400
+WMS,Industrials,S&P 400
+WMT,Consumer Staples,S&P 500
+WOR,Industrials,S&P 600
+WPC,Real Estate,S&P 400
+WRB,Financials,S&P 500
+WRBY,Consumer Discretionary,S&P 600
+WRLD,Financials,S&P 600
+WS,Materials,S&P 600
+WSBC,Financials,S&P 600
+WSC,Industrials,S&P 600
+WSFS,Financials,S&P 600
+WSM,Consumer Discretionary,S&P 500
+WSO,Industrials,S&P 400
+WST,Healthcare,S&P 500
+WT,Financials,S&P 600
+WTFC,Financials,S&P 400
+WTRG,Utilities,S&P 400
+WTS,Industrials,S&P 400
+WTW,Financials,S&P 500
+WU,Financials,S&P 600
+WWD,Industrials,S&P 400
+WWW,Consumer Discretionary,S&P 600
+WY,Real Estate,S&P 500
+WYNN,Consumer Discretionary,S&P 500
+XEL,Utilities,S&P 500
+XHR,Real Estate,S&P 600
+XNCR,Healthcare,S&P 600
+XOM,Energy,S&P 500
+XPEL,Consumer Discretionary,S&P 600
+XPO,Industrials,S&P 400
+XRAY,Healthcare,S&P 400
+XYL,Industrials,S&P 500
+XYZ,Financials,S&P 500
+YELP,Communication Services,S&P 600
+YETI,Consumer Discretionary,S&P 400
+YOU,Technology,S&P 600
+YUM,Consumer Discretionary,S&P 500
+ZBH,Healthcare,S&P 500
+ZBRA,Technology,S&P 500
+ZD,Communication Services,S&P 600
+ZION,Financials,S&P 400
+ZTS,Healthcare,S&P 500
+ZWS,Industrials,S&P 600

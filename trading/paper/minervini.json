@@ -1,0 +1,35 @@
+{
+ "name": "minervini",
+ "strategy": "minervini",
+ "preset": "kroxis",
+ "start_date": "2026-11-06",
+ "last_date": "2026-11-06",
+ "initial_equity": 100000,
+ "cash": 100000,
+ "spy_start": 735.2899780273438,
+ "positions": [],
+ "pending": [
+  {
+   "symbol": "HUM",
+   "pivot": 429.2383120669844,
+   "stop_ref": 399.3500061035156,
+   "rank": 98.0,
+   "ref_close": 433.739990234375
+  },
+  {
+   "symbol": "ROIV",
+   "pivot": 38.52000045776367,
+   "stop_ref": 35.560001373291016,
+   "rank": 94.0,
+   "ref_close": 38.880001068115234
+  }
+ ],
+ "trades": [],
+ "equity_history": [
+  {
+   "date": "2026-11-06",
+   "equity": 100000,
+   "exposure": 0.0
+  }
+ ]
+}

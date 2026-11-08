@@ -22,12 +22,15 @@
 | `scripts/summarize.py` | מדפיס טבלאות מהתוצאות |
 | `pine/kroxis_book_strategies.pine` | אותה אסטרטגיה ל-TradingView |
 | `tests/test_engine.py` | בדיקות שהקנייה והמכירה מבוצעות במחיר הנכון |
+| `kroxis_trader/scanner.py` | הסריקה היומית (20+ מניות) |
+| `kroxis_trader/paper.py` | חשבון הדמו (כסף וירטואלי, מחירים אמיתיים) |
+| `kroxis_trader/presets.py` | הגדרות האסטרטגיות (לפי הספר / עם סטופ 3×ATR) |
+| `scripts/daily_run.py` | ההרצה היומית: סריקה + עדכון חשבונות הדמו |
+| `scripts/train_model.py` | בדיקת מודל הניבוי |
 
 ## הרצה
 
 ```bash
-pip install -r requirements.txt
-
 # נתונים 2019–2026 (S&P 500/400/600)
 git clone --depth 1 --filter=blob:none --sparse https://github.com/fja05680/brownbear.git
 (cd brownbear && git sparse-checkout set symbol-cache universe)
@@ -58,10 +61,24 @@ python tests/test_engine.py
 
 הסקריפט לא נבדק בתוך TradingView מכאן. אם מופיעה שגיאת קומפילציה – שלחו לי אותה ואתקן.
 
-## השלבים הבאים (לא בוצעו עדיין)
+## הרצה יומית: סריקה + חשבון דמו
 
-1. **TradingView** – הרצת הסקריפט על מניות לבחירתכם והשוואה לתוצאות כאן.
-2. **MetaTrader 5 (חשבון דמו בלבד בהתחלה)** – אחת משתי דרכים:
-   - התראות TradingView (Webhook, דורש מנוי בתשלום) ← שרת קטן ← MT5.
-   - או: הקוד כאן מייצר אותות כל ערב ← ספריית `MetaTrader5` של Python (עובדת רק על Windows עם MT5 מותקן) שולחת פקודות עם סטופ.
-3. רק אחרי 2–3 חודשים בדמו שמתנהגים כמו הבדיקה – לשקול כסף אמיתי, בסכום קטן.
+```bash
+pip install -r requirements.txt
+python scripts/daily_run.py
+```
+
+הסקריפט מוריד מחירים עדכניים (Yahoo Finance, חינם, בלי חשבון) ל-1,495 מניות S&P 1500, ואז:
+
+1. **סריקה** – `reports/scan/latest.md`: לפחות 20 מניות. אותות קנייה מהיום, מניות שמחכות לפריצה (עם מחיר קנייה וסטופ), וסיכוי היסטורי לכל אחת.
+2. **שני חשבונות דמו** של $100,000 (מינרביני, אוניל) – `reports/paper/latest.md`. קונים בפתיחה לפי אותות האתמול, מוכרים לפי סטופ, יעד וממוצע 50, בדיוק כמו בבדיקה. מצב החשבונות נשמר ב-`paper/*.json`.
+
+בדיקה שהדמו זהה לבדיקת העבר: `python tests/check_paper_vs_backtest.py`. החשבון רץ יום אחרי יום על 2025–2026, שומר וטוען את המצב כל יום, ויוצא זהה לבדיקת העבר עד הסנט.
+
+אפשר לחזות מראש איזו עסקה תרוויח? לא. פירוט ב-[`reports/model/MODEL_HE.md`](reports/model/MODEL_HE.md).
+
+## השלבים הבאים
+
+1. **דמו** – להריץ את `daily_run.py` כל יום מסחר במשך 2–3 חודשים ולהשוות לבדיקת העבר.
+2. **TradingView** – הסקריפט ב-`pine/` מציג את אותם אותות על הגרפים.
+3. **MetaTrader 5** – רק אחרי הדמו: חיבור לחשבון דמו ב-MT5 (צריך מחשב Windows עם MT5 פתוח).

@@ -27,26 +27,11 @@ from kroxis_trader import engine as en          # noqa: E402
 from kroxis_trader import metrics as me         # noqa: E402
 from kroxis_trader import strategies as st      # noqa: E402
 from kroxis_trader.data import EXCLUDE, INDEX_SYMBOLS, load_saved_panel  # noqa: E402
+from kroxis_trader.presets import BOOK          # noqa: E402
 
 COST = 0.001  # 0.1% per side: commission + slippage
 
-STRATEGIES = {
-    "minervini": {
-        "title": "Minervini SEPA (Trend Template + VCP breakout)",
-        "signals": lambda f: st.minervini_signals(f, regime="trend200"),
-        "regime": "trend200",
-        "rules": en.ExitRules(stop_mode="structure", stop_pct=0.08,
-                              breakeven_r=2.0, trail_sma50=True),
-    },
-    "oneil": {
-        "title": "O'Neil CAN SLIM (price/volume rules: N, L, M)",
-        "signals": lambda f: st.oneil_signals(f, regime="oneil"),
-        "regime": "oneil",
-        "rules": en.ExitRules(stop_mode="pct", stop_pct=0.075, target_pct=0.20,
-                              oneil_8week=True, trail_sma50=True,
-                              sma50_heavy_volume=True),
-    },
-}
+STRATEGIES = BOOK
 
 STOP_VARIANTS = {
     "fixed 3%": dict(stop_mode="pct", stop_pct=0.03),

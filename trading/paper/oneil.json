@@ -1,0 +1,20 @@
+{
+ "name": "oneil",
+ "strategy": "oneil",
+ "preset": "kroxis",
+ "start_date": "2026-11-06",
+ "last_date": "2026-11-06",
+ "initial_equity": 100000,
+ "cash": 100000,
+ "spy_start": 735.2899780273438,
+ "positions": [],
+ "pending": [],
+ "trades": [],
+ "equity_history": [
+  {
+   "date": "2026-11-06",
+   "equity": 100000,
+   "exposure": 0.0
+  }
+ ]
+}
