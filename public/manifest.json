@@ -1,11 +1,11 @@
 {
-  "name": "KROXIS - Professional Safety Eyewear",
-  "short_name": "KROXIS",
-  "description": "ANSI Z87.1+ certified safety glasses engineered for the toughest environments",
+  "name": "Portolan · Product compliance for online sellers",
+  "short_name": "Portolan",
+  "description": "Regulatory information for online sellers: notice triage, supplier document checks and product check reports.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1C1C1C",
-  "theme_color": "#FF8800",
+  "background_color": "#0B151A",
+  "theme_color": "#0B151A",
   "orientation": "portrait",
   "icons": [
     {
@@ -21,19 +21,33 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["shopping", "business", "productivity"],
+  "categories": [
+    "shopping",
+    "business",
+    "productivity"
+  ],
   "shortcuts": [
     {
       "name": "Shop All",
       "short_name": "Shop",
       "url": "/shop",
-      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "My Orders",
       "short_name": "Orders",
       "url": "/checkout",
-      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ]
 }

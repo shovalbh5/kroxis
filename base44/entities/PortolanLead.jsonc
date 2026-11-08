@@ -1,0 +1,72 @@
+{
+  "name": "PortolanLead",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "offer": {
+      "type": "string",
+      "enum": [
+        "notice_triage",
+        "document_check",
+        "product_check",
+        "waitlist"
+      ],
+      "description": "What the seller asked for"
+    },
+    "marketplace": {
+      "type": "string",
+      "enum": [
+        "amazon_us",
+        "amazon_eu",
+        "amazon_uk",
+        "amazon_ca",
+        "walmart",
+        "tiktok_shop",
+        "shopify",
+        "other"
+      ]
+    },
+    "product": {
+      "type": "string",
+      "description": "Product description or listing link"
+    },
+    "notice_text": {
+      "type": "string",
+      "description": "Pasted marketplace compliance notice, if any"
+    },
+    "consent": {
+      "type": "boolean",
+      "description": "Agreed to be contacted about the request"
+    },
+    "source": {
+      "type": "string",
+      "description": "Page section or campaign the lead came from"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "customer",
+        "lost"
+      ],
+      "default": "new"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "email",
+    "offer"
+  ]
+}

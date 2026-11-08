@@ -6,18 +6,14 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import { CartProvider } from '@/context/CartContext';
-
-import SiteLayout from '@/components/layout/SiteLayout';
-import Home from '@/pages/Home';
-import Shop from '@/pages/Shop';
-import ProductDetail from '@/pages/ProductDetail';
-import Checkout from '@/pages/Checkout';
-import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
-import Wholesale from '@/pages/Wholesale';
-import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
-import SalesPopup from '@/components/marketing/SalesPopup';
 import { LanguageProvider } from '@/context/LanguageContext';
+
+// kroxis.com now serves the Portolan landing page.
+// The KROXIS store pages are still in src/pages but no longer routed;
+// its admin stays at /admin so past orders and customers remain reachable.
+import PortolanLanding from '@/pages/portolan/Landing';
+import PortolanTerms from '@/pages/portolan/Terms';
+import PortolanPrivacy from '@/pages/portolan/Privacy';
 import AdminLayout from '@/components/admin/AdminLayout';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminProducts from '@/pages/admin/AdminProducts';
@@ -28,27 +24,16 @@ import AdminBlog from '@/pages/admin/AdminBlog';
 import AdminSettings from '@/pages/admin/AdminSettings';
 import WhatsAppChat from '@/pages/admin/WhatsAppChat';
 import LiveChatAdmin from '@/pages/admin/LiveChatAdmin';
-import Warranty from '@/pages/Warranty';
-import B2BPortal from '@/pages/B2BPortal';
-import Contact from '@/pages/Contact';
-import FAQ from '@/pages/FAQ';
-import TermsOfService from '@/pages/TermsOfService';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
-import ReturnPolicy from '@/pages/ReturnPolicy';
-import MyAccount from '@/pages/MyAccount';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import FacebookPixel from '@/components/seo/FacebookPixel';
-import FaceMeshDebugger from '@/pages/FaceMeshDebugger';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-secondary">
+      <div className="fixed inset-0 flex items-center justify-center" style={{ background: '#0B151A' }}>
         <div className="text-center">
-          <span className="font-heading text-2xl text-white tracking-widest">KROXIS</span>
-          <div className="w-8 h-8 border-4 border-secondary-foreground/20 border-t-primary rounded-full animate-spin mx-auto mt-4"></div>
+          <span className="text-2xl tracking-widest" style={{ color: '#E2EBE8', fontFamily: 'Georgia, serif' }}>PORTOLAN</span>
+          <div className="w-8 h-8 border-4 rounded-full animate-spin mx-auto mt-4" style={{ borderColor: 'rgba(226,235,232,.2)', borderTopColor: '#52C0A2' }}></div>
         </div>
       </div>
     );
@@ -64,53 +49,23 @@ const AuthenticatedApp = () => {
   }
 
   return (
-    <>
-      <Routes>
-        <Route element={<SiteLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/wholesale" element={<Wholesale />} />
-          
-          {/* English language routes */}
-          <Route path="/en" element={<Home />} />
-          <Route path="/en/shop" element={<Shop />} />
-          <Route path="/en/product/:id" element={<ProductDetail />} />
-          <Route path="/en/checkout" element={<Checkout />} />
-          <Route path="/en/blog" element={<Blog />} />
-          <Route path="/en/blog/:slug" element={<BlogPost />} />
-          <Route path="/en/wholesale" element={<Wholesale />} />
-          <Route path="/warranty" element={<Warranty />} />
-          <Route path="/b2b" element={<B2BPortal />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/returns" element={<ReturnPolicy />} />
-          <Route path="/account" element={<MyAccount />} />
-        </Route>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="products" element={<AdminProducts />} />
-          <Route path="orders" element={<AdminOrders />} />
-          <Route path="customers" element={<AdminCustomers />} />
-          <Route path="coupons" element={<AdminCoupons />} />
-          <Route path="blog" element={<AdminBlog />} />
-          <Route path="settings" element={<AdminSettings />} />
-          <Route path="whatsapp" element={<WhatsAppChat />} />
-          <Route path="livechat" element={<LiveChatAdmin />} />
-        </Route>
-        <Route path="/face-debug" element={<FaceMeshDebugger />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <ExitIntentPopup />
-      <SalesPopup />
-      <WhatsAppButton />
-      <FacebookPixel />
-    </>
+    <Routes>
+      <Route path="/" element={<PortolanLanding />} />
+      <Route path="/terms" element={<PortolanTerms />} />
+      <Route path="/privacy" element={<PortolanPrivacy />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="products" element={<AdminProducts />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="customers" element={<AdminCustomers />} />
+        <Route path="coupons" element={<AdminCoupons />} />
+        <Route path="blog" element={<AdminBlog />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="whatsapp" element={<WhatsAppChat />} />
+        <Route path="livechat" element={<LiveChatAdmin />} />
+      </Route>
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 };
 

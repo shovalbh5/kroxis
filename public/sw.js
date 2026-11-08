@@ -1,9 +1,9 @@
 /**
- * Service Worker for KROXIS PWA
+ * Service Worker for the Portolan site
  * Handles caching and offline functionality
  */
 
-const CACHE_NAME = 'kroxis-v1';
+const CACHE_NAME = 'portolan-v1';
 const urlsToCache = [
   '/',
   '/index.html',
