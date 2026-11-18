@@ -3,33 +3,90 @@
  "strategy": "minervini",
  "preset": "kroxis",
  "start_date": "2026-11-06",
- "last_date": "2026-11-06",
+ "last_date": "2026-11-17",
  "initial_equity": 100000,
- "cash": 100000,
+ "cash": 59217.438828072845,
  "spy_start": 735.2899780273438,
- "positions": [],
- "pending": [
+ "positions": [
   {
    "symbol": "HUM",
-   "pivot": 429.2383120669844,
+   "entry_date": "2026-11-09",
+   "entry_price": 439.00857733154294,
    "stop_ref": 399.3500061035156,
-   "rank": 98.0,
-   "ref_close": 433.739990234375
+   "shares": 24.02706551267867,
+   "ref_close": 423.2200012207031,
+   "stop_now": 386.98391375619303,
+   "target": null,
+   "last_close": 443.3399963378906,
+   "exit_next_open": null
   },
   {
    "symbol": "ROIV",
-   "pivot": 38.52000045776367,
+   "entry_date": "2026-11-09",
+   "entry_price": 39.509471221923825,
    "stop_ref": 35.560001373291016,
-   "rank": 94.0,
-   "ref_close": 38.880001068115234
+   "shares": 270.9929586201113,
+   "ref_close": 40.66999816894531,
+   "stop_now": 34.89680524578568,
+   "target": null,
+   "last_close": 38.709999084472656,
+   "exit_next_open": null
+  },
+  {
+   "symbol": "CHD",
+   "entry_date": "2026-11-17",
+   "entry_price": 113.90379091644286,
+   "stop_ref": 106.09671995968421,
+   "shares": 171.44016600934802,
+   "ref_close": 112.4800033569336,
+   "stop_now": 106.5914258905116,
+   "target": null,
+   "last_close": 112.4800033569336,
+   "exit_next_open": null
   }
  ],
+ "pending": [],
  "trades": [],
  "equity_history": [
   {
    "date": "2026-11-06",
    "equity": 100000,
    "exposure": 0.0
+  },
+  {
+   "date": "2026-11-09",
+   "equity": 99935.14147836466,
+   "exposure": 0.21203770278416315
+  },
+  {
+   "date": "2026-11-10",
+   "equity": 100432.61950511625,
+   "exposure": 0.21594075669936671
+  },
+  {
+   "date": "2026-11-11",
+   "equity": 100809.69810693488,
+   "exposure": 0.21887352972377513
+  },
+  {
+   "date": "2026-11-12",
+   "equity": 100242.4607726386,
+   "exposure": 0.21445340582285935
+  },
+  {
+   "date": "2026-11-13",
+   "equity": 100269.65445603832,
+   "exposure": 0.21466645039246193
+  },
+  {
+   "date": "2026-11-16",
+   "equity": 100290.6459173284,
+   "exposure": 0.21483082563060688
+  },
+  {
+   "date": "2026-11-17",
+   "equity": 99643.32559280183,
+   "exposure": 0.40570591682107937
   }
  ]
 }

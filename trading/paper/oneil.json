@@ -3,7 +3,7 @@
  "strategy": "oneil",
  "preset": "kroxis",
  "start_date": "2026-11-06",
- "last_date": "2026-11-06",
+ "last_date": "2026-11-17",
  "initial_equity": 100000,
  "cash": 100000,
  "spy_start": 735.2899780273438,
@@ -14,6 +14,41 @@
   {
    "date": "2026-11-06",
    "equity": 100000,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-09",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-10",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-11",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-12",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-13",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-16",
+   "equity": 100000.0,
+   "exposure": 0.0
+  },
+  {
+   "date": "2026-11-17",
+   "equity": 100000.0,
    "exposure": 0.0
   }
  ]
